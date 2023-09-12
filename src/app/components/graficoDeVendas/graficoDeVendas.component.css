@@ -8,17 +8,38 @@
   transform: translateY(-5px);
 }
 
+.title-grafico {
+  text-align: center;
+  color: #007bff;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-shadow: 4px 4px 7px rgba(0, 0, 0, 0.5);
+}
+
+.info-dados-indisponiveis {
+  text-align: center;
+  color: #6c757d;
+  font-size: 18px;
+}
+
 .vendas {
   color: #0fe400;
   text-shadow: 4px 4px 7px rgba(0, 0, 0, 30.5);
   border-radius: 20px;
 }
-
-.produto {
+.vendas-name {
   color: rgba(243, 243, 243, 0.843);
   text-shadow: 4px 4px 7px rgba(0, 0, 0, 30.5);
 }
 
+.sub-titulos {
+  color: rgba(243, 243, 243, 0.843);
+  text-shadow: 4px 4px 7px rgba(0, 0, 0, 30.5);
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 5px;
+  color: #d7d7d7;
+  margin: 0px 20px 6px 30px;
+}
 
 .sombra {
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.492);
@@ -26,4 +47,36 @@
 }
 .sombra:focus {
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.488);
+}
+
+.div-principal {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+.cabecario-card {
+  background-color: rgba(49, 67, 78, 0.744);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titulo {
+  padding-bottom: 20px;
+  color: rgba(243, 243, 243, 0.843);
+  text-shadow: 4px 4px 7px rgba(0, 0, 0, 30.5);
+}
+
+.ajust-summry {
+  padding: 5px;
+  border-right: 1px solid #e5e5e5;
+  text-align: center;
+}
+
+.ajust-summry-ultimo-item {
+  padding: 5px;
+  text-align: center;
 }

@@ -17,21 +17,12 @@ export abstract class BaseService {
 
     const response = request.pipe(map((response: any) => response?.dados),
       catchError((error: any) => {
-        console.error('Ocorreu um erro:', error);
-        this.ApiErrorMessage(error.error.mensagens);
-
+        error.error.Mensagens.forEach((mensagem: any) => {
+          console.error(`API error, StatusCodes: ${mensagem.StatusCode}, Message: ${mensagem.Descricao}`);
+        });
         return throwError(() => error);
       })
     );
-
     return response;
-  }
-
-  private ApiErrorMessage(mensagens: any): void {
-    mensagens.forEach((mensagem: any) => {
-      if (mensagem.tipo == 400) {
-        console.error('API error: ' + mensagem.descricao);
-      }
-    });
   }
 }

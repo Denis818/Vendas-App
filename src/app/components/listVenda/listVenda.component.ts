@@ -25,7 +25,6 @@ export class ListVendaComponent implements OnInit {
   public totalItens: number = 0;
 
   public vendaId: number = 0;
-  //public totalDasVendas: number = 0;
   private buscarName: string = '';
 
   public listVendas: Venda[] = [];
@@ -69,9 +68,8 @@ export class ListVendaComponent implements OnInit {
         this.vendasFiltradas = [...this.listVendas];
         this.totalItens = vendas.totalItens;
       },
-      error: error => {
+      error: () => {
         this.toastr.error('Error ao carregar Vendas', 'Error')
-        console.log('Ocorreu um error: ', error);
       }
     });
   }
@@ -85,11 +83,10 @@ export class ListVendaComponent implements OnInit {
 
   public getVendasPorPeriodo(): void {
     if (this.dateRange && this.dateRange.length === 2) {
-      const dataInicio = this.dateRange[0];
-      const dataFim = this.dateRange[1];
-      this.vendaServices.getSalesByDate(dataInicio, dataFim).subscribe(data => {
+      this.vendaServices.getSalesByDate(this.dateRange[0], this.dateRange[1]).subscribe(data => {
         this.vendasFiltradas = data
       })
+
     } else {
       this.vendasFiltradas = [...this.listVendas];
     }
@@ -99,10 +96,11 @@ export class ListVendaComponent implements OnInit {
     if (id != null) {
       this.vendaId = id;
       this.vendaServices.getSaleById(id).subscribe(produto => {
+        console.log(produto.nome , produto.preco, produto.quantidadeVendido);
         this.form.patchValue({
-          produto: produto.nome,
+          nome: produto.nome,
           preco: produto.preco,
-          quantidade: produto.quantidadeVendido
+          quantidadeVendido: produto.quantidadeVendido
         });
       });
     }
@@ -117,9 +115,8 @@ export class ListVendaComponent implements OnInit {
           this.getAllVendas();
           this.toastr.success('Alterações realizadas com sucesso!', 'Finalizado!');
         },
-        error: error =>{
+        error: () => {
           this.toastr.error('Ocorreu um error ao atualizar!', 'Error');
-          console.log('Ocorreu um error: ', error);""
         }
       });
 
@@ -130,9 +127,8 @@ export class ListVendaComponent implements OnInit {
           this.getAllVendas();
           this.toastr.success('Adiconado com sucesso!', 'Finalizado!');
         },
-        error: error =>{
+        error: () =>{
           this.toastr.error('Ocorreu um error ao adicionar!', 'Error');
-          console.log('Ocorreu um error: ', error);
         }
       });
     }
@@ -146,8 +142,7 @@ export class ListVendaComponent implements OnInit {
           this.getAllVendas();
           this.toastr.success('O Venda deletada com sucesso!', 'Finalizado!');
         },
-        error : error => {
-          console.error("Ocorreu um error: ", error)
+        error : () => {
           this.toastr.error('Ocorreu um erro ao deletar.', 'Erro');
         }
       });
@@ -157,8 +152,8 @@ export class ListVendaComponent implements OnInit {
   public validateDateRange() {
     if (this.dateRange && this.dateRange.length === 2) {
       if (this.dateRange[0] > this.dateRange[1]) {
-        alert('A data final não pode ser anterior à data inicial!');
-        this.dateRange = [this.dateRange[1], this.dateRange[0]]; // Inverte as datas
+        this.toastr.error('A data final não pode ser anterior à data inicial!', 'Atenção');
+        this.dateRange = [this.dateRange[1], this.dateRange[0]];
       }
     }
   }
@@ -166,9 +161,9 @@ export class ListVendaComponent implements OnInit {
   public validation(): void {
     this.form = this.fb.group(
       {
-        nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-        preco: ['', [Validators.required, Validators.pattern('^[0-9.]+$')]],
-        quantidadeVendido: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+        nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
+        preco: ['', [Validators.required, Validators.pattern('^[0-9.]+$'), Validators.min(0.1), Validators.max(999)]],
+        quantidadeVendido: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.min(1), Validators.max(999)]],
       }
     )
   }

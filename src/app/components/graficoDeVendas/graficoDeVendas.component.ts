@@ -37,7 +37,7 @@ export class GraficoDeVendasComponent implements OnInit {
     private toastr: ToastrService) {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.graficoDeVendas();
     this.getResumoVendas();
   }
