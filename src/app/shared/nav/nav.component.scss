@@ -1,0 +1,37 @@
+i {
+  font-size: 30px;
+  margin-top: 5px;
+  ;
+}
+
+.responsive-nav {
+  min-width: 1000px;
+  white-space: nowrap;
+}
+
+.navbar .nav-item input {
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f5f5f5;
+}
+
+.nav-item input {
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5); /* horizontal offset, vertical offset, blur radius, color */
+  transition: box-shadow 0.3s ease; /* Adiciona uma transição suave ao aplicar a sombra */
+
+}
+
+.nav-item input:focus {
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.7);
+  outline: none;
+}
+
+.sombra {
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.492);
+  transition: box-shadow 0.3s ease;
+}
+.sombra:focus {
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.488);
+}
+

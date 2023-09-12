@@ -1,0 +1,87 @@
+body.dark {
+  background-color: #222 !important;
+  color: #ddd !important;
+}
+
+body.dark .card {
+  background-color: #333 !important;
+  color: #f0f0f0 !important;
+}
+
+.shadow-sm {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important; // Define a sombra da borda mais escura para o modo escuro
+}
+
+body.dark .modal-body {
+  background-color: #333;
+  color: #f0f0f0;
+}
+
+body.dark p {
+  color: #f0f0f0 !important;
+}
+
+body.dark .nav-link{
+  color: #f0f0f0 !important;
+}
+
+body.dark label{
+  color: #f0f0f0 !important;
+}
+
+body.dark div{
+  color: #f0f0f0 !important;
+}
+
+body.dark i{
+  color: #f0f0f0 !important;
+}
+
+body.dark .dropdown-menu{
+  background-color: #333 !important;
+}
+body.dark .dropdown-item:hover {
+  background-color: #222 !important;
+  color: #f0f0f0 !important;
+}
+
+body.dark a{
+  color: #f0f0f0 !important;
+}
+
+body.light .white-icon {
+  color: #000 !important;
+}
+body.light .white-icon .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+body.dark .white-icon {
+  color: #fff !important;
+}
+body.dark .white-icon .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+body.dark .input-group-text{
+  color: #000 !important;
+}
+
+.btn-outline-light:hover i, .btn-outline-light:focus i {
+  color: #000 !important; // Isso irá mudar a cor do ícone para preto
+}
+
+.btn-outline-light:not(:hover):not(:focus) i {
+  color: #fff !important; // Isso irá mudar a cor do ícone de volta para branco
+}
+
+.btn-outline-light:not(:hover):not(:focus) {
+  color: #fff !important; // Isso irá mudar a cor do texto de volta para branco
+}
+
+body.dark .list-group-item{
+  background-color: #333 !important;
+}
+body.dark .invalid-feedback{
+  color: red !important;
+}
