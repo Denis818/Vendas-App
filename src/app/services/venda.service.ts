@@ -10,12 +10,11 @@ export class VendaService extends BaseService {
 
   private readonly Url = 'https://localhost:7109/api/Venda';
 
-  vendas: Venda[] = [];
   constructor(http: HttpClient) {
     super(http);
   }
 
-  public getVendas(paginaAtual: number, itensPorPagina: number): Observable<Venda[]> {
+  public getAllVendas(paginaAtual: number, itensPorPagina: number): Observable<Venda[]> {
     const params = new HttpParams()
       .set('paginaAtual', paginaAtual.toString())
       .set('itensPorPagina', itensPorPagina.toString());
@@ -23,37 +22,23 @@ export class VendaService extends BaseService {
     return this.SendHttpRequest('GET', this.Url, null, null, params);
   }
 
-  public getResumoVendas(): Observable<any> {
+  public getSalesSummary(): Observable<any> {
     return this.SendHttpRequest('GET', this.Url + '/resumo-vendas');
   }
 
-
-  public getFilterVendas(name: string): Observable<Venda>  {
+  public filterSalesByName(name: string): Observable<Venda> {
     return this.SendHttpRequest('GET', this.Url + `/filter?name=${name}`);
-
   }
 
-  public getVendaById(id: number): Observable<Venda> {
+  public getSaleById(id: number): Observable<Venda> {
     return this.SendHttpRequest('GET', this.Url + `/${id}`);
   }
 
-  public getVendasPorDia(): Observable<any> {
+  public getGroupSalesDay(): Observable<any> {
     return this.SendHttpRequest('GET', this.Url + "/vendas-por-dia")
   }
 
-  public adicionar(venda: Venda) {
-    return this.SendHttpRequest('POST', this.Url, venda)
-  }
-
-  public editar(id: number, venda: any): Observable<Venda> {
-    return this.SendHttpRequest('PUT', this.Url + `?id=${id}`, venda);
-  }
-
-  public deleteVenda(id: number) {
-    return this.SendHttpRequest('DELETE', this.Url + `?id=${id}`)
-  }
-
-  public getVendasPorPerildo(startDate?: Date, endDate?: Date): Observable<Venda[]> {
+  public getSalesByDate(startDate?: Date, endDate?: Date): Observable<Venda[]> {
     let params = new HttpParams();
     if (startDate) {
       params = params.set('startDate', this.formatDateForAPI(startDate));
@@ -63,6 +48,18 @@ export class VendaService extends BaseService {
     }
 
     return this.SendHttpRequest('GET', this.Url + '/por-periodo', null, null, params);
+  }
+
+  public insertSale(venda: Venda) {
+    return this.SendHttpRequest('POST', this.Url, venda)
+  }
+
+  public updateSale(id: number, venda: any): Observable<Venda> {
+    return this.SendHttpRequest('PUT', this.Url + `?id=${id}`, venda);
+  }
+
+  public deleteSale(id: number) {
+    return this.SendHttpRequest('DELETE', this.Url + `?id=${id}`)
   }
 
   private formatDateForAPI(date: Date): string {

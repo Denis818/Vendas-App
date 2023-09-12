@@ -1,11 +1,11 @@
 <div
   class="d-flex flex-wrap justify-content-between align-items-center my-3 bg-secondary rounded sombra p-3 responsive-input">
   <div class="text-white d-flex align-items-center mb-2 mb-md-0">
-    <h4 class="mb-0" style="  color: rgba(243, 243, 243, 0.843); text-shadow: 4px 4px 7px rgba(0, 0, 0, 30.5);"><i
+   <!--  <h4 class="mb-0" style="  color: rgba(243, 243, 243, 0.843); text-shadow: 4px 4px 7px rgba(0, 0, 0, 30.5);"><i
         class="fa fa-money mr-2" style="color: #0ed600"></i> Total Geral das Vendas:
       <b class="total" [ngStyle]="{'color': totalDasVendas < 40 ? 'red' : '#0fe400'}">
         R$ {{totalDasVendas.toFixed(2)}}</b>
-    </h4>
+    </h4> -->
   </div>
   <div class="d-flex justify-content-end">
     <div class="">
@@ -51,7 +51,7 @@
         <tr
           *ngFor="let venda of vendasFiltradas | paginate: { itemsPerPage: itemsPorPagina, currentPage: paginaAtual, totalItems: totalItens }">
           <td>{{venda.id}}</td>
-          <td>{{venda.produto}}</td>
+          <td>{{venda.nome}}</td>
           <td>R$ {{venda.preco.toFixed(2)}}</td>
           <td class="text-center">{{venda.quantidadeVendido}}</td>
           <td>{{venda.dataVenda}}</td>
@@ -80,7 +80,7 @@
     </table>
   </div>
   <div style="display: flex; justify-content: center;">
-    <pagination-controls (pageChange)="paginaAtual = $event; getVendas()"></pagination-controls>
+    <pagination-controls (pageChange)="paginaAtual = $event; getAllVendas()"></pagination-controls>
   </div>
   <div class="d-flex justify-content-end">
     <div class="vendas-final col-md-auto" style="margin-right: auto;">
@@ -93,7 +93,7 @@
         </b>
       </b>
       <b *ngIf="vendidoPorPagina < 25">&nbsp;&nbsp;😔</b>
-      <b *ngIf="vendidoPorPagina > 10">&nbsp;&nbsp;🤑</b>
+      <b *ngIf="vendidoPorPagina > 25">&nbsp;&nbsp;🤑</b>
     </div>
 
   </div>
@@ -117,10 +117,10 @@
         <div class="form-group col-md-auto mr-2">
           <label style="font-weight: 500; font-size: 18px;">Nome do Produto</label>
           <input type="text" class="form-control"
-            [ngClass]="{'is-invalid': vendaValidator.produto.errors && vendaValidator.produto.touched}"
+            [ngClass]="{'is-invalid': vendaValidator.nome.errors && vendaValidator.nome.touched}"
             formControlName="produto" placeholder="Insira o nome produto"
             style="border-radius: 5px; border: 2px solid #ced4da; padding: 10px 15px; font-size: 16px;">
-          <div *ngIf=" vendaValidator.produto.errors?.required" class="invalid-feedback">
+          <div *ngIf=" vendaValidator.nome.errors?.required" class="invalid-feedback">
             Nome do Produto é obrigatório.
           </div>
           <div *ngIf=" vendaValidator.produto.errors?.minlength" class="invalid-feedback">

@@ -23,7 +23,7 @@ export class GraficoDeVendasComponent implements OnInit {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top' // Alterado de 'right' para 'top'
+        position: 'top'
       }
     }
   };
@@ -31,6 +31,7 @@ export class GraficoDeVendasComponent implements OnInit {
   public mediaDeVendaPorDia: number = 0;
   public produtoMaisVendido: string = '';
   public totalDoMaisVendido: number = 0;
+  public totalDeTodasAsVendas: number = 0;
 
   constructor(private vendaServices: VendaService,
     private toastr: ToastrService) {
@@ -38,24 +39,28 @@ export class GraficoDeVendasComponent implements OnInit {
 
   ngOnInit() {
     this.graficoDeVendas();
-    this.getResunoVendas();
+    this.getResumoVendas();
   }
 
-  public getResunoVendas(){
-    this.vendaServices.getResumoVendas().subscribe(data => {
+  public getResumoVendas(){
+    this.vendaServices.getSalesSummary().subscribe(data => {
       this.mediaDeVendaPorDia = data.mediaDeVendaPorDia;
       this.produtoMaisVendido = data.produtoMaisVendido;
       this.totalDoMaisVendido = data.totalDoMaisVendido;
+      this.totalDeTodasAsVendas = data.totalDeTodasAsVendas;
     });
   }
 
   public graficoDeVendas(): void {
-    this.vendaServices.getVendasPorDia().subscribe(data => {
-      this.pieChartLabels = data.map((venda: any) => venda.dia);
-      this.pieChartDatasets[0].data = data.map((venda: any) => venda.total);
-    }, error => {
-      console.error("Ocorreu um error: ", error)
-      this.toastr.error('Erro ao carregar os dados das vendas.', 'Error');
+    this.vendaServices.getGroupSalesDay().subscribe({
+      next: data => {
+        this.pieChartLabels = data.map((venda: any) => venda.dia);
+        this.pieChartDatasets[0].data = data.map((venda: any) => venda.total);
+      },
+      error: error =>{
+        console.error("Ocorreu um error: ", error)
+        this.toastr.error('Erro ao carregar gráfico de Vendas.', 'Error');
+      }
     });
   }
 }

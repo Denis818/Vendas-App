@@ -1,6 +1,6 @@
 export interface Venda {
   id: number;
-  produto: string;
+  nome: string;
   preco: number;
   dataVenda: Date;
   quantidadeVendido: number;

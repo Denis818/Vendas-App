@@ -9,10 +9,29 @@ export abstract class BaseService {
   protected SendHttpRequest(metodo: string, url: string, dados?: any,
     contentType?: any, params?: HttpParams): Observable<any> {
 
-      return this.http.request(metodo, url, {
+    let request = this.http.request(metodo, url, {
       body: dados,
       headers: contentType ?? 'application/json',
       params: params
+    });
+
+    const response = request.pipe(map((response: any) => response?.dados),
+      catchError((error: any) => {
+        console.error('Ocorreu um erro:', error);
+        this.ApiErrorMessage(error.error.mensagens);
+
+        return throwError(() => error);
+      })
+    );
+
+    return response;
+  }
+
+  private ApiErrorMessage(mensagens: any): void {
+    mensagens.forEach((mensagem: any) => {
+      if (mensagem.tipo == 400) {
+        console.error('API error: ' + mensagem.descricao);
+      }
     });
   }
 }

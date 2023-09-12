@@ -1,32 +1,44 @@
 <!-- Card com Resumo das Vendas e Gráfico -->
-<div class="card my-3 sombra" style="background-color: #f7f7f7; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: all 0.3s;">
+<div class="card my-3 sombra"
+  style="background-color: #f7f7f7; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: all 0.3s;">
 
   <!-- Cabeçalho Elegante do Card -->
-  <div class="d-flex flex-wrap justify-content-between align-items-center rounded p-3 sombra" style="background-color: rgba(49, 67, 78, 0.744);">
+  <div class="d-flex flex-wrap justify-content-between align-items-center rounded p-3 sombra"
+    style="background-color: rgba(49, 67, 78, 0.744);">
     <div class="text-white d-flex align-items-center mb-2 mb-md-0">
-      <h2 class="mb-0 produto" style="color: #d7d7d7; padding-bottom: 10px"><i class="fa fa-chart-bar mr-2" ></i> Resumo das Vendas</h2>
+      <!--  <h2 class="mb-0 produto" style="color: #d7d7d7; padding-bottom: 10px"><i class="fa fa-chart-bar mr-2" ></i> Resumo das Vendas</h2> -->
+      <h4 class="mb-0" style="padding-bottom: 10px;  color: rgba(243, 243, 243, 0.843); text-shadow: 4px 4px 7px rgba(0, 0, 0, 30.5);"><i
+          class="fa fa-money mr-2" style="color: #0ed600"></i> Total Geral das Vendas:
+        <b class="total" [ngStyle]="{'color': totalDeTodasAsVendas < 40 ? 'red' : '#0fe400'}">
+          R$ {{totalDeTodasAsVendas.toFixed(2)}}</b>
+      </h4>
     </div>
     <div class="d-flex justify-content-end">
       <div class="summary-item" style="padding: 5px; border-right: 1px solid #e5e5e5; text-align: center;">
-        <h4 class="produto" style="border-bottom: 1px solid #e5e5e5; padding-bottom: 5px; color: #d7d7d7;">Venda Média por Dia</h4>
+        <h4 class="produto" style="border-bottom: 1px solid #e5e5e5; padding-bottom: 5px; color: #d7d7d7;">Venda Média
+          por Dia</h4>
         <h4 class="vendas">R$ {{ mediaDeVendaPorDia.toFixed(2) }}</h4>
       </div>
       <div class="summary-item" style="padding: 5px; border-right: 1px solid #e5e5e5; text-align: center;">
-        <h4 class="produto" style="border-bottom: 1px solid #e5e5e5; padding-bottom: 5px; color: #d7d7d7;">Produto Mais Vendido</h4>
+        <h4 class="produto" style="border-bottom: 1px solid #e5e5e5; padding-bottom: 5px; color: #d7d7d7;">Produto Mais
+          Vendido</h4>
         <h4 class="produto">{{ produtoMaisVendido }}</h4>
       </div>
       <div class="produto" style="padding: 5px; text-align: center;">
-        <h4 style="border-bottom: 1px solid #e5e5e5; padding-bottom: 5px; color: #d7d7d7;">Total do Produto mais Vendido</h4>
+        <h4 style="border-bottom: 1px solid #e5e5e5; padding-bottom: 5px; color: #d7d7d7;">Total do Produto mais Vendido
+        </h4>
         <h4 class="vendas">R$ {{ totalDoMaisVendido.toFixed(2) }}</h4>
       </div>
     </div>
-</div>
+  </div>
 
 
 
   <!-- Gráfico de Vendas -->
   <div class="grafico-container my-5">
-    <h1 style="text-align: center; color: #007BFF; font-weight: 600; margin-bottom: 20px; text-shadow: 4px 4px 7px rgba(0, 0, 0, 0.5);">Gráfico de Vendas</h1>
+    <h1
+      style="text-align: center; color: #007BFF; font-weight: 600; margin-bottom: 20px; text-shadow: 4px 4px 7px rgba(0, 0, 0, 0.5);">
+      Gráfico de Vendas</h1>
     <canvas *ngIf="pieChartDatasets[0].data.length; else noDataTemplate" baseChart [type]="'pie'"
       [datasets]="pieChartDatasets" [labels]="pieChartLabels" [options]="pieChartOptions" [legend]="pieChartLegend">
     </canvas>

@@ -25,7 +25,7 @@ export class ListVendaComponent implements OnInit {
   public totalItens: number = 0;
 
   public vendaId: number = 0;
-  public totalDasVendas: number = 0;
+  //public totalDasVendas: number = 0;
   private buscarName: string = '';
 
   public listVendas: Venda[] = [];
@@ -57,24 +57,28 @@ export class ListVendaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getVendas()
+    this.getAllVendas()
     this.validation()
     this.localeService.use('pt-br');
   }
 
-  public getVendas(): void {
-    this.vendaServices.getVendas(this.paginaAtual, this.itemsPorPagina).subscribe((data: any) => {
-      this.listVendas = data.paginatedResult.itens
-      this.vendasFiltradas = [...this.listVendas];
-
-      this.totalItens = data.paginatedResult.totalItens;
-      this.totalDasVendas = data.totalVendido
+  public getAllVendas(): void {
+    this.vendaServices.getAllVendas(this.paginaAtual, this.itemsPorPagina).subscribe({
+      next: (vendas: any) => {
+        this.listVendas = vendas.itens
+        this.vendasFiltradas = [...this.listVendas];
+        this.totalItens = vendas.totalItens;
+      },
+      error: error => {
+        this.toastr.error('Error ao carregar Vendas', 'Error')
+        console.log('Ocorreu um error: ', error);
+      }
     });
   }
 
   public FiltrarVendas(filtrarPorName: string): void {
     let name = filtrarPorName.toLocaleLowerCase();
-    this.vendaServices.getFilterVendas(name).subscribe((data: any) => {
+    this.vendaServices.filterSalesByName(name).subscribe((data: any) => {
       this.vendasFiltradas = data;
     });
   }
@@ -83,7 +87,7 @@ export class ListVendaComponent implements OnInit {
     if (this.dateRange && this.dateRange.length === 2) {
       const dataInicio = this.dateRange[0];
       const dataFim = this.dateRange[1];
-      this.vendaServices.getVendasPorPerildo(dataInicio, dataFim).subscribe(data => {
+      this.vendaServices.getSalesByDate(dataInicio, dataFim).subscribe(data => {
         this.vendasFiltradas = data
       })
     } else {
@@ -94,9 +98,9 @@ export class ListVendaComponent implements OnInit {
   public abrirModal(template: TemplateRef<any>, id: any = null) {
     if (id != null) {
       this.vendaId = id;
-      this.vendaServices.getVendaById(id).subscribe(produto => {
+      this.vendaServices.getSaleById(id).subscribe(produto => {
         this.form.patchValue({
-          produto: produto.produto,
+          produto: produto.nome,
           preco: produto.preco,
           quantidade: produto.quantidadeVendido
         });
@@ -107,32 +111,45 @@ export class ListVendaComponent implements OnInit {
 
   public adicionarVenda() {
     if (this.vendaId != 0) {
-      console.log(this.form.value);
-      this.vendaServices.editar(this.vendaId, this.form.value).subscribe(() => {
-        this.resetForm();
-        this.getVendas();
-        this.toastr.success('Alterações realizadas com sucesso!', 'Finalizado!');
+      this.vendaServices.updateSale(this.vendaId, this.form.value).subscribe({
+        next: () => {
+          this.resetForm();
+          this.getAllVendas();
+          this.toastr.success('Alterações realizadas com sucesso!', 'Finalizado!');
+        },
+        error: error =>{
+          this.toastr.error('Ocorreu um error ao atualizar!', 'Error');
+          console.log('Ocorreu um error: ', error);""
+        }
       });
 
     } else {
-      this.vendaServices.adicionar(this.form.value).subscribe(() => {
-        this.resetForm();
-        this.getVendas();
-        this.toastr.success('Adiconado com sucesso!', 'Finalizado!');
+      this.vendaServices.insertSale(this.form.value).subscribe({
+        next: () => {
+          this.resetForm();
+          this.getAllVendas();
+          this.toastr.success('Adiconado com sucesso!', 'Finalizado!');
+        },
+        error: error =>{
+          this.toastr.error('Ocorreu um error ao adicionar!', 'Error');
+          console.log('Ocorreu um error: ', error);
+        }
       });
     }
   }
 
   public confirmDelete(): void {
     if (this.vendaId != 0) {
-      this.vendaServices.deleteVenda(this.vendaId).subscribe(() => {
-
-        this.resetForm();
-        this.getVendas();
-        this.toastr.success('O Venda deletada com sucesso!', 'Finalizado!');
-      }, error => {
-        console.error("Ocorreu um error: ", error)
-        this.toastr.error('Ocorreu um erro ao deletar a venda.', 'Erro');
+      this.vendaServices.deleteSale(this.vendaId).subscribe({
+        next: () => {
+          this.resetForm();
+          this.getAllVendas();
+          this.toastr.success('O Venda deletada com sucesso!', 'Finalizado!');
+        },
+        error : error => {
+          console.error("Ocorreu um error: ", error)
+          this.toastr.error('Ocorreu um erro ao deletar.', 'Erro');
+        }
       });
     }
   }
@@ -149,7 +166,7 @@ export class ListVendaComponent implements OnInit {
   public validation(): void {
     this.form = this.fb.group(
       {
-        produto: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+        nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
         preco: ['', [Validators.required, Validators.pattern('^[0-9.]+$')]],
         quantidadeVendido: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       }
