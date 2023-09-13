@@ -20,6 +20,8 @@ import { GraficoDeVendasComponent } from './components/graficoDeVendas/graficoDe
 
 import { VendaService } from './services/venda.service';
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
+import { LoginComponent } from './components/user/login/login.component';
+import { RegisterComponent } from './components/user/register/register.component';
 
 
 @NgModule({
@@ -28,6 +30,8 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
     ListVendaComponent,
     NavComponent,
     GraficoDeVendasComponent,
+    LoginComponent,
+    RegisterComponent,
     DateTimeFormatPipe
   ],
   imports: [

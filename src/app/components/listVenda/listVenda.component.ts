@@ -85,7 +85,7 @@ export class ListVendaComponent implements OnInit {
     if (this.dateRange && this.dateRange.length === 2) {
       this.vendaServices.getSalesByDate(this.dateRange[0], this.dateRange[1]).subscribe(data => {
         this.vendasFiltradas = data
-      })
+      });
 
     } else {
       this.vendasFiltradas = [...this.listVendas];

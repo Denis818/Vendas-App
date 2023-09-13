@@ -1,4 +1,4 @@
-<div class="card my-3 sombra div-principal">
+<div class="card my-3 sombra div-principal" style="border: none;">
   <div class="align-items-center rounded p-3 sombra cabecario-card">
     <div class="text-white d-flex align-items-center mb-2 mb-md-0">
       <h4 class="mb-0 titulo">
@@ -24,7 +24,7 @@
   </div>
 
   <!-- Gráfico de Vendas -->
-  <div class="grafico-container my-5">
+  <div class="grafico-container my-3">
     <h1 class="title-grafico">
       Vendas Por Dia</h1>
     <canvas *ngIf="pieChartDatasets[0].data.length; else noDataTemplate" baseChart [type]="'pie'"

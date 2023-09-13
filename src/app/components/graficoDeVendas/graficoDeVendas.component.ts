@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ChartOptions } from 'chart.js';
 import { ToastrService } from 'ngx-toastr';
 import { VendaService } from 'src/app/services/venda.service';
+import 'chartjs-plugin-datalabels';
+
 
 @Component({
   selector: 'app-graficoDeVendas',
@@ -16,6 +18,9 @@ export class GraficoDeVendasComponent implements OnInit {
     {
       data: [],
       label: 'Vendas Por Dia',
+      font: {
+        size: 500
+      },
       backgroundColor: ['#6A5ACD', '#4169E1', '#708090', '#8A2BE2', '#228B22', '#2F4F4F', '#4682B4']
     }
   ];
@@ -23,10 +28,17 @@ export class GraficoDeVendasComponent implements OnInit {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top'
+        position: 'top',
+        labels: {
+          font: {
+            size: 20 
+          }
+        }
       }
     }
   };
+
+
 
   public mediaDeVendaPorDia: number = 0;
   public produtoMaisVendido: string = '';
@@ -57,8 +69,7 @@ export class GraficoDeVendasComponent implements OnInit {
         this.pieChartLabels = data.map((venda: any) => venda.dia);
         this.pieChartDatasets[0].data = data.map((venda: any) => venda.total);
       },
-      error: error =>{
-        console.error("Ocorreu um error: ", error)
+      error: () =>{
         this.toastr.error('Erro ao carregar gráfico de Vendas.', 'Error');
       }
     });
