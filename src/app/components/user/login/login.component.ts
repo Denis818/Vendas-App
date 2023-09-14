@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
     this.userService.login(dados).subscribe({
       next: () =>{
-        this.router.navigateByUrl('/vendas');
+        this.router.navigateByUrl('/venda/list-vendas');
       },
       error: () => {
         this.errorMessage = "Não foi possível efetuar o login. Verifique seus dados.";

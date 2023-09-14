@@ -10,15 +10,29 @@ import { UserService } from 'src/app/services/user.service';
 export class NavComponent implements OnInit {
   public isCollapsed: boolean = true;
 
+  public userEmail: string = 'Email'
+
   constructor(private router: Router,
     private userService: UserService) {
+      this.getUserEmail();
   }
+  ngOnInit() {}
 
-  ngOnInit() {
+  public getUserEmail() {
+    this.userService.getUserEmail().subscribe({
+      next: user => {
+        this.userEmail = user;
+      },
+      error: () =>{
+        throw new Error();
+      }
+    })
   }
 
   public ShowMenu(): boolean {
-    return this.router.url != '/login' && this.router.url != '/register'; 
+    return this.router.url != '/login' &&
+    this.router.url != '/register' &&
+    this.router.url != '/nao-autorizado';
   }
 
   public logout(): void {

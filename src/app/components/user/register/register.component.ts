@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
 
     this.userService.registraUsuario(dados).subscribe({
       next: () => {
-        this.router.navigateByUrl('/vendas');
+        this.router.navigateByUrl('/venda/list-vendas');
         this.form.reset();
       },
       error: error => {
