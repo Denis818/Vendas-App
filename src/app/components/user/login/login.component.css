@@ -1,42 +1,21 @@
-body {
-  font-family: 'Arial', sans-serif;
-  background: linear-gradient(45deg, #ffffff, #6c757d);
+.vh-100 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-
-.d-flex.vh-100 {
-  background: linear-gradient(45deg, #ffffff, #6c757d);
-  border: none;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.478);
+.card-container{
+  padding: 100px 50px 100px 50px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
 
-.mx-auto.text-center {
-  background: linear-gradient(45deg, #ffffff, #6c757d);
-  max-width: 400px;
-  border-radius: 10px;
+.text-color{
+  color: #708090;
+  font-weight: bold;
 }
 
-.form-signin {
-  width: 100%;
+.fa-eye,
+.fa-eye-slash {
+  font-size: 24px;
 }
 
-.form-signin .form-control {
-  position: relative;
-  padding-right: 40px;
-  margin-bottom: 15px; /* Adicionando margem para separar os inputs */
-}
-
-.fa.fa-users {
-  font-size: 50px;
-  color: #6a16b3;
-}
-
-.btn-primary {
-  background-color: #6a16b3;
-  border: none;
-  margin-top: 15px; /* Adicionando margem para separar o botão do input de senha */
-}
-
-.btn-link {
-  color: #6a16b3;
-}

@@ -1,4 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { RoundedRect } from 'chart.js/dist/types/geometric';
+import { ToastrService } from 'ngx-toastr';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -9,12 +13,32 @@ export class LoginComponent implements OnInit {
 
   @ViewChild('passwordInput') passwordInput!: ElementRef;
 
+  public email!: string;
   public password!: string;
   public showPassword: boolean = false;
 
-  constructor() { }
+  constructor(private userService: UserService,
+    private router: Router) { }
 
   ngOnInit() {
+  }
+  public errorMessage!: string;
+
+  public login(){
+    const dados =
+    {
+      email: this.email,
+      password: this.password
+    }
+
+    this.userService.login(dados).subscribe({
+      next: () =>{
+        this.router.navigateByUrl('/vendas');
+      },
+      error: () => {
+        this.errorMessage = "Não foi possível efetuar o login. Verifique seus dados.";
+      }
+    });
   }
 
 

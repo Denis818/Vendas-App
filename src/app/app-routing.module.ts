@@ -4,8 +4,11 @@ import { GraficoDeVendasComponent } from './components/graficoDeVendas/graficoDe
 import { ListVendaComponent } from './components/listVenda/listVenda.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegisterComponent } from './components/user/register/register.component';
+import { NaoAutorizadoComponent } from './components/user/naoAutorizado/naoAutorizado.component';
 
 const routes: Routes = [
+  { path: 'nao-autorizado', component: NaoAutorizadoComponent },
+
   { path:'grafico/vendas', component: GraficoDeVendasComponent },
   { path:'vendas', component: ListVendaComponent },
   { path:'login', component: LoginComponent },

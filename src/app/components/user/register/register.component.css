@@ -1,0 +1,29 @@
+.gradient-custom-2 {
+  background: linear-gradient(45deg, #ffffff, #708090);
+}
+
+@media (min-width: 768px) {
+  .gradient-form {
+    height: 100vh !important;
+  }
+}
+@media (min-width: 769px) {
+  .gradient-custom-2 {
+    border-top-right-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
+  }
+}
+
+.fa-eye,
+.fa-eye-slash {
+  font-size: 24px;
+}
+
+.text-color{
+  color: #708090;
+  font-weight: bold;
+}
+
+.container-form{
+  padding: 20% !important;
+}

@@ -96,7 +96,6 @@ export class ListVendaComponent implements OnInit {
     if (id != null) {
       this.vendaId = id;
       this.vendaServices.getSaleById(id).subscribe(produto => {
-        console.log(produto.nome , produto.preco, produto.quantidadeVendido);
         this.form.patchValue({
           nome: produto.nome,
           preco: produto.preco,

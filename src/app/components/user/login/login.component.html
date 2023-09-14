@@ -1,50 +1,60 @@
-<!-- <div class="d-flex align-items-center vh-100 card-login">
-
-  <div class="mx-auto text-center shadow-sm rounded p-5 my-5">
-
-      <form class="form-signin">
-          <i class="fa fa-users mb-2"></i>
-          <h1 class="h3 mb-3 font-weight-normal">Entrar com</h1>
-          <label for="username" class="sr-only">Usuário</label>
-          <input type="email" id="username" class="form-control" placeholder="Usuário" name="username" required>
-          <label for="password" class="sr-only">Password</label>
-          <input type="password" id="password" class="form-control" placeholder="Senha" name="password" required>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
-          <p class="mt-4 mb-2 text-muted">Não tem login? Cadastre-se abaixo</p>
-          <a class="btn btn-lg btn-link btn-block">Quero me cadastrar</a>
-      </form>
-
-  </div>
-
-</div> -->
-
-<body>
-  <div class="d-flex align-items-center vh-100">
-
-    <div class="mx-auto text-center shadow-sm rounded p-5 my-5">
-
-      <form class="form-signin">
-        <i class="fa fa-users mb-2"></i>
-        <h1 class="h3 mb-3 font-weight-normal">Entrar com</h1>
-        <label for="username" class="sr-only">Usuário</label>
-        <input type="email" id="username" class="form-control" placeholder="Usuário" name="username" required>
-        <label for="password" class="sr-only">Password</label>
-        <div class="input-group">
-          <input #passwordInput type="password" id="password" class="form-control" placeholder="Senha" name="password"
-            [(ngModel)]="password" required>
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
-              <i class="fa" [ngClass]="{'fa-eye': !showPassword, 'fa-eye-slash': showPassword}"></i>
-            </button>
-          </div>
+ <div class="vh-100">
+  <div class="card-container">
+    <div class="container-fluid h-custom">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-9 col-lg-6 col-xl-5">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp" class="img-fluid"
+            alt="Sample image">
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
-        <p class="mt-4 mb-2 text-muted">Não tem login? Cadastre-se abaixo</p>
-        <a class="btn btn-lg btn-link btn-block" routerLink="/register">Quero me cadastrar</a>
-      </form>
+        <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+          <form>
+            <div *ngIf="errorMessage" class="alert alert-danger mt-3 mb-3">
+              {{ errorMessage }}
+            </div>
+            <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+              <h1 class="h3 mb-3 font-weight-normal text-color">Entrar com</h1>
+            </div>
 
+            <div class="form-outline mb-4">
+              <input type="email"class="form-control form-control-lg shadow-sm" placeholder="email"
+              [(ngModel)]="email" name="email">
+              <label class="form-label text-color" for="form3Example3">Endereço de Email</label>
+            </div>
+
+            <div class="form-outline mb-3">
+              <div class="input-group">
+                <input #passwordInput type="password" class="form-control form-control-lg shadow-sm" placeholder="Senha"
+                [(ngModel)]="password" name="password" />
+
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
+                    <i class="fa" [ngClass]="{'fa-eye': !showPassword, 'fa-eye-slash': showPassword}" style="margin: 5px;"></i>
+                  </button>
+                </div>
+              </div>
+              <label class="form-label text-color" for="form3Example4">Senha</label>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="form-check mb-0">
+                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+                <label class="form-check-label text-color" for="form2Example3">
+                  Lembre de mim
+                </label>
+              </div>
+              <a href="#!" class="btn-link">Esqueceu sua senha?</a>
+            </div>
+
+            <div class="text-center text-lg-start mt-4 pt-2">
+              <button type="button" class="btn btn-secondary btn-lg"
+                style="padding-left: 2.5rem; padding-right: 2.5rem;" (click)="login()">Login</button>
+              <p class="mt-4 mb-2 text-color">Não tem login?
+                <a class="btn-link" routerLink="/register">Cadastrar-se</a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-
   </div>
-
-</body>
+</div>
