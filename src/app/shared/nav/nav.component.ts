@@ -10,22 +10,15 @@ import { UserService } from 'src/app/services/user.service';
 export class NavComponent implements OnInit {
   public isCollapsed: boolean = true;
 
-  public userEmail: string = '';
-
   constructor(private router: Router,
-    private userService: UserService,
-    private cdRef: ChangeDetectorRef) {
+    private userService: UserService) {
   }
 
   ngOnInit() {
-    this.updateEmail();
   }
 
-  public updateEmail() {
-    this.userService.getUserEmail().subscribe(emailUser => {
-      this.userEmail = emailUser;
-      this.cdRef.detectChanges(); //Força o angular a verificar se naquele componente teve mudanças.
-    });
+  public getUserEmail(): string {
+    return this.userService.getUserEmail();
   }
 
   public ShowMenu(): boolean {
