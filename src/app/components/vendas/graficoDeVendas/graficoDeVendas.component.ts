@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions } from 'chart.js';
 import { ToastrService } from 'ngx-toastr';
-import { VendaService } from 'src/app/services/venda.service';
 import 'chartjs-plugin-datalabels';
+import { VendaService } from '../../../services/venda.service';
 
 
 @Component({
@@ -31,14 +31,12 @@ export class GraficoDeVendasComponent implements OnInit {
         position: 'top',
         labels: {
           font: {
-            size: 20 
+            size: 20
           }
         }
       }
     }
   };
-
-
 
   public mediaDeVendaPorDia: number = 0;
   public produtoMaisVendido: string = '';

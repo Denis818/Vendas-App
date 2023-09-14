@@ -3,9 +3,9 @@ import { VendaService } from '../../../services/venda.service';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { Venda } from 'src/app/models/Venda';
 import { defineLocale, ptBrLocale } from 'ngx-bootstrap/chronos';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { Venda } from '../../../models/Venda';
 
 @Component({
   selector: 'app-listVenda',

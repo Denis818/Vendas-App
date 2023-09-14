@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-nav',
@@ -10,15 +10,13 @@ import { UserService } from 'src/app/services/user.service';
 export class NavComponent implements OnInit {
   public isCollapsed: boolean = true;
 
+  public localStorage = localStorage;
+
   constructor(private router: Router,
     private userService: UserService) {
   }
 
   ngOnInit() {
-  }
-
-  public getUserEmail(): string {
-    return this.userService.getUserEmail();
   }
 
   public ShowMenu(): boolean {
