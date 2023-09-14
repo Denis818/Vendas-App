@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
@@ -10,29 +10,28 @@ import { UserService } from 'src/app/services/user.service';
 export class NavComponent implements OnInit {
   public isCollapsed: boolean = true;
 
-  public userEmail: string = 'Email'
+  public userEmail: string = '';
 
   constructor(private router: Router,
-    private userService: UserService) {
-      this.getUserEmail();
+    private userService: UserService,
+    private cdRef: ChangeDetectorRef) {
   }
-  ngOnInit() {}
 
-  public getUserEmail() {
-    this.userService.getUserEmail().subscribe({
-      next: user => {
-        this.userEmail = user;
-      },
-      error: () =>{
-        throw new Error();
-      }
-    })
+  ngOnInit() {
+    this.updateEmail();
+  }
+
+  public updateEmail() {
+    this.userService.getUserEmail().subscribe(emailUser => {
+      this.userEmail = emailUser;
+      this.cdRef.detectChanges(); //Força o angular a verificar se naquele componente teve mudanças.
+    });
   }
 
   public ShowMenu(): boolean {
     return this.router.url != '/login' &&
-    this.router.url != '/register' &&
-    this.router.url != '/nao-autorizado';
+      this.router.url != '/register' &&
+      this.router.url != '/nao-autorizado';
   }
 
   public logout(): void {

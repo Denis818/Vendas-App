@@ -12,6 +12,7 @@ export abstract class BaseService {
 
     const token = localStorage.getItem('token');
     let headers = new HttpHeaders().set('Content-Type', contentType ?? 'application/json');
+
     if (token) {
       headers = headers.set('Authorization', 'Bearer ' + token);
     }
@@ -22,7 +23,8 @@ export abstract class BaseService {
       params: params
     });
 
-    const response = request.pipe(map((response: any) => response?.dados),
+    const response = request.pipe(map((response: any) =>
+      response?.dados),
       catchError((error: any) => {
 
         error?.error?.Mensagens?.forEach((mensagem: any) => {

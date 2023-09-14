@@ -10,11 +10,12 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class RegisterComponent implements OnInit {
 
+  public errorMessage!: string;
+
   public email!: string;
   public password!: string;
   public showPassword: boolean = false;
   @ViewChild('passwordInput') passwordInput!: ElementRef;
-
 
   public form!: FormGroup;
   get vendaValidator(): any { return this.form.controls; }
@@ -35,14 +36,13 @@ export class RegisterComponent implements OnInit {
       password: this.form.get('password')?.value
     };
 
-    this.userService.registraUsuario(dados).subscribe({
+    this.userService.register(dados).subscribe({
       next: () => {
         this.router.navigateByUrl('/venda/list-vendas');
         this.form.reset();
       },
-      error: error => {
-
-        console.log('Deu error: ', error)
+      error: () => {
+        this.errorMessage = 'Falha ao tentar registrar, verifique seus dados.'
       }
     });
   }

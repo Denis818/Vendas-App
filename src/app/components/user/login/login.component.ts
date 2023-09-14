@@ -17,12 +17,13 @@ export class LoginComponent implements OnInit {
   public password!: string;
   public showPassword: boolean = false;
 
+  public errorMessage!: string;
+
   constructor(private userService: UserService,
     private router: Router) { }
 
   ngOnInit() {
   }
-  public errorMessage!: string;
 
   public login(){
     const dados =
@@ -40,7 +41,6 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-
 
   public togglePasswordVisibility() {
     this.showPassword = !this.showPassword;

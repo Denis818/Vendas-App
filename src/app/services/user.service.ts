@@ -16,25 +16,17 @@ export class UserService extends BaseService {
     super(http);
   }
 
+//Metodo Tap permite que você "faça algo" com os valores emitidos pelo Observable sem realmente modificá-los ou consumi-los.
 
-
-  public registraUsuario(dados: any): Observable<any> {
+  public register(dados: any): Observable<any> {
     return this.SendHttpRequest('POST', this.url + '/register', dados).pipe(
-      tap((response: any) => {
-        if (response && response.token) {
-          localStorage.setItem('token', response.token);
-        }
-      })
+      tap(response => this.guardarToken(response))
     );
   }
 
   public login(dados: any): Observable<any> {
     return this.SendHttpRequest('POST', this.url + '/login', dados).pipe(
-      tap((response:any) =>{
-        if(response && response.token){
-          localStorage.setItem('token', response.token);
-        }
-      })
+      tap(response => this.guardarToken(response))
     );
   }
 
@@ -45,5 +37,11 @@ export class UserService extends BaseService {
 
   public getUserEmail(): Observable<any>{
     return this.SendHttpRequest('GET', this.url + '/name-user');
+  }
+
+  private guardarToken(response: any){
+    if(response && response.token){
+      localStorage.setItem('token', response.token);
+    }
   }
 }
