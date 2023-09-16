@@ -1,25 +1,23 @@
 <div class="container my-3">
   <div class="full-box" id="chart1">
     <h1 class="title-grafico">Resumo das vendas de cada Produto</h1>
-
     <label style="color: #708090 !important; font-size: 1.1em; ; font-weight: bold;margin-right: 4px">
       Total de Vendas:
     </label>
     <span style="color:#0fe400 !important; font-size: 1.1em; font-weight: bold;">
       R${{ totalDeTodasAsVendas.toFixed(2) }}
     </span>
-
     <span class="span-vendas">
       R$ {{ mediaDeVendaPorDia.toFixed(2) }}
     </span>
     <label class="label-media-vendas">
       Média de Vendas por Dia:
     </label>
-
     <canvas baseChart [type]="'bar'" [datasets]="produtosResumoDatasets" [labels]="produtosResumoLabels"
       [options]="chartOptionsProdutosResumo">
     </canvas>
   </div>
+
   <div class="half-box">
     <h1 class="title-grafico">Quantidade de Vendas por Dia</h1>
     <div class="chart">
@@ -30,16 +28,13 @@
       </div>
     </div>
   </div>
+
   <div class="half-box summary">
     <h1 class="title-grafico">Resumo do Produto mais Vendido</h1>
-
-
-
     <div class="summary-item">
       <label>Produto Mais Vendido:</label>
       <span>{{ produtoMaisVendido }}</span>
     </div>
-
     <div class="summary-item">
       <label>Total Vendido:</label>
       <span style="color:#0fe400 !important">R$ {{ totalDoMaisVendido.toFixed(2) }}</span>
