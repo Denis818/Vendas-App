@@ -81,8 +81,8 @@
   width: auto;
 
   canvas {
-    width: 1000px;
-    height: 400px !important;
+    width: 820px;
+    height: auto !important;
   }
 }
 
@@ -146,9 +146,9 @@
 }
 
 .chart-container-style {
-  flex-basis: 48%;
+
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  padding: auto;
   border-radius: 8px;
   overflow: hidden;
 }
