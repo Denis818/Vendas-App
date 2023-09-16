@@ -1,0 +1,56 @@
+<div class="dashboard-container dashboard-container-style">
+
+  <div class="dashboard-cards dashboard-cards-style">
+
+    <div class="card card-style">
+      <h3 class="title title-style">Vendas de Hoje</h3>
+      <p class="values" [ngStyle]="{'color': totalVendasHoje < 30 ? 'red' : '#0fe400'}">
+         R$ {{ totalVendasHoje.toFixed(2) }}
+         <span *ngIf="totalVendasHoje < 30">↓</span>
+         <span *ngIf="totalVendasHoje >= 30">↑</span>
+      </p>
+    </div>
+
+    <div class="card card-style">
+      <h3 class="title title-style">Medía das Vendas por Dia</h3>
+      <p class="values" [ngStyle]="{'color': mediaDeVendaPorDia < 20 ? 'red' : '#0fe400'}">
+         R$ {{ mediaDeVendaPorDia.toFixed(2) }}
+         <span *ngIf="mediaDeVendaPorDia < 20">↓</span>
+         <span *ngIf="mediaDeVendaPorDia >= 20">↑</span>
+      </p>
+    </div>
+
+    <div class="card card-style">
+      <h3 class="title title-style">Mais Vendido da Semana</h3>
+      <p class="values" style="color: #008080 !important;">{{ produtoMaisVendido }}</p>
+    </div>
+
+    <div class="card card-style">
+      <h3 class="title title-style">Total das Vendas</h3>
+      <p class="values" [ngStyle]="{'color': totalDeTodasAsVendas < 40 ? 'red' : '#0fe400'}">
+         R$ {{ totalDeTodasAsVendas.toFixed(2) }}
+         <span *ngIf="totalDeTodasAsVendas < 40">↓</span>
+         <span *ngIf="totalDeTodasAsVendas >= 40">↑</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="chart-flex-container chart-flex-container-style">
+
+    <div class="chart-container chart-container-style">
+      <h1 class="title title-grafico-style">Resumo das vendas de cada Produto</h1>
+      <div class="chart-scroll-container bar-chart-container" style="max-height: 400px; overflow-y: auto;">
+        <canvas baseChart [type]="'bar'" [datasets]="produtosResumoDatasets" [labels]="produtosResumoLabels"
+          [options]="chartOptionsProdutosResumo"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-container chart-container-style">
+      <h1 class="title title-grafico-style">Total das Vendas por Dia</h1>
+      <div class="chart-scroll-container pie-chart-container" style="max-height: 400px; overflow-y: auto;">
+        <canvas baseChart [type]="'pie'" [datasets]="graficoVendasPorDiaDados" [labels]="graficoVendasPorDiaLabel"
+          [options]="chartOptionsGraficoVendas"></canvas>
+      </div>
+    </div>
+  </div>
+</div>

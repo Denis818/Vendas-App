@@ -1,26 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions } from 'chart.js';
-import { ToastrService } from 'ngx-toastr';
-import 'chartjs-plugin-datalabels';
-import { VendaService } from '../../../services/venda.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
-
+import { VendaService } from 'src/app/services/venda.service';
 
 @Component({
-  selector: 'app-graficoDeVendas',
-  templateUrl: './graficoDeVendas.component.html',
-  styleUrls: ['./graficoDeVendas.component.css']
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
+export class DashboardComponent implements OnInit {
 
-export class GraficoDeVendasComponent implements OnInit {
+  vendasDoDia: number = 0;  // Exemplo
+  produtosVendidos: number = 0;  // Exemplo
+
   public mediaDeVendaPorDia: number = 0;
   public produtoMaisVendido: string = '';
-  public totalDoMaisVendido: number = 0;
   public totalDeTodasAsVendas: number = 0;
+  public totalVendasHoje: number = 0;
 
   public chartOptionsGraficoVendas: ChartOptions = {
-    responsive: true,
+    responsive: false,
     plugins: {
       legend: {
         position: 'top',
@@ -33,25 +34,25 @@ export class GraficoDeVendasComponent implements OnInit {
       },
       tooltip: {
         callbacks: {
-          label: this.graficoFormatPreco
+          label: this.vendasFormatPreco
         }
       }
     }
   };
 
   public chartOptionsProdutosResumo: ChartOptions = {
-    responsive: true,
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    },
-    plugins:{
-      tooltip: {
-        callbacks: {
-          label: this.graficoFormatPreco
+    responsive: false, // Desativa o redimensionamento responsivo
+    maintainAspectRatio: false,
+    scales: { y: { beginAtZero: true } },
+    plugins: {
+      tooltip: { callbacks: { label: this.produtoFormatPreco } },
+      legend: {
+        position: 'top',
+        labels: {
+          font: { size: 13, },
+          color: '#708090'
         }
-      }
+      },
     }
   };
 
@@ -59,7 +60,9 @@ export class GraficoDeVendasComponent implements OnInit {
   public graficoVendasPorDiaDados = [
     {
       data: [] as any,
-      backgroundColor: ['#d22030', '#51bbcb', '#606b6d', '#93b9c6', '#f2d249', '#ccc5a8', '#26867a']
+      backgroundColor: ['#d22030', '#51bbcb', '#606b6d', '#93b9c6', '#f2d249', '#ccc5a8', '#26867a'],
+      borderColor: ['#fff'],
+      borderWidth: 2
     }
   ];
 
@@ -67,11 +70,16 @@ export class GraficoDeVendasComponent implements OnInit {
   public produtosResumoDatasets = [
     {
       data: [] as any,
-      label: 'Total de Vendas'
+      label: 'Total de Vendas',
+      backgroundColor: ['#606b6d'],
+      borderColor: ['#fff'], // Cor da borda em azul como exemplo
+      borderWidth: 1
     },
     {
       data: [] as any,
-      label: 'Quantidade total das vendas do item'
+      label: 'Quantidade Vendida',
+      backgroundColor: ['#51bbcb']
+
     }
   ];
 
@@ -79,6 +87,7 @@ export class GraficoDeVendasComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toastr: ToastrService) {
   }
+
 
   public ngOnInit() {
     this.spinner.show();
@@ -108,32 +117,41 @@ export class GraficoDeVendasComponent implements OnInit {
   private processarResumoVendas(produto: any) {
     this.mediaDeVendaPorDia = produto.mediaDeVendaPorDia;
     this.produtoMaisVendido = produto.produtoMaisVendido;
-    this.totalDoMaisVendido = produto.totalDoMaisVendido;
     this.totalDeTodasAsVendas = produto.totalDeTodasAsVendas;
+    this.totalVendasHoje = produto.totalVendasHoje;
     this.getProdutosResumoVendas(produto.produtosResumo);
   }
 
   private processarGraficoDeVendas(produto: any[]) {
     this.graficoVendasPorDiaLabel = produto
-    .map((venda: any) => venda.dia);
+      .map((venda: any) => venda.dia);
 
     this.graficoVendasPorDiaDados[0].data = produto
-    .map((venda: any) => venda.total.toFixed(2));
+      .map((venda: any) => venda.total.toFixed(2));
   }
 
   public getProdutosResumoVendas(produtosResumoVendas: any[]) {
     this.produtosResumoLabels = produtosResumoVendas
-    .map(produto => produto.nome);
+      .map(produto => produto.nome);
 
     this.produtosResumoDatasets[0].data = produtosResumoVendas
-    .map(produto => produto.totalDaVenda.toFixed(2));
+      .map(produto => produto.totalDaVenda.toFixed(2));
 
     this.produtosResumoDatasets[1].data = produtosResumoVendas
-    .map(produto => produto.quantidadeTotalVendida);
+      .map(produto => produto.quantidadeTotalVendida);
   }
 
-  public graficoFormatPreco(context: any): string {
-    const value = context.parsed.y || context.parsed;
-    return `${context.label}: R$ ${value.toFixed(2)}`;
+  public vendasFormatPreco(context: any): string {
+    return `${context.label}: R$ ${context.parsed.toFixed(2)}`;
+
   }
+
+  public produtoFormatPreco(context: any): string {
+    if (context.dataset.label === 'Total de Vendas') {
+      return `${context.label}: R$ ${context.parsed.y.toFixed(2)}`;
+    } else {
+      return `${context.label}: ${context.parsed.y}`;
+    }
+  }
+
 }

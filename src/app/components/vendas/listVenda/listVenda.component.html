@@ -11,14 +11,14 @@
   </div>
 </div>
 
-<div class="card rounded p-3 sombra card-principal" style="border:none">
+<div class="card rounded p-3 card-principal card-hover">
   <div class="d-flex">
     <div class="flex-fill pr-3">
       <div class="input-group mb-2">
         <div class="input-group-prepend">
-          <div class="input-group-text  p-2 rounded shadow-sm">Filtro:</div>
+          <div class="input-group-text  p-2 rounded shadow-sm hover">Filtro:</div>
         </div>
-        <input type="text" class="form-control p-2 rounded sombra-input" placeholder="Filtrar por Tema e Local"
+        <input type="text" class="form-control p-2 rounded sombra-input hover" placeholder="Filtrar por Tema e Local"
           [(ngModel)]="filtroLista">
       </div>
     </div>
@@ -38,7 +38,7 @@
         </tr>
       </thead>
       <tbody *ngIf="listVendas && listVendas.length > 0">
-        <tr *ngFor="let venda of vendasFiltradas | paginate:
+        <tr class="hoverable-row" *ngFor="let venda of vendasFiltradas | paginate:
           { itemsPerPage: itemsPorPagina,
             currentPage: paginaAtual,
             totalItems: totalItens
@@ -50,11 +50,11 @@
           <td class="text-center">{{venda.dataVenda}}</td>
           <td class="text-center">R$ {{venda.totalDaVenda.toFixed(2)}}</td>
           <td class="text-center">
-            <button type="button" class="btn btn-primary btn-lg space" tooltip="Editar"
+            <button type="button" class="btn btn-primary btn-lg space hover-botton" tooltip="Editar"
               (click)="abrirModal(modalForm, venda.id)">
               <i class="fa fa-edit"></i>
             </button>
-            <button type="button" class="btn btn-danger btn-lg" tooltip="Deletar"
+            <button type="button" class="btn btn-danger btn-lg hover-botton" tooltip="Deletar"
               (click)="abrirModal(modalConfirmDelete, venda.id)">
               <i class="fa fa-trash"></i>
             </button>
@@ -73,6 +73,7 @@
   <div class="pagination-center">
     <pagination-controls (pageChange)="paginaAtual = $event; getAllVendas()"></pagination-controls>
   </div>
+
   <div class="d-flex justify-content-end">
     <div class="fotter-summary col-md-auto footer-card-totais">
       <b>Total Itens: {{totalItens}}</b>

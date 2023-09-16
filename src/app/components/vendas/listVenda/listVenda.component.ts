@@ -148,6 +148,7 @@ export class ListVendaComponent implements OnInit {
           this.toastr.success('O Venda deletada com sucesso!', 'Finalizado!');
         },
         error : () => {
+          this.resetForm();
           this.toastr.error('Ocorreu um erro ao deletar.', 'Erro');
         }
       });

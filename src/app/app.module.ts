@@ -16,7 +16,6 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AppComponent } from './app.component';
 import { ListVendaComponent } from './components/vendas/listVenda/listVenda.component';
 import { NavComponent } from './shared/nav/nav.component';
-import { GraficoDeVendasComponent } from './components/vendas/graficoDeVendas/graficoDeVendas.component';
 
 import { VendaService } from './services/venda.service';
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
@@ -24,6 +23,7 @@ import { LoginComponent } from './components/user/login/login.component';
 import { RegisterComponent } from './components/user/register/register.component';
 import { VendaComponent } from './components/vendas/venda.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 
 @NgModule({
@@ -31,11 +31,11 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     AppComponent,
     ListVendaComponent,
     NavComponent,
-    GraficoDeVendasComponent,
     LoginComponent,
     RegisterComponent,
     DateTimeFormatPipe,
-    VendaComponent
+    VendaComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -46,13 +46,12 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     BrowserAnimationsModule,
     NgChartsModule,
     NgxPaginationModule,
-    //NgxSpinnerModule,
+    NgxSpinnerModule,
     BsDatepickerModule.forRoot(),
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
     CollapseModule.forRoot(),
-    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-bottom-right',

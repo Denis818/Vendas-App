@@ -1,6 +1,7 @@
 /* cabeçario */
-.input-date{
-  width: 300px; margin-left: auto;
+.input-date {
+  width: 300px;
+  margin-left: auto;
   border: none;
   border-radius: 5px;
   padding: 10px;
@@ -8,34 +9,67 @@
   margin: auto;
 }
 
-.bottom-apply{
+.input-date:hover{
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.278);
+  transform: translateY(-2px);
+}
+
+.hoverable-row {
+  background-color: #FFF;  /* ajuste a cor conforme necessário */
+  transition: transform 0.3s, box-shadow 0.3s;  /* Efeito de transição suave */
+}
+
+.hoverable-row:hover {
+  transform: translateY(-5px); /* Move o item 5px para cima */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);  /* Adiciona uma sombra sutil */
+}
+
+
+
+.bottom-apply {
   margin-left: 10px;
 }
 
-.bottom-novo{
-  width: 90px; height: 43.9px;
+.bottom-novo {
+  width: 90px;
+  height: 43.9px;
 }
-.card-principal{
+.card-principal {
   margin-bottom: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.178);
 }
+
+.card-principal:hover{
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.278);
+  transform: translateY(-5px);
+}
+
 .sombrear {
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.492);
-  transition: box-shadow 0.3s ease;
 }
-.sombrear:focus {
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.488);
+
+.sombrear:hover{
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.378);
+  transform: translateY(-1px);
 }
+
 /* end cabeçario */
 
-.pagination-center{
-  display: flex; justify-content: center;
+.pagination-center {
+  display: flex;
+  justify-content: center;
 }
 
-.footer-card-totais{
+.footer-card-totais {
   margin-right: auto;
 }
 
-.space{
+.footer-card-totais:hover{
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.178);
+  transform: translateY(-2px);
+}
+
+.space {
   margin-right: 5px;
 }
 
@@ -49,9 +83,19 @@
   justify-content: center;
 }
 
+.fotter-summary:hover{
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.178);
+  transform: translateY(-2px);
+}
+
 .total {
   text-shadow: 4px 4px 7px rgba(0, 0, 0, 30.5);
   border-radius: 20px;
+}
+
+.total:hover{
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.178);
+  transform: translateY(-2px);
 }
 
 .responsive-input {
@@ -81,6 +125,13 @@
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.237);
   outline: none;
 }
+
+.sombra-input:hover{
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.178);
+  transform: translateY(-2px);
+}
+
+
 
 .sombra {
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.492);
@@ -166,13 +217,23 @@
   transition: background-color 0.3s;
 }
 
-.space-form{
-  margin-top: 10px;
-
+.hover-botton:hover{
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.178);
+  transform: translateY(-2px);
 }
 
-.space-card-top{
+.space-form {
+  margin-top: 10px;
+}
+
+.space-card-top {
   margin-top: 12px;
+}
+
+
+.hover:hover{
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1denosde0);
+  transform: translateY(-1px);
 }
 
 /* end css form */
