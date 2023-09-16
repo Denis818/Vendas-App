@@ -15,7 +15,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { AppComponent } from './app.component';
 import { ListVendaComponent } from './components/vendas/listVenda/listVenda.component';
-import { NavComponent } from './shared/nav/nav.component';
+import { NavComponent } from './shared/navbar/nav.component';
 
 import { VendaService } from './services/venda.service';
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';

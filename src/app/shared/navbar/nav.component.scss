@@ -1,0 +1,87 @@
+i {
+  font-size: 30px;
+  margin-top: 5px;
+  ;
+}
+.navbar-color{
+  background-color: #e6e6e6;
+}
+
+.responsive-nav {
+  min-width: 1000px;
+  white-space: nowrap;
+}
+
+.sombra {
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.492);
+  transition: box-shadow 0.3s ease;
+}
+.sombra:focus {
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.488);
+}
+
+
+//styles
+
+
+/* Estilização Básica da Navbar */
+.navbar {
+  background-color: #f8f9fa; /* Um tom de cinza claro */
+  font-family: 'Arial', sans-serif; /* Usando Arial, mas sinta-se à vontade para usar outra fonte */
+  border-bottom: 1px solid #e9ecef; /* Uma borda fina na parte inferior para separar do conteúdo abaixo */
+}
+
+/* Logo e Ícones */
+.navbar-brand img {
+  transition: transform 0.3s; /* Para um efeito hover suave no logo */
+}
+
+.navbar-brand:hover img {
+  transform: scale(1.1); /* O logo amplia um pouco quando passamos o mouse por cima */
+}
+
+.navbar-toggler {
+  border: none;
+  background-color: rgba(0, 0, 0, 0.1); /* Ícone do menu mobile um pouco transparente */
+}
+
+.navbar-toggler:focus {
+  outline: none;
+}
+
+.navbar-toggler-icon {
+  background-color: #343a40; /* Ícone do menu mobile em cinza escuro */
+}
+
+/* Links da Navbar */
+.nav-link {
+  color: #343a40; /* Cor padrão dos links */
+  transition: color 0.3s;
+}
+
+.nav-link:hover, .nav-item.active .nav-link {
+  color: #007bff; /* Altera a cor ao passar o mouse e para o link ativo */
+  text-decoration: none;
+}
+
+/* Dropdown */
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra suave */
+}
+
+.dropdown-item {
+  transition: background-color 0.3s;
+}
+
+.dropdown-item:hover {
+  background-color: #e9ecef; /* Altera a cor de fundo do item ao passar o mouse */
+  color: #343a40; /* Cor do texto do item ao passar o mouse */
+}
+
+.divider {
+  height: 1px;
+  background-color: #e9ecef;
+  margin: 0.5rem 0;
+}
+
