@@ -1,16 +1,13 @@
 <app-nav></app-nav>
 
-<div class="container">
-  <router-outlet></router-outlet>
-</div>
+<router-outlet></router-outlet>
 
-<footer class="text-center text-white"
-style="background-color: #ffffff;
- margin-top: 50px !important;
- margin-bottom: 0% !important;
- box-shadow: 0 -5px 5px -5px #888888;">
+<ngx-spinner type="ball-scale-multiple">
+  <p class="spinner-style">Loading...</p>
+</ngx-spinner>
 
-  <div class="text-center text-dark p-3 " style="background-color: #ffffff;">
+<footer class="text-center text-white footer-customer">
+  <div class="text-center text-dark p-3 ">
     © 2023 Sales Manager.
   </div>
 </footer>

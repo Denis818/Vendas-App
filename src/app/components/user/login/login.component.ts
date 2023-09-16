@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoundedRect } from 'chart.js/dist/types/geometric';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
 
@@ -20,12 +21,14 @@ export class LoginComponent implements OnInit {
   public errorMessage!: string;
 
   constructor(private userService: UserService,
+    private spinner: NgxSpinnerService,
     private router: Router) { }
 
   ngOnInit() {
   }
 
   public login(){
+    this.spinner.show();
     const dados =
     {
       email: this.email,
@@ -34,9 +37,11 @@ export class LoginComponent implements OnInit {
 
     this.userService.login(dados).subscribe({
       next: () =>{
-        this.router.navigateByUrl('/venda/list-vendas');
+        this.spinner.hide();
+        this.router.navigateByUrl('/venda/lista');
       },
       error: () => {
+        this.spinner.hide();
         this.errorMessage = "Não foi possível efetuar o login. Verifique seus dados.";
       }
     });

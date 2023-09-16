@@ -10,7 +10,7 @@ class AuthGuard {
     const token = localStorage.getItem('token');
     if (!token) {
 
-      router.navigateByUrl('/nao-autorizado');
+      router.navigateByUrl('/login');
       return false;
     }
     return true;

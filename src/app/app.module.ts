@@ -22,8 +22,8 @@ import { VendaService } from './services/venda.service';
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegisterComponent } from './components/user/register/register.component';
-import { NaoAutorizadoComponent } from './components/user/naoAutorizado/naoAutorizado.component';
 import { VendaComponent } from './components/vendas/venda.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -35,7 +35,6 @@ import { VendaComponent } from './components/vendas/venda.component';
     LoginComponent,
     RegisterComponent,
     DateTimeFormatPipe,
-    NaoAutorizadoComponent,
     VendaComponent
   ],
   imports: [
@@ -47,11 +46,13 @@ import { VendaComponent } from './components/vendas/venda.component';
     BrowserAnimationsModule,
     NgChartsModule,
     NgxPaginationModule,
+    //NgxSpinnerModule,
     BsDatepickerModule.forRoot(),
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
     CollapseModule.forRoot(),
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-bottom-right',

@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { defineLocale, ptBrLocale } from 'ngx-bootstrap/chronos';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { Venda } from '../../../models/Venda';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-listVenda',
@@ -47,7 +48,9 @@ export class ListVendaComponent implements OnInit {
     }, 0);
   };
 
-  constructor(private vendaServices: VendaService,
+  constructor(
+    private spinner: NgxSpinnerService,
+    private vendaServices: VendaService,
     private toastr: ToastrService,
     private modalService: BsModalService,
     private fb: FormBuilder,
@@ -56,6 +59,7 @@ export class ListVendaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.spinner.show();
     this.getAllVendas()
     this.validation()
     this.localeService.use('pt-br');
@@ -67,8 +71,10 @@ export class ListVendaComponent implements OnInit {
         this.listVendas = vendas.itens
         this.vendasFiltradas = [...this.listVendas];
         this.totalItens = vendas.totalItens;
+        this.spinner.hide();
       },
       error: () => {
+        this.spinner.hide();
         this.toastr.error('Error ao carregar Vendas', 'Error')
       }
     });

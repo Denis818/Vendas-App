@@ -3,8 +3,6 @@ import { BaseService } from "./base/BaseService.service";
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import { Venda } from "../models/Venda";
-import { ThisReceiver } from "@angular/compiler";
-import { Router } from "@angular/router";
 
 @Injectable()
 export class VendaService extends BaseService {

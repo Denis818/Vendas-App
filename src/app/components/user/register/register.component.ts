@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private spinner: NgxSpinnerService,
     private router: Router,
     private fb: FormBuilder
   ) { }
@@ -31,6 +33,7 @@ export class RegisterComponent implements OnInit {
   }
 
   public registrarUsuario() {
+    this.spinner.show();
     const dados = {
       email: this.form.get('email')?.value,
       password: this.form.get('password')?.value
@@ -38,10 +41,13 @@ export class RegisterComponent implements OnInit {
 
     this.userService.register(dados).subscribe({
       next: () => {
-        this.router.navigateByUrl('/venda/list-vendas');
+        this.spinner.hide();
+        this.router.navigateByUrl('/venda/lista');
         this.form.reset();
+
       },
       error: () => {
+        this.spinner.hide();
         this.errorMessage = 'Falha ao tentar registrar, verifique seus dados.'
       }
     });
