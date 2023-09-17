@@ -1,40 +1,54 @@
-<nav class="navbar navbar-expand-lg shadow-sm" *ngIf="ShowMenu()"> <!-- *ngIf="ShowMenu()" -->
-  <div class="container">
-    <a class="navbar-brand" routerLink="/venda/lista">
-      <img src="https://i.pinimg.com/originals/f4/02/9e/f4029e0ea4d9e21e481b104543dd5e00.png" alt="logo" style=" width: 50px; height: 50px;">
-    </a>
+<nav class="navbar navbar-expand-lg shadow-sm" *ngIf="showMenu()">
+  <div class="container d-flex justify-content-between align-items-center">
+    <!-- Lado esquerdo - Logo e botão de colapso -->
+    <div>
+      <a class="navbar-brand" routerLink="/venda/lista">
+        <img src="https://i.pinimg.com/originals/f4/02/9e/f4029e0ea4d9e21e481b104543dd5e00.png" alt="logo"
+          style="width: 50px; height: 50px;">
+      </a>
+      <button class="navbar-toggler white-icon" (click)="isCollapsed = !isCollapsed" type="button"
+        data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
 
-    <button class="navbar-toggler white-icon" (click)="isCollapsed = !isCollapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
+    <!-- Conteúdo da Navbar -->
     <div class="collapse navbar-collapse" [collapse]="isCollapsed" [isAnimated]="true" id="navbarNav">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/dashboard" >Dashboard</a>
+          <a class="nav-link" routerLink="/dashboard">Dashboard</a>
         </li>
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" aria-current="page" routerLink="/venda/lista">Vendas</a>
         </li>
       </ul>
 
-      <ul class="navbar-nav">
-        <li class="nav-item dropdown" dropdown>
-          <div class="d-flex justify-content-between align-items-center">
-            <a dropdownToggle class="nav-link dropdown-toggle" style="cursor: pointer;" id="navbarDropdownMenuLink" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
+      <!-- Lado direito - Dark mode e dropdown -->
+      <div class="d-flex align-items-center">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown" dropdown>
+            <a dropdownToggle class="nav-link dropdown-toggle" style="cursor: pointer;" id="navbarDropdownMenuLink"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {{localStorage.getItem('userEmail')}}
             </a>
-          </div>
-          <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <div role="separator" class="divider"></div>
-            <a class="dropdown-item" (click)="logout()" Sair>
-              Sair
-            </a>
-          </div>
-        </li>
-      </ul>
+            <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <div role="separator" class="divider"></div>
+              <a class="dropdown-item" (click)="logout()" Sair>
+                Sair
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div style="display: flex; justify-content: flex-end !important;">
+      <a class="mr-3" (click)="setDarkMode(!darkMode)">
+        <i *ngIf="darkMode; else sunIcon" class="fas fa-moon"></i>
+        <ng-template #sunIcon>
+          <i class="fas fa-sun"></i>
+        </ng-template>
+      </a>
     </div>
   </div>
 </nav>
