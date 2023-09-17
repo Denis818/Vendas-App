@@ -77,17 +77,4 @@ body.dark .list-group-item{
   background-color: #333 !important;
 }
 
-body.dark table {
-  /* Estilos padrões para todas as tabelas quando o darkMode estiver ativo */
-  background-color: #333 !important;
-  color: #fff !important;
-}
-
-body.dark table.table-striped tbody tr:nth-of-type(odd) {
-  background-color: rgba(255, 255, 255, 0.05) !important; /* Adiciona um leve destaque para linhas alternadas */
-}
-
-body.dark table.table-dark {
-  background-color: #444 !important; /* Apenas um exemplo, você pode ajustar o valor conforme necessário */
-}
 
