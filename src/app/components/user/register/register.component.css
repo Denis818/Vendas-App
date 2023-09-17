@@ -1,5 +1,7 @@
 .gradient-custom-2 {
-  background: linear-gradient(45deg, #ffffff, #708090);
+  background-image: url('../../../../assets/img/logo-g.png');
+  width: 630px;
+  height: auto;
 }
 
 @media (min-width: 768px) {
@@ -26,4 +28,26 @@
 
 .container-form{
   padding: 20% !important;
+}
+
+.sombra {
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.194);
+  transition: box-shadow 0.3s ease;
+  outline: none;
+}
+
+.sombra:focus {
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.237);
+  outline: none;
+}
+
+.sombra:hover{
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.178);
+  transform: translateY(-2px);
+}
+
+.btn-link{
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
 }

@@ -1,72 +1,74 @@
-<div class="gradient-form ml-3" style="margin-top: 40px;">
-  <div class="card text-black">
-    <div class="row g-0 ">
-      <div class="col-lg-6 d-flex align-items-center justify-content-center gradient-custom-2 text-center">
-        <div class="text-white px-3 py-4 p-md-5 mx-md-4 text-center">
-          <h4 class="mb-4 text-center">Veja suas Vendas</h4>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="card-body p-md-5 mx-md-4 container-form">
-          <div class="text-center">
-            <img src="https://cdn-icons-png.flaticon.com/512/2660/2660322.png" style="width: 100px;" alt="logo">
-            <h4 class="mt-1 mb-5 pb-1 text-color">Gerencie aqui suas Vendas</h4>
+<div class="container " style="margin-bottom: -150px;">
+  <div class="gradient-form ml-3" style="margin-top: 40px;">
+    <div class="card text-black sombra">
+      <div class="row g-0 ">
+        <div class="col-lg-6 d-flex align-items-center justify-content-center gradient-custom-2 text-center">
+          <div class="text-white px-3 py-4 p-md-5 mx-md-4 text-center">
           </div>
-          <form [formGroup]="form">
-            <div *ngIf="errorMessage" class="alert alert-danger mt-3 mb-3">
-              {{ errorMessage }}
+        </div>
+        <div class="col-lg-6">
+          <div class="card-body p-md-5 mx-md-4 container-form">
+            <div class="text-center">
+              <img src="https://cdn-icons-png.flaticon.com/512/2660/2660322.png" style="width: 100px;" alt="logo">
+              <h4 class="mt-1 mb-5 pb-1 text-color">Gerencie aqui suas Vendas</h4>
             </div>
-            <label class="form-label text-color">Email</label>
-            <div class="form-outline mb-4">
-              <input type="email" class="form-control form-control-lg shadow-sm" placeholder="Email"
-              [ngClass]="{'is-invalid': vendaValidator.email.errors && vendaValidator.email.touched}"
-              formControlName="email"/>
-
-              <div *ngIf=" vendaValidator.email.errors?.required" class="invalid-feedback">
-                Email é obrigatório.
+            <form [formGroup]="form">
+              <div *ngIf="errorMessage" class="alert alert-danger mt-3 mb-3">
+                {{ errorMessage }}
               </div>
-              <div *ngIf=" vendaValidator.email.errors?.email" class="invalid-feedback">
-                Email não e valido.
-              </div>
+              <label class="form-label text-color">Email</label>
+              <div class="form-outline mb-4">
+                <input type="email" class="form-control form-control-lg sombra" placeholder="Email"
+                  [ngClass]="{'is-invalid': vendaValidator.email.errors && vendaValidator.email.touched}"
+                  formControlName="email" />
 
-            </div>
-
-            <label class="form-label text-color">Senha</label>
-            <div class="form-outline mb-3">
-              <div class="input-group">
-                <input #passwordInput type="password" class="form-control form-control-lg shadow-sm" placeholder="Senha"
-                [ngClass]="{'is-invalid': vendaValidator.password.errors && vendaValidator.password.touched}"
-                formControlName="password"/>
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
-                    <i class="fa" [ngClass]="{'fa-eye': !showPassword, 'fa-eye-slash': showPassword}"
-                      style="margin: 5px;"></i>
-                  </button>
+                <div *ngIf=" vendaValidator.email.errors?.required" class="invalid-feedback">
+                  Email é obrigatório.
+                </div>
+                <div *ngIf=" vendaValidator.email.errors?.email" class="invalid-feedback">
+                  Email não e valido.
                 </div>
 
-                <div *ngIf=" vendaValidator.password.errors?.required" class="invalid-feedback">
-                  Senha é obrigatório.
-                </div>
-                <div *ngIf="vendaValidator.password.errors?.pattern" class="invalid-feedback">
+              </div>
+
+              <label class="form-label text-color">Senha</label>
+              <div class="form-outline mb-3">
+                <div class="input-group">
+                  <input #passwordInput type="password" class="form-control form-control-lg sombra" placeholder="Senha"
+                    [ngClass]="{'is-invalid': vendaValidator.password.errors && vendaValidator.password.touched}"
+                    formControlName="password" />
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
+                      <i class="fa" [ngClass]="{'fa-eye': !showPassword, 'fa-eye-slash': showPassword}"
+                        style="margin: 5px;"></i>
+                    </button>
+                  </div>
+
+                  <div *ngIf=" vendaValidator.password.errors?.required" class="invalid-feedback">
+                    Senha é obrigatório.
+                  </div>
+                  <div *ngIf="vendaValidator.password.errors?.pattern" class="invalid-feedback">
                     Senha deve conter pelo menos:
                     <li>Um Número.</li>
                     <li>Uma letra minúscula.</li>
                     <li>Uma letra maiúscula.</li>
                     <li>Um carácter especial.</li>
-                </div>
-                <div *ngIf=" vendaValidator.password.errors?.minlength" class="invalid-feedback">
-                  <li>Pelo menos 6 digitos.</li>
-                </div>
-                <div *ngIf=" vendaValidator.password.errors?.hasUniqueChar" class="invalid-feedback">
-                  <li>A senha não pode ter todos os caracteres iguais</li>
+                  </div>
+                  <div *ngIf=" vendaValidator.password.errors?.minlength" class="invalid-feedback">
+                    <li>Pelo menos 6 digitos.</li>
+                  </div>
+                  <div *ngIf=" vendaValidator.password.errors?.hasUniqueChar" class="invalid-feedback">
+                    <li>A senha não pode ter todos os caracteres iguais</li>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="my-3" style="display: flex;justify-content: center;">
-              <button class="btn btn-secondary btn-lg" type="button" [disabled]="!form.valid" (click)="registrarUsuario()"
-                style="padding: auto;">Cadastar</button>
-            </div>
-          </form>
+              <div class="my-3" style="display: flex;justify-content: center;">
+                <button class="btn btn-secondary btn-lg sombra" type="button" [disabled]="!form.valid"
+                  (click)="registrarUsuario()" style="padding: auto;">Cadastar</button>
+              </div>
+              <a class="btn-link" routerLink="/login">Login</a>
+            </form>
+          </div>
         </div>
       </div>
     </div>
