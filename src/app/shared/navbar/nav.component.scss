@@ -1,4 +1,19 @@
 i {
   font-size: 30px;
-  margin-top: 5px;;
+  margin-top: 5px;
+  ;
+}
+
+.hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.111);
+  transform: translateY(-1px);
+}
+
+.hover:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.138);
+  transform: translateY(-1px);
+}
+
+.color-navbar {
+  background-color: #f2f2f2;
 }

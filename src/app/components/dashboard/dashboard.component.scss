@@ -97,8 +97,7 @@
   }
 }
 
-.values {
-  color: #0fe400 !important;
+.card-value {
   display: flex;
   font-size: 1.7em;
   padding-bottom: 10px;
@@ -107,10 +106,16 @@
   font-weight: bold;
 }
 
+.color-positivo {
+  color: #0fe400;
+}
+
+.color-negativo {
+  color: red;
+}
+
 
 /* styles */
-
-
 .dashboard-container-style {
   font-family: 'Arial', sans-serif;
   margin: 0 auto;

@@ -30,6 +30,9 @@ export class ListVendaComponent implements OnInit {
 
   public listVendas: Venda[] = [];
   public vendasFiltradas: Venda[] = [];
+
+  public totalDestaVenda: number = 0;
+
   public get filtroLista(): string { return this.buscarName; }
 
   public set filtroLista(value: string) {
@@ -63,6 +66,7 @@ export class ListVendaComponent implements OnInit {
     this.getAllVendas()
     this.validation()
     this.localeService.use('pt-br');
+    this.getPriceAndQuantity();
   }
 
   public getAllVendas(): void {
@@ -84,6 +88,8 @@ export class ListVendaComponent implements OnInit {
     let name = filtrarPorName.toLocaleLowerCase();
     this.vendaServices.filterSalesByName(name).subscribe((data: any) => {
       this.vendasFiltradas = data;
+      this.totalItens = this.vendasFiltradas.length;
+      this.paginaAtual = 1;
     });
   }
 
@@ -98,6 +104,31 @@ export class ListVendaComponent implements OnInit {
     }
   }
 
+  public getPriceAndQuantity() {
+    this.form.get('preco')?.valueChanges.subscribe(() => {
+      this.calcularTotalDaVenda();
+    });
+
+    this.form.get('quantidadeVendido')?.valueChanges.subscribe(() => {
+      this.calcularTotalDaVenda();
+    });
+  }
+
+  public calcularTotalDaVenda(): void {
+    const preco = this.form.get('preco')?.value;
+    const quantidade = this.form.get('quantidadeVendido')?.value;
+
+    console.log(quantidade);
+    if (preco) {
+
+      this.totalDestaVenda = !quantidade ? preco : preco * quantidade;
+      this.totalDestaVenda = isNaN(this.totalDestaVenda) ? 0 : this.totalDestaVenda;
+
+    } else {
+      this.totalDestaVenda = 0;
+    }
+  }
+
   public abrirModal(template: TemplateRef<any>, id: any = null) {
     if (id != null) {
       this.vendaId = id;
@@ -107,6 +138,8 @@ export class ListVendaComponent implements OnInit {
           preco: produto.preco,
           quantidadeVendido: produto.quantidadeVendido
         });
+
+        this.totalDestaVenda = produto.preco * produto.quantidadeVendido;
       });
     }
     this.modal = this.modalService.show(template, { class: 'modal-sm' });
@@ -132,7 +165,7 @@ export class ListVendaComponent implements OnInit {
           this.getAllVendas();
           this.toastr.success('Adiconado com sucesso!', 'Finalizado!');
         },
-        error: () =>{
+        error: () => {
           this.toastr.error('Ocorreu um error ao adicionar!', 'Error');
         }
       });
@@ -147,7 +180,7 @@ export class ListVendaComponent implements OnInit {
           this.getAllVendas();
           this.toastr.success('O Venda deletada com sucesso!', 'Finalizado!');
         },
-        error : () => {
+        error: () => {
           this.resetForm();
           this.toastr.error('Ocorreu um erro ao deletar.', 'Erro');
         }

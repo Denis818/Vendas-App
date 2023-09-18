@@ -142,15 +142,15 @@ export class DashboardComponent implements OnInit {
   }
 
   public vendasFormatPreco(context: any): string {
-    return `${context.label}: R$ ${context.parsed.toFixed(2)}`;
+    return `R$ ${context.parsed.toFixed(2)}`;
 
   }
 
   public produtoFormatPreco(context: any): string {
     if (context.dataset.label === 'Total de Vendas') {
-      return `${context.label}: R$ ${context.parsed.y.toFixed(2)}`;
+      return `R$ ${context.parsed.y.toFixed(2)}`;
     } else {
-      return `${context.label}: ${context.parsed.y}`;
+      return `Total de vendas: ${context.parsed.y}`;
     }
   }
 

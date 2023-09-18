@@ -4,8 +4,8 @@
 
     <div class="card card-style">
       <h3 class="title title-style">Vendas de Hoje</h3>
-      <p class="values" [ngStyle]="{'color': totalVendasHoje < 30 ? 'red' : '#0fe400'}">
-         R$ {{ totalVendasHoje.toFixed(2) }}
+      <p class="card-value" [ngClass]="{'color-negativo': totalVendasHoje < 30, 'color-positivo': totalVendasHoje >= 30}">
+        R$ {{ totalVendasHoje.toFixed(2) }}
          <span *ngIf="totalVendasHoje < 30">↓</span>
          <span *ngIf="totalVendasHoje >= 30">↑</span>
       </p>
@@ -13,8 +13,8 @@
 
     <div class="card card-style">
       <h3 class="title title-style">Medía das Vendas por Dia</h3>
-      <p class="values" [ngStyle]="{'color': mediaDeVendaPorDia < 20 ? 'red' : '#0fe400'}">
-         R$ {{ mediaDeVendaPorDia.toFixed(2) }}
+      <p class="card-value" [ngClass]="{'color-negativo': mediaDeVendaPorDia < 30, 'color-positivo': mediaDeVendaPorDia >= 30}">
+        R$ {{ mediaDeVendaPorDia.toFixed(2) }}
          <span *ngIf="mediaDeVendaPorDia < 20">↓</span>
          <span *ngIf="mediaDeVendaPorDia >= 20">↑</span>
       </p>
@@ -22,13 +22,13 @@
 
     <div class="card card-style">
       <h3 class="title title-style">Mais Vendido da Semana</h3>
-      <p class="values" style="color: #008080 !important;">{{ produtoMaisVendido }}</p>
+      <p class="card-value" style="color: #008080 !important;">{{ produtoMaisVendido }}</p>
     </div>
 
     <div class="card card-style">
       <h3 class="title title-style">Total das Vendas</h3>
-      <p class="values" [ngStyle]="{'color': totalDeTodasAsVendas < 40 ? 'red' : '#0fe400'}">
-         R$ {{ totalDeTodasAsVendas.toFixed(2) }}
+      <p class="card-value" [ngClass]="{'color-negativo': totalDeTodasAsVendas < 30, 'color-positivo': totalDeTodasAsVendas >= 30}">
+        R$ {{ totalDeTodasAsVendas.toFixed(2) }}
          <span *ngIf="totalDeTodasAsVendas < 40">↓</span>
          <span *ngIf="totalDeTodasAsVendas >= 40">↑</span>
       </p>

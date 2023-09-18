@@ -38,15 +38,12 @@ export class NavComponent implements OnInit {
   public setDarkMode(isDarkMode: boolean): void {
     this.darkMode = isDarkMode;
     localStorage.setItem('DARK_MODE', isDarkMode.toString());
-    const themeLink = this.document.getElementById('theme-link') as HTMLLinkElement;
 
     if (isDarkMode) {
-     // themeLink.href = '../../../assets/themes/bootstrap-darkly.min.css';
       this.renderer.addClass(this.document.body, 'dark');
       this.renderer.removeClass(this.document.body, 'light');
 
     } else {
-     // themeLink.href = '../../../assets/themes/bootstrap-cosmo.min.css';
       this.renderer.removeClass(this.document.body, 'dark');
       this.renderer.addClass(this.document.body, 'light');
     }

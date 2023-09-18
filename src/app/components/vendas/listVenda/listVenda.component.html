@@ -16,17 +16,17 @@
     <div class="flex-fill pr-3">
       <div class="input-group mb-2">
         <div class="input-group-prepend">
-          <div class="input-group-text  p-2 rounded sombra-input hover">Filtro:</div>
+          <div class="input-group-text  p-2 rounded sombra-input">Filtro:</div>
         </div>
-        <input type="text" class="form-control p-2 rounded sombra-input hover" placeholder="Filtrar por Tema e Local"
+        <input type="text" class="form-control p-2 rounded sombra-input" placeholder="Filtrar por Tema e Local"
           [(ngModel)]="filtroLista">
       </div>
     </div>
   </div>
 
-  <div class="responsive-table">
-    <table class="table table-striped table-hover">
-      <thead class="thead-dark">
+  <div class="responsive-table my-1">
+    <table class="table dark-table table-striped table-hover">
+      <thead>
         <tr>
           <th class="text-center">#ID</th>
           <th class="text-center">Produto</th>
@@ -71,7 +71,7 @@
     </table>
   </div>
   <div class="pagination-center">
-    <pagination-controls (pageChange)="paginaAtual = $event; getAllVendas()"></pagination-controls>
+    <pagination-controls (pageChange)="paginaAtual = $event; vendasFiltradas"></pagination-controls>
   </div>
 
   <div class="d-flex justify-content-end">
@@ -164,6 +164,10 @@
           <div *ngIf=" vendaValidator.quantidadeVendido.errors?.max" class="invalid-feedback">
             Quantidade não pode ser maior que 999.
           </div>
+        </div>
+
+        <div class="total-da-venda">
+          <b>Total: R$ {{totalDestaVenda}}</b>
         </div>
       </div>
       <div class="card-footer space-card-top">
