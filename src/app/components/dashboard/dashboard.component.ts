@@ -72,7 +72,7 @@ export class DashboardComponent implements OnInit {
       data: [] as any,
       label: 'Total de Vendas',
       backgroundColor: ['#606b6d'],
-      borderColor: ['#fff'], // Cor da borda em azul como exemplo
+      borderColor: ['#fff'],
       borderWidth: 1
     },
     {

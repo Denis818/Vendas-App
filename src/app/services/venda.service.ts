@@ -21,6 +21,10 @@ export class VendaService extends BaseService {
     return this.SendHttpRequest('GET', this.Url, null, null, params);
   }
 
+  public getSalesCurrentDay(): Observable<Venda[]> {
+    return this.SendHttpRequest('GET', this.Url + '/dia-atual');
+  }
+
   public getSalesSummary(): Observable<any> {
     return this.SendHttpRequest('GET', this.Url + '/resumo-vendas');
   }

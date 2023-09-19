@@ -33,6 +33,7 @@ export class ListVendaComponent implements OnInit {
 
   public totalDestaVenda: number = 0;
 
+  public isFiltering: boolean = false;
   public get filtroLista(): string { return this.buscarName; }
 
   public set filtroLista(value: string) {
@@ -43,7 +44,6 @@ export class ListVendaComponent implements OnInit {
       this.vendasFiltradas = this.listVendas;
     }
   }
-
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -65,6 +65,7 @@ export class ListVendaComponent implements OnInit {
   }
 
   public getAllVendas(): void {
+    this.isFiltering = false;
     this.vendaServices.getAllVendas(this.paginaAtual, this.itemsPorPagina).subscribe({
       next: (vendas: any) => {
         this.listVendas = vendas.itens
@@ -81,12 +82,21 @@ export class ListVendaComponent implements OnInit {
 
   }
 
+  public vendasPaginadas(event: any): void {
+    this.paginaAtual = event;
+    if (this.buscarName && this.buscarName.trim().length > 0) {
+      this.FiltrarVendas(this.buscarName);
+    } else {
+      this.getAllVendas();
+    }
+  }
+
   public FiltrarVendas(filtrarPorName: string): void {
+    this.isFiltering = true;
     let name = filtrarPorName.toLocaleLowerCase();
     this.vendaServices.filterSalesByName(name).subscribe((data: any) => {
       this.vendasFiltradas = data;
       this.totalItens = this.vendasFiltradas.length;
-      this.paginaAtual = 1;
     });
   }
 

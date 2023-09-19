@@ -142,3 +142,22 @@ body.dark .bs-datepicker-container {
 }
 
 /* end calendario */
+
+/* pagination */
+body.dark .ngx-pagination a,
+.ngx-pagination button {
+  color: #54708b !important;
+  background-color: #2e2e2e !important;
+  border-radius: 5px !important;
+}
+body.dark .ngx-pagination .current {
+  padding: .1875rem .625rem !important;
+  background: #212121 !important;
+  color: #fefefe !important;
+  cursor: default !important;
+  border-radius: 5px !important;
+
+}
+
+
+/* end pagination */

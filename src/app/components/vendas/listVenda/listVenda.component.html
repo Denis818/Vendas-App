@@ -71,7 +71,7 @@
     </table>
   </div>
   <div class="pagination-center">
-    <pagination-controls (pageChange)="paginaAtual = $event; vendasFiltradas"></pagination-controls>
+    <pagination-controls (pageChange)="vendasPaginadas($event)"></pagination-controls>
   </div>
 
   <div class="d-flex justify-content-end">

@@ -248,7 +248,7 @@
 
 /* end css form */
 
-::ng-deep .pagination-buttons a {
-  background-color: #000000a1 !important;
-  border-radius: 5px !important;
+::ng-deep  .ngx-pagination a,
+.ngx-pagination button {
+  color: #54708b !important;
 }
