@@ -280,7 +280,7 @@ export class ListVendaComponent implements OnInit {
   public resetForm(): void {
     this.form.reset();
     this.modal.hide();
-    //this.resetFilters();
+    this.resetFilters();
   }
 
   public resetFilters() {
