@@ -3,29 +3,29 @@
   width: 300px;
   margin-left: auto;
   border: none;
-  border-radius: 5px;
   padding: 10px;
   background-color: #f5f5f5;
   margin: auto;
+  outline: none;
 }
 
-.input-date:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.278);
-  transform: translateY(-2px);
+.color-text {
+  color: #708090 !important;
 }
 
-.hoverable-row {
+.hover-table-row {
   background-color: #fff; /* ajuste a cor conforme necessário */
   transition: transform 0.3s, box-shadow 0.3s; /* Efeito de transição suave */
+  cursor: pointer;
 }
 
-.hoverable-row:hover {
+.hover-table-row:hover {
   transform: translateY(-5px); /* Move o item 5px para cima */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra sutil */
 }
 
 .bottom-apply {
-  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .bottom-novo {
@@ -47,7 +47,7 @@
 }
 
 .sombrear:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.378);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.178);
   transform: translateY(-1px);
 }
 
@@ -248,7 +248,11 @@
 
 /* end css form */
 
-::ng-deep  .ngx-pagination a,
+::ng-deep .ngx-pagination a,
 .ngx-pagination button {
   color: #54708b !important;
+}
+
+.cursor{
+  cursor: pointer;
 }

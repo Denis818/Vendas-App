@@ -14,39 +14,51 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./listVenda.component.css']
 })
 export class ListVendaComponent implements OnInit {
-  public modal!: BsModalRef;
 
-  public dateRange!: Date[];
+  public modal!: BsModalRef;
 
   public form!: FormGroup;
   get vendaValidator(): any { return this.form.controls; }
 
-  public paginaAtual: number = 1;
-  public itemsPorPagina: number = 7;
-  public totalItens: number = 0;
+  public pagination: { paginaAtual: number, itemsPorPagina: number, totalItens: number } = {
+    paginaAtual: 1,
+    itemsPorPagina: 7,
+    totalItens: 0
+  }
 
-  public vendaId: number = 0;
-  private buscarName: string = '';
+  public vendaHelper: { vendaId: number, buscarName: string, dateRange: Date[], totalDestaVenda: number } = {
+    vendaId: 0,
+    buscarName: '',
+    dateRange: [],
+    totalDestaVenda: 0
+  }
 
-  public listVendas: Venda[] = [];
-  public vendasFiltradas: Venda[] = [];
+  public vendas: { list: Venda[]; filtradas: Venda[]; } = {
+    list: [],
+    filtradas: []
+  }
 
-  public totalDestaVenda: number = 0;
+  public checkFilters: { isFiltering: boolean, isFilteringByDate: boolean } = {
+    isFiltering: false,
+    isFilteringByDate: false
+  }
 
-  public isFiltering: boolean = false;
-  public get filtroLista(): string { return this.buscarName; }
+  public get filtroLista(): string {
+    return this.vendaHelper.buscarName;
+  }
 
   public set filtroLista(value: string) {
-    this.buscarName = value;
-    if (this.buscarName) {
-      this.FiltrarVendas(this.buscarName);
+    this.vendaHelper.buscarName = value;
+
+    if (this.vendaHelper.buscarName) {
+      this.FiltrarVendas(this.vendaHelper.buscarName);
+
     } else {
-      this.vendasFiltradas = this.listVendas;
+      this.vendas.filtradas = this.vendas.list;
     }
   }
 
-  constructor(
-    private spinner: NgxSpinnerService,
+  constructor(private spinner: NgxSpinnerService,
     private vendaServices: VendaService,
     private toastr: ToastrService,
     private modalService: BsModalService,
@@ -59,19 +71,20 @@ export class ListVendaComponent implements OnInit {
     this.spinner.show();
     this.getAllVendas()
     this.validation()
-    this.localeService.use('pt-br');
     this.getPriceAndQuantity();
 
+    this.localeService.use('pt-br');
   }
 
   public getAllVendas(): void {
-    this.isFiltering = false;
-    this.vendaServices.getAllVendas(this.paginaAtual, this.itemsPorPagina).subscribe({
-      next: (vendas: any) => {
-        this.listVendas = vendas.itens
-        this.vendasFiltradas = [...this.listVendas];
-        this.totalItens = vendas.totalItens;
+    this.checkFilters.isFiltering = false;
 
+    this.vendaServices.getAllVendas(this.pagination.paginaAtual, this.pagination.itemsPorPagina).subscribe({
+      next: (vendas: any) => {
+
+        this.vendas.list = vendas.itens
+        this.vendas.filtradas = [...this.vendas.list];
+        this.pagination.totalItens = vendas.totalItens;
         this.spinner.hide();
       },
       error: () => {
@@ -79,51 +92,82 @@ export class ListVendaComponent implements OnInit {
         this.toastr.error('Error ao carregar Vendas', 'Error')
       }
     });
+  }
 
+  public FiltrarVendas(name: string, resetPage: boolean = true): void {
+    if (!name || name.trim() == '') return;
+
+    this.checkFilters.isFiltering = true;
+
+    this.vendaHelper.dateRange = [];
+
+    if (resetPage) { this.pagination.paginaAtual = 1; }
+
+    this.vendaServices.filterSalesByName(name.toLocaleLowerCase()).subscribe((data: any) => {
+
+      this.vendas.filtradas = data;
+      this.pagination.totalItens = this.vendas.filtradas.length;
+    });
   }
 
   public vendasPaginadas(event: any): void {
-    this.paginaAtual = event;
-    if (this.buscarName && this.buscarName.trim().length > 0) {
-      this.FiltrarVendas(this.buscarName);
+    this.pagination.paginaAtual = event;
+
+    if (this.checkFilters.isFiltering) {
+      this.FiltrarVendas(this.vendaHelper.buscarName, false);
+
+    } else if (this.checkFilters.isFilteringByDate) {
+      this.getVendasPorPeriodo(false);
+
     } else {
       this.getAllVendas();
     }
   }
 
-  public FiltrarVendas(filtrarPorName: string): void {
-    this.isFiltering = true;
-    let name = filtrarPorName.toLocaleLowerCase();
-    this.vendaServices.filterSalesByName(name).subscribe((data: any) => {
-      this.vendasFiltradas = data;
-      this.totalItens = this.vendasFiltradas.length;
-    });
-  }
-
   public calculateTotalForCurrentPage(): number {
-    if (!this.vendasFiltradas) return 0;
-
-    const startIndex = (this.paginaAtual - 1) * this.itemsPorPagina;
-    const endIndex = Math.min(startIndex + this.itemsPorPagina, this.vendasFiltradas.length);
     let total = 0;
 
-    for (let i = startIndex; i < endIndex; i++) {
-      total += this.vendasFiltradas[i].totalDaVenda;
-    }
+    if (this.checkFilters.isFiltering || this.checkFilters.isFilteringByDate) {
+      const startIndex = (this.pagination.paginaAtual - 1) * this.pagination.itemsPorPagina;
+      const endIndex = Math.min(startIndex + this.pagination.itemsPorPagina, this.vendas.filtradas.length);
 
+      for (let i = startIndex; i < endIndex; i++) {
+        total += this.vendas.filtradas[i].totalDaVenda;
+      }
+
+    } else {
+
+      for (let i = 0; i < this.vendas.filtradas.length; i++) {
+        total += this.vendas.filtradas[i].totalDaVenda;
+      }
+    }
     return total;
   }
 
+  public getVendasPorPeriodo(resetPage: boolean = true): void {
+    this.vendaHelper.buscarName = '';
 
-  public getVendasPorPeriodo(): void {
-    if (this.dateRange && this.dateRange.length === 2) {
-      this.vendaServices.getSalesByDate(this.dateRange[0], this.dateRange[1]).subscribe(data => {
-        this.vendasFiltradas = data
-      });
-
-    } else {
-      this.vendasFiltradas = [...this.listVendas];
+    if (!this.vendaHelper.dateRange || this.vendaHelper.dateRange.length !== 2) {
+      return;
     }
+
+    if (this.vendaHelper.dateRange[0] > this.vendaHelper.dateRange[1]) {
+      this.toastr.warning('A data final não pode ser menor que a data inicial!', 'Atenção');
+      return;
+    }
+
+    if (resetPage) { this.pagination.paginaAtual = 1; }
+
+    this.vendaServices.getSalesByDate(this.vendaHelper.dateRange[0], this.vendaHelper.dateRange[1]).subscribe({
+      next: data => {
+        this.checkFilters.isFilteringByDate = true;
+        this.vendas.filtradas = data;
+        this.pagination.totalItens = this.vendas.filtradas.length;
+      },
+      error: () => {
+        this.toastr.error('Erro ao filtrar vendas por período.', 'Erro');
+      }
+    });
   }
 
   public getPriceAndQuantity() {
@@ -143,17 +187,18 @@ export class ListVendaComponent implements OnInit {
     console.log(quantidade);
     if (preco) {
 
-      this.totalDestaVenda = !quantidade ? preco : preco * quantidade;
-      this.totalDestaVenda = isNaN(this.totalDestaVenda) ? 0 : this.totalDestaVenda;
+      this.vendaHelper.totalDestaVenda = !quantidade ? preco : preco * quantidade;
+      this.vendaHelper.totalDestaVenda = isNaN(this.vendaHelper.totalDestaVenda) ? 0 : this.vendaHelper.totalDestaVenda;
 
     } else {
-      this.totalDestaVenda = 0;
+      this.vendaHelper.totalDestaVenda = 0;
     }
   }
 
   public abrirModal(template: TemplateRef<any>, id: any = null) {
     if (id != null) {
-      this.vendaId = id;
+      this.vendaHelper.vendaId = id;
+
       this.vendaServices.getSaleById(id).subscribe(produto => {
         this.form.patchValue({
           nome: produto.nome,
@@ -161,15 +206,16 @@ export class ListVendaComponent implements OnInit {
           quantidadeVendido: produto.quantidadeVendido
         });
 
-        this.totalDestaVenda = produto.preco * produto.quantidadeVendido;
+        this.vendaHelper.totalDestaVenda = produto.preco * produto.quantidadeVendido;
       });
     }
+
     this.modal = this.modalService.show(template, { class: 'modal-sm' });
   }
 
   public adicionarVenda() {
-    if (this.vendaId != 0) {
-      this.vendaServices.updateSale(this.vendaId, this.form.value).subscribe({
+    if (this.vendaHelper.vendaId != 0) {
+      this.vendaServices.updateSale(this.vendaHelper.vendaId, this.form.value).subscribe({
         next: () => {
           this.resetForm();
           this.getAllVendas();
@@ -195,8 +241,8 @@ export class ListVendaComponent implements OnInit {
   }
 
   public confirmDelete(): void {
-    if (this.vendaId != 0) {
-      this.vendaServices.deleteSale(this.vendaId).subscribe({
+    if (this.vendaHelper.vendaId != 0) {
+      this.vendaServices.deleteSale(this.vendaHelper.vendaId).subscribe({
         next: () => {
           this.resetForm();
           this.getAllVendas();
@@ -211,26 +257,37 @@ export class ListVendaComponent implements OnInit {
   }
 
   public validateDateRange() {
-    if (this.dateRange && this.dateRange.length === 2) {
-      if (this.dateRange[0] > this.dateRange[1]) {
-        this.toastr.error('A data final não pode ser anterior à data inicial!', 'Atenção');
-        this.dateRange = [this.dateRange[1], this.dateRange[0]];
+    if (this.vendaHelper.dateRange && this.vendaHelper.dateRange.length === 2) {
+      if (this.vendaHelper.dateRange[0] > this.vendaHelper.dateRange[1]) {
+
+        this.vendaHelper.dateRange = [
+          this.vendaHelper.dateRange[1],
+          this.vendaHelper.dateRange[0]
+        ];
       }
     }
   }
 
   public validation(): void {
-    this.form = this.fb.group(
-      {
-        nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
-        preco: ['', [Validators.required, Validators.pattern('^[0-9.]+$'), Validators.min(0.1), Validators.max(999)]],
-        quantidadeVendido: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.min(1), Validators.max(999)]],
-      }
-    )
+    this.form = this.fb.group({
+      nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
+      preco: ['', [Validators.required, Validators.pattern('^[0-9.]+$'), Validators.min(0.1), Validators.max(999)]],
+      quantidadeVendido: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.min(1), Validators.max(999)]],
+    }
+    );
   }
 
   public resetForm(): void {
     this.form.reset();
-    this.modal.hide()
+    this.modal.hide();
+    //this.resetFilters();
+  }
+
+  public resetFilters() {
+    this.vendaHelper.buscarName = '';
+    this.vendaHelper.dateRange = [];
+    this.checkFilters.isFiltering = false;
+    this.checkFilters.isFilteringByDate = false;
+    this.getAllVendas();
   }
 }

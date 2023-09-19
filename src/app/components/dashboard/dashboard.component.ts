@@ -12,13 +12,18 @@ import { VendaService } from 'src/app/services/venda.service';
 })
 export class DashboardComponent implements OnInit {
 
-  vendasDoDia: number = 0;  // Exemplo
-  produtosVendidos: number = 0;  // Exemplo
+  public listVendas: any[] = [];
+  public exibirTabela: boolean = false;
 
-  public mediaDeVendaPorDia: number = 0;
-  public produtoMaisVendido: string = '';
-  public totalDeTodasAsVendas: number = 0;
-  public totalVendasHoje: number = 0;
+  vendasDoDia: number = 0;
+  produtosVendidos: number = 0;
+
+  public resumoVendas: any = {
+    mediaDeVendaPorDia: 0,
+    produtoMaisVendido: '',
+    totalDeTodasAsVendas: 0,
+    totalVendasHoje: 0
+  }
 
   public chartOptionsGraficoVendas: ChartOptions = {
     responsive: false,
@@ -94,15 +99,21 @@ export class DashboardComponent implements OnInit {
     this.carregarDados();
   }
 
+  public toggleTabela(): void {
+    this.exibirTabela = !this.exibirTabela;
+  }
+
   private carregarDados() {
     forkJoin({
       resumoVendas: this.vendaServices.getSalesSummary(),
-      graficoVendas: this.vendaServices.getGroupSalesDay()
+      graficoVendas: this.vendaServices.getGroupSalesDay(),
+      vendasDeHoje: this.vendaServices.getSalesCurrentDay()
 
     }).subscribe({
       next: results => {
         this.processarResumoVendas(results.resumoVendas);
         this.processarGraficoDeVendas(results.graficoVendas);
+        this.processarVendasDeHoje(results.vendasDeHoje);
       },
       error: () => {
         this.spinner.hide();
@@ -114,11 +125,15 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  private processarVendasDeHoje(vendas: any[]) {
+    this.listVendas = vendas;
+  }
+
   private processarResumoVendas(produto: any) {
-    this.mediaDeVendaPorDia = produto.mediaDeVendaPorDia;
-    this.produtoMaisVendido = produto.produtoMaisVendido;
-    this.totalDeTodasAsVendas = produto.totalDeTodasAsVendas;
-    this.totalVendasHoje = produto.totalVendasHoje;
+    this.resumoVendas.mediaDeVendaPorDia = produto.mediaDeVendaPorDia;
+    this.resumoVendas.produtoMaisVendido = produto.produtoMaisVendido;
+    this.resumoVendas.totalDeTodasAsVendas = produto.totalDeTodasAsVendas;
+    this.resumoVendas.totalVendasHoje = produto.totalVendasHoje;
     this.getProdutosResumoVendas(produto.produtosResumo);
   }
 
@@ -143,7 +158,6 @@ export class DashboardComponent implements OnInit {
 
   public vendasFormatPreco(context: any): string {
     return `R$ ${context.parsed.toFixed(2)}`;
-
   }
 
   public produtoFormatPreco(context: any): string {
@@ -153,5 +167,4 @@ export class DashboardComponent implements OnInit {
       return `Total de vendas: ${context.parsed.y}`;
     }
   }
-
 }

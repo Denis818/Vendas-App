@@ -62,6 +62,10 @@ body.dark .input-group-text {
   color: #000 !important;
 }
 
+body.dark .color-text {
+  color: #708090 !important;
+}
+
 .btn-outline-light:hover i,
 .btn-outline-light:focus i {
   color: #000 !important;
@@ -158,6 +162,4 @@ body.dark .ngx-pagination .current {
   border-radius: 5px !important;
 
 }
-
-
 /* end pagination */

@@ -3,11 +3,12 @@
     Novo <i class="fa fa-plus-circle my-1"></i>
   </button>
   <div class="d-flex justify-content-end">
-    <input class="input-date" placeholder="Pesquisar por data" [(ngModel)]="dateRange" bsDaterangepicker id="filtroData"
-      (bsValueChange)="validateDateRange()">
     <button class="btn btn-success sombrear bottom-apply" (click)="getVendasPorPeriodo()">
       Aplicar
     </button>
+    <input class="input-date rounded" placeholder="Pesquisar por data" [(ngModel)]="vendaHelper.dateRange" bsDaterangepicker id="filtroData"
+      (bsValueChange)="validateDateRange()">
+    <div class="input-group-text rounded color-text cursor" (click)="resetFilters()">Limpar</div>
   </div>
 </div>
 
@@ -16,16 +17,19 @@
     <div class="flex-fill pr-3">
       <div class="input-group mb-2">
         <div class="input-group-prepend">
-          <div class="input-group-text  p-2 rounded sombra-input">Filtro:</div>
+          <div class="input-group-text  p-2 rounded sombra-input color-text">Filtro:</div>
         </div>
         <input type="text" class="form-control p-2 rounded sombra-input" placeholder="Filtrar por Tema e Local"
           [(ngModel)]="filtroLista">
+        <div class="input-group-prepend">
+          <div class="input-group-text  p-2 rounded sombra-input color-text cursor" (click)="resetFilters()">Limpar</div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="responsive-table my-1">
-    <table class="table dark-table table-striped table-hover">
+    <table class="table dark-table table-striped">
       <thead>
         <tr>
           <th class="text-center">#ID</th>
@@ -37,11 +41,11 @@
           <th class="text-center">Opções</th>
         </tr>
       </thead>
-      <tbody *ngIf="listVendas && listVendas.length > 0">
-        <tr class="hoverable-row" *ngFor="let venda of vendasFiltradas | paginate:
-          { itemsPerPage: itemsPorPagina,
-            currentPage: paginaAtual,
-            totalItems: totalItens
+      <tbody *ngIf="vendas.list && vendas.list.length > 0">
+        <tr class="hover-table-row" *ngFor="let venda of vendas.filtradas | paginate:
+          { itemsPerPage: pagination.itemsPorPagina,
+            currentPage: pagination.paginaAtual,
+            totalItems: pagination.totalItens
           }">
           <td class="text-center">{{venda.id}}</td>
           <td class="text-center">{{venda.nome}}</td>
@@ -61,7 +65,7 @@
           </td>
         </tr>
       </tbody>
-      <tfoot *ngIf="vendasFiltradas.length === 0 && filtroLista">
+      <tfoot *ngIf="vendas.filtradas.length === 0 && filtroLista">
         <tr>
           <td colspan="8" class="text-center">
             <h4>Nenhuma venda encontrada!</h4>
@@ -76,7 +80,7 @@
 
   <div class="d-flex justify-content-end">
     <div class="fotter-summary col-md-auto footer-card-totais">
-      <b>Total Itens: {{totalItens}}</b>
+      <b>Total Itens: {{pagination.totalItens}}</b>
     </div>
     <div class="fotter-summary col-md-auto">
       <b>Subtotal da página:
@@ -167,7 +171,7 @@
         </div>
 
         <div class="total-da-venda">
-          <b>Total: R$ {{totalDestaVenda}}</b>
+          <b>Total: R$ {{vendaHelper.totalDestaVenda}}</b>
         </div>
       </div>
       <div class="card-footer space-card-top">

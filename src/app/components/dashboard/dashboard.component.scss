@@ -138,6 +138,7 @@
 .title-style {
   font-size: 18px;
   margin-bottom: 10px;
+  color: #708090;
 }
 
 .title-grafico-style {
@@ -151,9 +152,43 @@
 }
 
 .chart-container-style {
-
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: auto;
   border-radius: 8px;
   overflow: hidden;
+}
+
+/* table */
+.responsive-table {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 204px;
+}
+
+.responsive-table table {
+  min-width: 800px;
+  white-space: nowrap;
+}
+
+.modal-table {
+  display: flex;
+  justify-content: flex-start;
+  max-width: 45%;
+}
+
+.hover-table-row {
+  background-color: #fff;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.hover-table-row:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+td,
+th {
+  color: #54708b !important;
+
 }

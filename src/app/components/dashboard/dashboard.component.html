@@ -2,41 +2,45 @@
 
   <div class="dashboard-cards dashboard-cards-style">
 
-    <div class="card card-style">
-      <h3 class="title title-style">Vendas de Hoje</h3>
-      <p class="card-value" [ngClass]="{'color-negativo': totalVendasHoje < 30, 'color-positivo': totalVendasHoje >= 30}">
-        R$ {{ totalVendasHoje.toFixed(2) }}
-         <span *ngIf="totalVendasHoje < 30">↓</span>
-         <span *ngIf="totalVendasHoje >= 30">↑</span>
+    <div class="card card-style" (click)="toggleTabela()">
+      <h3 class="title title-style">Ver Vendas de Hoje</h3>
+      <p class="card-value"
+        [ngClass]="{'color-negativo': resumoVendas.totalVendasHoje < 30, 'color-positivo': resumoVendas.totalVendasHoje >= 30}">
+        R$ {{ resumoVendas.totalVendasHoje.toFixed(2) }}
+        <span *ngIf="resumoVendas.totalVendasHoje < 30">↓</span>
+        <span *ngIf="resumoVendas.totalVendasHoje >= 30">↑</span>
       </p>
     </div>
 
     <div class="card card-style">
       <h3 class="title title-style">Medía das Vendas por Dia</h3>
-      <p class="card-value" [ngClass]="{'color-negativo': mediaDeVendaPorDia < 30, 'color-positivo': mediaDeVendaPorDia >= 30}">
-        R$ {{ mediaDeVendaPorDia.toFixed(2) }}
-         <span *ngIf="mediaDeVendaPorDia < 20">↓</span>
-         <span *ngIf="mediaDeVendaPorDia >= 20">↑</span>
+      <p class="card-value"
+        [ngClass]="{'color-negativo': resumoVendas.mediaDeVendaPorDia < 30, 'color-positivo': resumoVendas.mediaDeVendaPorDia >= 30}">
+        R$ {{ resumoVendas.mediaDeVendaPorDia.toFixed(2) }}
+        <span *ngIf="resumoVendas.mediaDeVendaPorDia < 20">↓</span>
+        <span *ngIf="resumoVendas.mediaDeVendaPorDia >= 20">↑</span>
       </p>
     </div>
 
     <div class="card card-style">
       <h3 class="title title-style">Mais Vendido da Semana</h3>
-      <p class="card-value" style="color: #008080 !important;">{{ produtoMaisVendido }}</p>
+      <p class="card-value" style="color: #008080 !important;">{{ resumoVendas.produtoMaisVendido }}</p>
     </div>
 
     <div class="card card-style">
       <h3 class="title title-style">Total das Vendas</h3>
-      <p class="card-value" [ngClass]="{'color-negativo': totalDeTodasAsVendas < 30, 'color-positivo': totalDeTodasAsVendas >= 30}">
-        R$ {{ totalDeTodasAsVendas.toFixed(2) }}
-         <span *ngIf="totalDeTodasAsVendas < 40">↓</span>
-         <span *ngIf="totalDeTodasAsVendas >= 40">↑</span>
+      <p class="card-value"
+        [ngClass]="{'color-negativo': resumoVendas.totalDeTodasAsVendas < 30, 'color-positivo': resumoVendas.totalDeTodasAsVendas >= 30}">
+        R$ {{ resumoVendas.totalDeTodasAsVendas.toFixed(2) }}
+        <span *ngIf="resumoVendas.totalDeTodasAsVendas < 40">↓</span>
+        <span *ngIf="resumoVendas.totalDeTodasAsVendas >= 40">↑</span>
       </p>
     </div>
   </div>
 
-  <div class="chart-flex-container chart-flex-container-style">
+  <ng-container *ngTemplateOutlet="tabelaVendas"></ng-container>
 
+  <div class="chart-flex-container chart-flex-container-style">
     <div class="chart-container chart-container-style">
       <h1 class="title title-grafico-style">Resumo das vendas de cada Produto</h1>
       <div class="chart-scroll-container bar-chart-container" style="max-height: 400px; overflow-y: auto;">
@@ -54,3 +58,28 @@
     </div>
   </div>
 </div>
+
+<ng-template #tabelaVendas>
+  <div *ngIf="exibirTabela" class="responsive-table modal-table scrollbar scrollbar-primary">
+    <table class="table dark-table table-striped">
+      <thead>
+        <th class="text-center">#ID</th>
+        <th class="text-center">Produto</th>
+        <th class="text-center">Preço</th>
+        <th class="text-center">Quantidade</th>
+        <th class="text-center">Data da Venda</th>
+        <th class="text-center">Total</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let venda of listVendas" class="hover-table-row">
+          <td class="text-center">{{venda.id}}</td>
+          <td class="text-center teste">{{venda.nome}}</td>
+          <td class="text-center">R$ {{venda.preco.toFixed(2)}}</td>
+          <td class="text-center">{{venda.quantidadeVendido}}</td>
+          <td class="text-center">{{venda.dataVenda}}</td>
+          <td class="text-center">R$ {{venda.totalDaVenda.toFixed(2)}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-template>
