@@ -21,31 +21,32 @@ body.dark p {
   color: #f0f0f0 !important;
 }
 
-body.dark .nav-link{
+body.dark .nav-link {
   color: #f0f0f0 !important;
 }
 
-body.dark label{
+body.dark label {
   color: #f0f0f0 !important;
 }
 
-body.dark div{
+body.dark div {
   color: #f0f0f0 !important;
 }
 
-body.dark i{
+body.dark i {
   color: #f0f0f0 !important;
 }
 
-body.dark .dropdown-menu{
+body.dark .dropdown-menu {
   background-color: #333 !important;
 }
+
 body.dark .dropdown-item:hover {
   background-color: #222 !important;
   color: #f0f0f0 !important;
 }
 
-body.dark a{
+body.dark a {
   color: #f0f0f0 !important;
 }
 
@@ -57,11 +58,12 @@ body.dark .white-icon {
   color: #fff !important;
 }
 
-body.dark .input-group-text{
+body.dark .input-group-text {
   color: #000 !important;
 }
 
-.btn-outline-light:hover i, .btn-outline-light:focus i {
+.btn-outline-light:hover i,
+.btn-outline-light:focus i {
   color: #000 !important;
 }
 
@@ -73,14 +75,15 @@ body.dark .input-group-text{
   color: #fff !important;
 }
 
-body.dark .list-group-item{
+body.dark .list-group-item {
   background-color: #333 !important;
 }
 
-body.dark .color-positivo{
+body.dark .color-positivo {
   color: #0fe400 !important;
 }
-body.dark .color-negativo{
+
+body.dark .color-negativo {
   color: red !important;
 }
 
@@ -123,4 +126,19 @@ body.dark .dark-table tbody tr:hover {
 body.dark .dark-table tbody tr:last-child {
   border-bottom: none !important;
 }
+
 /* end table */
+
+
+/* calendario */
+body.dark .bs-datepicker-body {
+  background-color: rgba(29, 29, 29, 0.409) !important;
+  border: none;
+
+}
+
+body.dark .bs-datepicker-container {
+  background-color: rgb(22 22 22 / 79%) !important;
+}
+
+/* end calendario */

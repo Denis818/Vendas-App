@@ -37,7 +37,6 @@ export class NavComponent implements OnInit {
 
   public setDarkMode(isDarkMode: boolean): void {
     this.darkMode = isDarkMode;
-    localStorage.setItem('DARK_MODE', isDarkMode.toString());
 
     if (isDarkMode) {
       this.renderer.addClass(this.document.body, 'dark');

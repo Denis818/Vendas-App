@@ -142,7 +142,7 @@
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.178);
 }
 
-.total-da-venda:hover{
+.total-da-venda:hover {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.237);
   transform: translateY(-2px);
 }
@@ -164,17 +164,22 @@
 }
 
 ::ng-deep .theme-green .bs-datepicker-head {
-  color: aliceblue;
   background-color: rgba(49, 67, 78, 0.744);
   text-shadow: 4px 4px 7px rgba(0, 0, 0, 30.5);
   border-radius: 5px;
 }
 
-::ng-deep .theme-green .bs-datepicker-body table td span.selected,
-.theme-green .bs-datepicker-body table td.selected span,
-.theme-green .bs-datepicker-body table td span[class*="select-"]:after,
-.theme-green .bs-datepicker-body table td[class*="select-"] span:after {
+::ng-deep .theme-green .bs-datepicker-body table td span.selected {
   background-color: rgba(49, 67, 78, 0.744);
+}
+
+::ng-deep .theme-green .bs-datepicker-body table td.week span {
+  display: none !important;
+}
+
+::ng-deep .bs-datepicker-body table td span.is-other-month,
+.bs-datepicker-body table td.is-other-month span {
+  color: rgba(0, 187, 34, 0.767);
 }
 
 /* end calendarios */
@@ -242,3 +247,8 @@
 }
 
 /* end css form */
+
+::ng-deep .pagination-buttons a {
+  background-color: #000000a1 !important;
+  border-radius: 5px !important;
+}
