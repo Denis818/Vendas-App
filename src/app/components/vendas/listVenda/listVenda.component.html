@@ -80,12 +80,12 @@
     </div>
     <div class="fotter-summary col-md-auto">
       <b>Subtotal da página:
-        <b [ngStyle]="{'color': vendidoPorPagina < 25 ? 'red' : '#0fe400'}">
-          R$ {{vendidoPorPagina.toFixed(2)}}
+        <b [ngStyle]="{'color': calculateTotalForCurrentPage() < 25 ? 'red' : '#0fe400'}">
+          R$ {{calculateTotalForCurrentPage().toFixed(2)}}
         </b>
       </b>
-      <b *ngIf="vendidoPorPagina < 25">&nbsp;&nbsp;😔</b>
-      <b *ngIf="vendidoPorPagina >= 25">&nbsp;&nbsp;🤑</b>
+      <b *ngIf="calculateTotalForCurrentPage() < 25">&nbsp;&nbsp;😔</b>
+      <b *ngIf="calculateTotalForCurrentPage() >= 25">&nbsp;&nbsp;🤑</b>
     </div>
   </div>
 </div>

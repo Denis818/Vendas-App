@@ -44,12 +44,6 @@ export class ListVendaComponent implements OnInit {
     }
   }
 
-  public get vendidoPorPagina(): number {
-    return this.vendasFiltradas.reduce((total, venda) => {
-      total += venda.totalDaVenda
-      return total;
-    }, 0);
-  };
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -67,6 +61,7 @@ export class ListVendaComponent implements OnInit {
     this.validation()
     this.localeService.use('pt-br');
     this.getPriceAndQuantity();
+
   }
 
   public getAllVendas(): void {
@@ -75,6 +70,7 @@ export class ListVendaComponent implements OnInit {
         this.listVendas = vendas.itens
         this.vendasFiltradas = [...this.listVendas];
         this.totalItens = vendas.totalItens;
+
         this.spinner.hide();
       },
       error: () => {
@@ -82,6 +78,7 @@ export class ListVendaComponent implements OnInit {
         this.toastr.error('Error ao carregar Vendas', 'Error')
       }
     });
+
   }
 
   public FiltrarVendas(filtrarPorName: string): void {
@@ -92,6 +89,21 @@ export class ListVendaComponent implements OnInit {
       this.paginaAtual = 1;
     });
   }
+
+  public calculateTotalForCurrentPage(): number {
+    if (!this.vendasFiltradas) return 0;
+
+    const startIndex = (this.paginaAtual - 1) * this.itemsPorPagina;
+    const endIndex = Math.min(startIndex + this.itemsPorPagina, this.vendasFiltradas.length);
+    let total = 0;
+
+    for (let i = startIndex; i < endIndex; i++) {
+      total += this.vendasFiltradas[i].totalDaVenda;
+    }
+
+    return total;
+  }
+
 
   public getVendasPorPeriodo(): void {
     if (this.dateRange && this.dateRange.length === 2) {
