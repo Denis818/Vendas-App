@@ -37,7 +37,7 @@
             <label class="custom-checkbox-label">
                 <input #selectAllCheckbox class="custom-checkbox" type="checkbox"
                        (change)="toggleAllSelections($event)">
-                <span class="custom-checkbox-x"> X </span>
+                <span class="custom-checkbox-x"> ✓ </span>
             </label>
         </th>
           <th class="text-center">#ID</th>
@@ -60,7 +60,7 @@
                 <input class="custom-checkbox" type="checkbox"
                        [checked]="isSelected(venda.id)"
                        (change)="toggleItemSelection(venda.id)">
-                <span class="custom-checkbox-x"> X </span>
+                <span class="custom-checkbox-x"> ✓ </span>
             </label>
         </td>
           <td class="text-center">{{venda.id}}</td>
