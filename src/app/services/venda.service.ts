@@ -65,6 +65,10 @@ export class VendaService extends BaseService {
     return this.SendHttpRequest('DELETE', this.Url + `?id=${id}`)
   }
 
+  public deleteAllSale(ids: number[]) {
+    return this.SendHttpRequest('DELETE', this.Url + '/DeleteRange', ids)
+  }
+
   private formatDateForAPI(date: Date): string {
     const year = date.getFullYear();
     const month = ("0" + (date.getMonth() + 1)).slice(-2);

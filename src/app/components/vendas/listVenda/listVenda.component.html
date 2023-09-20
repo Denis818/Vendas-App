@@ -6,8 +6,8 @@
     <button class="btn btn-success sombrear bottom-apply" (click)="getVendasPorPeriodo()">
       Aplicar
     </button>
-    <input class="input-date rounded" placeholder="Pesquisar por data" [(ngModel)]="vendaHelper.dateRange" bsDaterangepicker id="filtroData"
-      (bsValueChange)="validateDateRange()">
+    <input class="input-date rounded" placeholder="Pesquisar por data" [(ngModel)]="vendaHelper.dateRange"
+      bsDaterangepicker id="filtroData" (bsValueChange)="validateDateRange()">
     <div class="input-group-text rounded color-text cursor" (click)="resetFilters()">Limpar</div>
   </div>
 </div>
@@ -22,7 +22,8 @@
         <input type="text" class="form-control p-2 rounded sombra-input" placeholder="Filtrar por Tema e Local"
           [(ngModel)]="filtroLista">
         <div class="input-group-prepend">
-          <div class="input-group-text  p-2 rounded sombra-input color-text cursor" (click)="resetFilters()">Limpar</div>
+          <div class="input-group-text  p-2 rounded sombra-input color-text cursor" (click)="resetFilters()">Limpar
+          </div>
         </div>
       </div>
     </div>
@@ -32,6 +33,13 @@
     <table class="table dark-table table-striped">
       <thead>
         <tr>
+          <th class="text-center" style="padding: 3px !important;">
+            <label class="custom-checkbox-label">
+                <input #selectAllCheckbox class="custom-checkbox" type="checkbox"
+                       (change)="toggleAllSelections($event)">
+                <span class="custom-checkbox-x"> X </span>
+            </label>
+        </th>
           <th class="text-center">#ID</th>
           <th class="text-center">Produto</th>
           <th class="text-center">Preço</th>
@@ -47,6 +55,14 @@
             currentPage: pagination.paginaAtual,
             totalItems: pagination.totalItens
           }">
+          <td class="text-center">
+            <label class="custom-checkbox-label">
+                <input class="custom-checkbox" type="checkbox"
+                       [checked]="isSelected(venda.id)"
+                       (change)="toggleItemSelection(venda.id)">
+                <span class="custom-checkbox-x"> X </span>
+            </label>
+        </td>
           <td class="text-center">{{venda.id}}</td>
           <td class="text-center">{{venda.nome}}</td>
           <td class="text-center">R$ {{venda.preco.toFixed(2)}}</td>
@@ -73,9 +89,14 @@
         </tr>
       </tfoot>
     </table>
+
+    <button type="button" class="btn btn-danger btn-sm hover-botton my-1" (click)="deleteSelected()">
+      Deletar Selecionados
+    </button>
   </div>
+
   <div class="pagination-center">
-    <pagination-controls (pageChange)="vendasPaginadas($event)"></pagination-controls>
+    <pagination-controls (pageChange)="pularPagina($event)"></pagination-controls>
   </div>
 
   <div class="d-flex justify-content-end">

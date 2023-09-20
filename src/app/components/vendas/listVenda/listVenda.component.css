@@ -256,3 +256,53 @@
 .cursor{
   cursor: pointer;
 }
+
+
+/* checkbox */
+
+.custom-checkbox-label {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+.custom-checkbox {
+  appearance: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #f1f1f1;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  transition: background-color 0.3s, border-color 0.3s;
+  outline: none;
+}
+
+.custom-checkbox:checked {
+  background-color: #007BFF;
+  border-color: #0062CC;
+}
+
+.custom-checkbox-x {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  color: #FF4C4C;
+  visibility: hidden;
+  font-weight: bold;
+  text-shadow: 1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff;
+}
+
+.custom-checkbox:checked + .custom-checkbox-x {
+  visibility: visible;
+}
+
+
+/* end checkbox */

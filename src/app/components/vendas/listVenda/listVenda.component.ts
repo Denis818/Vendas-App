@@ -1,11 +1,11 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VendaService } from '../../../services/venda.service';
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { defineLocale, ptBrLocale } from 'ngx-bootstrap/chronos';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
-import { Venda } from '../../../models/Venda';
+import { CheckFilters, Pagination, VendaHelper, Vendas } from '../../../models/dto/helper';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -20,25 +20,28 @@ export class ListVendaComponent implements OnInit {
   public form!: FormGroup;
   get vendaValidator(): any { return this.form.controls; }
 
-  public pagination: { paginaAtual: number, itemsPorPagina: number, totalItens: number } = {
+  @ViewChild('selectAllCheckbox') selectAllCheckbox!: ElementRef<HTMLInputElement>;
+
+  public pagination: Pagination = {
     paginaAtual: 1,
     itemsPorPagina: 7,
     totalItens: 0
   }
 
-  public vendaHelper: { vendaId: number, buscarName: string, dateRange: Date[], totalDestaVenda: number } = {
+  public vendaHelper: VendaHelper = {
     vendaId: 0,
     buscarName: '',
+    totalDestaVenda: 0,
     dateRange: [],
-    totalDestaVenda: 0
-  }
+    selectedItems: [],
+  };
 
-  public vendas: { list: Venda[]; filtradas: Venda[]; } = {
+  public vendas: Vendas = {
     list: [],
     filtradas: []
   }
 
-  public checkFilters: { isFiltering: boolean, isFilteringByDate: boolean } = {
+  public checkFilters: CheckFilters = {
     isFiltering: false,
     isFilteringByDate: false
   }
@@ -110,8 +113,11 @@ export class ListVendaComponent implements OnInit {
     });
   }
 
-  public vendasPaginadas(event: any): void {
+  public pularPagina(event: any): void {
     this.pagination.paginaAtual = event;
+    this.vendaHelper.selectedItems = [];
+    this.selectAllCheckbox.nativeElement.checked = false;
+
 
     if (this.checkFilters.isFiltering) {
       this.FiltrarVendas(this.vendaHelper.buscarName, false);
@@ -196,6 +202,7 @@ export class ListVendaComponent implements OnInit {
   }
 
   public abrirModal(template: TemplateRef<any>, id: any = null) {
+    this.vendaHelper.selectedItems = [];
     if (id != null) {
       this.vendaHelper.vendaId = id;
 
@@ -214,6 +221,7 @@ export class ListVendaComponent implements OnInit {
   }
 
   public adicionarVenda() {
+    this.vendaHelper.selectedItems = [];
     if (this.vendaHelper.vendaId != 0) {
       this.vendaServices.updateSale(this.vendaHelper.vendaId, this.form.value).subscribe({
         next: () => {
@@ -254,6 +262,48 @@ export class ListVendaComponent implements OnInit {
         }
       });
     }
+  }
+
+  public isSelected(id: number): boolean {
+    return this.vendaHelper.selectedItems.includes(id);
+  }
+
+  public toggleItemSelection(id: number): void {
+    const index = this.vendaHelper.selectedItems.indexOf(id);
+    if (index === -1) {
+      this.vendaHelper.selectedItems.push(id);
+    } else {
+      this.vendaHelper.selectedItems.splice(index, 1);
+    }
+  }
+
+  public toggleAllSelections(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input && input.checked) {
+      this.vendaHelper.selectedItems = this.vendas.filtradas.map(venda => venda.id);
+    } else {
+      this.vendaHelper.selectedItems = [];
+    }
+  }
+
+  public deleteSelected(): void {
+    if (this.vendaHelper.selectedItems.length === 0) {
+      this.toastr.warning('Nenhum item selecionado.', 'Atenção');
+      return;
+    }
+
+    this.vendaServices.deleteAllSale(this.vendaHelper.selectedItems).subscribe({
+      next: () => {
+        this.vendaHelper.selectedItems = [];
+        this, this.getAllVendas();
+        this.toastr.success('O Vendas deletadas com sucesso!', 'Finalizado!');
+
+      },
+      error: () => {
+        this.resetForm();
+        this.toastr.error('Ocorreu um erro ao deletar.', 'Erro');
+      }
+    });
   }
 
   public validateDateRange() {
