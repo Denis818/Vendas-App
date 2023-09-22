@@ -1,0 +1,63 @@
+<div class="container my-3">
+  <div class="card rounded p-3 card-principal card-hover">
+    <div class="d-flex">
+      <div class="flex-fill pr-3">
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text  p-2 rounded sombra-input color-text">Filtro:</div>
+          </div>
+          <input type="text" class="form-control p-2 rounded sombra-input" placeholder="Filtrar por Tema e Local"
+            [(ngModel)]="filtroLista">
+          <div class="input-group-prepend">
+            <div class="input-group-text  p-2 rounded sombra-input color-text cursor" (click)="resetFilters()">Limpar
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="responsive-table my-1">
+      <table class="table dark-table table-striped">
+        <thead>
+          <tr>
+            <th class="text-center">#ID</th>
+            <th class="text-center">Usuário</th>
+            <th class="text-center">Data do Acesso</th>
+            <th class="text-center">Ação Efeituada</th>
+            <th class="text-center">Id da Venda</th>
+            <th class="text-center">Produto</th>
+            <th class="text-center">Preço</th>
+            <th class="text-center">Quantidade Vendido</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="listLogs && listLogs.length > 0">
+          <tr class="hover-table-row" *ngFor="let log of logsFiltrados | paginate:
+            { itemsPerPage: itemsPorPagina,
+              currentPage: paginaAtual,
+              totalItems: totalItens
+            }">
+            <td class="text-center">{{log.id}}</td>
+            <td class="text-center">{{log.userName}}</td>
+            <td class="text-center">{{log.dataAcesso}}</td>
+            <td class="text-center">{{log.acao}}</td>
+            <td class="text-center">{{log.vendaId}}</td>
+            <td class="text-center">{{log.nomeProduto}}</td>
+            <td class="text-center">R$ {{log.precoProduto.toFixed(2)}}</td>
+            <td class="text-center">{{log.quantidadeVendido}}</td>
+          </tr>
+        </tbody>
+        <tfoot *ngIf="logsFiltrados.length === 0 && filtroLista">
+          <tr>
+            <td colspan="8" class="text-center">
+              <h4>Nenhuma acesso encontrado!</h4>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="pagination-center">
+      <pagination-controls (pageChange)="pularPagina($event)"></pagination-controls>
+    </div>
+
+</div>

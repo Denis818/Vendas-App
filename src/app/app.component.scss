@@ -1,10 +1,15 @@
-.footer-customer {
-  margin-top: 50px !important;
-  margin-bottom: 0% !important;
-  box-shadow: 0 -5px 5px -5px #888888 !important;
+.contianer-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .spinner-style {
   font-size: 20px;
   color: white;
+}
+
+.footer-position {
+  box-shadow: 0 -5px 5px -5px #888888 !important;
+  margin-top: auto;
 }

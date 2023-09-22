@@ -17,7 +17,7 @@ export class UserService extends BaseService {
     return this.SendHttpRequest('POST', this.url + '/register', dados).pipe(
       tap(response => {
         this.guardarToken(response)
-        this.getUserEmail();
+        this.getUserInfo();
       })
     );
   }
@@ -26,25 +26,40 @@ export class UserService extends BaseService {
     return this.SendHttpRequest('POST', this.url + '/login', dados).pipe(
       tap(response => {
         this.guardarToken(response)
-        this.getUserEmail();
+        this.getUserInfo();
       })
     );
   }
 
   public logout(): Observable<any> {
     localStorage.removeItem('token');
+    localStorage.removeItem('isAdmin');
     localStorage.removeItem('userEmail');
+    localStorage.removeItem('expirationToken');
     return this.SendHttpRequest('GET', this.url + '/logout');
   }
 
-  public getUserEmail(): void {
-    this.SendHttpRequest('GET', this.url + '/name-user')
-      .subscribe(email => localStorage.setItem('userEmail', email));
+  public getUserInfo(): void {
+    this.SendHttpRequest('GET', this.url + '/info')
+      .subscribe({
+        next: obj => {
+          localStorage.setItem('userEmail', obj.userEmail)
+          localStorage.setItem('isAdmin', obj.isAdmin)
+        },
+        error: error =>{
+          throw new Error(error);
+        }
+      });
   }
 
   private guardarToken(response: any) {
-    if (response && response.token) {
+    if (response && response.token && response.expiration) {
       localStorage.setItem('token', response.token);
+      localStorage.setItem('expirationToken', response.expiration);
     }
+  }
+
+  public isAdmin(): Observable<any> {
+    return this.SendHttpRequest('GET', this.url + '/admin');
   }
 }

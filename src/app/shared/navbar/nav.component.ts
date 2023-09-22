@@ -30,6 +30,10 @@ export class NavComponent implements OnInit {
       this.router.url != '/nao-autorizado';
   }
 
+  public isAdmin(): boolean {
+    return localStorage.getItem('isAdmin') === 'true' ? true : false;
+  }
+
   public logout(): void {
     this.userService.logout();
     this.router.navigateByUrl('login');

@@ -57,7 +57,7 @@ export class ListVendaComponent implements OnInit {
       this.FiltrarVendas(this.vendaHelper.buscarName);
 
     } else {
-      this.vendas.filtradas = this.vendas.list;
+      this.resetFilters();
     }
   }
 
@@ -190,7 +190,6 @@ export class ListVendaComponent implements OnInit {
     const preco = this.form.get('preco')?.value;
     const quantidade = this.form.get('quantidadeVendido')?.value;
 
-    console.log(quantidade);
     if (preco) {
 
       this.vendaHelper.totalDestaVenda = !quantidade ? preco : preco * quantidade;
@@ -202,8 +201,8 @@ export class ListVendaComponent implements OnInit {
   }
 
   public abrirModal(template: TemplateRef<any>, id: any = null) {
-    this.vendaHelper.selectedItems = [];
     if (id != null) {
+      this.vendaHelper.selectedItems = [];
       this.vendaHelper.vendaId = id;
 
       this.vendaServices.getSaleById(id).subscribe(produto => {
@@ -254,13 +253,15 @@ export class ListVendaComponent implements OnInit {
         next: () => {
           this.resetForm();
           this.getAllVendas();
-          this.toastr.success('O Venda deletada com sucesso!', 'Finalizado!');
+          this.toastr.success('Venda deletada com sucesso!', 'Finalizado!');
         },
         error: () => {
           this.resetForm();
           this.toastr.error('Ocorreu um erro ao deletar.', 'Erro');
         }
       });
+    }else{
+      this.deleteSelected()
     }
   }
 
@@ -288,7 +289,7 @@ export class ListVendaComponent implements OnInit {
 
   public deleteSelected(): void {
     if (this.vendaHelper.selectedItems.length === 0) {
-      this.toastr.warning('Nenhum item selecionado.', 'Atenção');
+      this.toastr.warning('Nenhum item selecionado para deletar.', 'Atenção');
       return;
     }
 
@@ -296,8 +297,8 @@ export class ListVendaComponent implements OnInit {
       next: () => {
         this.vendaHelper.selectedItems = [];
         this, this.getAllVendas();
-        this.toastr.success('O Vendas deletadas com sucesso!', 'Finalizado!');
-
+        this.toastr.success('Vendas deletadas com sucesso!', 'Finalizado!');
+        this.resetForm();
       },
       error: () => {
         this.resetForm();

@@ -24,6 +24,7 @@ import { RegisterComponent } from './components/user/register/register.component
 import { VendaComponent } from './components/vendas/venda.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     RegisterComponent,
     DateTimeFormatPipe,
     VendaComponent,
-    DashboardComponent
+    DashboardComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

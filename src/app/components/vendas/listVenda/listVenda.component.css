@@ -58,15 +58,6 @@
   justify-content: center;
 }
 
-.footer-card-totais {
-  margin-right: auto;
-}
-
-.footer-card-totais:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.178);
-  transform: translateY(-2px);
-}
-
 .space {
   margin-right: 5px;
 }
@@ -77,8 +68,7 @@
   text-shadow: 4px 4px 7px rgba(0, 0, 0, 30.5);
   border-radius: 20px;
   padding: 15px;
-  display: flex;
-  justify-content: center;
+
 }
 
 .fotter-summary:hover {

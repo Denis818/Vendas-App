@@ -1,0 +1,72 @@
+.color-text {
+  color: #708090 !important;
+}
+
+.hover-table-row {
+  background-color: #fff;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.hover-table-row:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.bottom-apply {
+  margin-right: 10px;
+}
+
+.bottom-novo {
+  width: 90px;
+  height: 43.9px;
+}
+.card-principal {
+  margin-bottom: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.178);
+}
+
+.sombrear {
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.492);
+}
+
+.pagination-center {
+  display: flex;
+  justify-content: center;
+}
+
+
+.responsive-input {
+  min-width: 100px;
+  white-space: nowrap;
+}
+.responsive-table {
+  overflow-x: auto;
+}
+
+.responsive-table table {
+  min-width: 1000px;
+  white-space: nowrap;
+}
+
+.sombra-input {
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.194);
+  transition: box-shadow 0.3s ease;
+  outline: none;
+}
+
+.sombra-input:focus {
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.237);
+  outline: none;
+}
+
+/* end css form */
+
+::ng-deep .ngx-pagination a,
+.ngx-pagination button {
+  color: #54708b !important;
+}
+
+.cursor{
+  cursor: pointer;
+}
