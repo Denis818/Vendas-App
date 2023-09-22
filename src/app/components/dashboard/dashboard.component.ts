@@ -5,10 +5,26 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 import { VendaService } from 'src/app/services/venda.service';
 
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  animations: [
+    trigger('slideIn', [
+      state('void', style({ transform: 'translateY(-25%)' })),
+      state('*', style({ transform: 'translateY(0)' })),
+      transition(':enter', animate('300ms ease-in')),
+      transition(':leave', animate('200ms ease-out'))
+    ])
+  ]
 })
 export class DashboardComponent implements OnInit {
 
