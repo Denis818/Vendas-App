@@ -23,11 +23,11 @@
             <th class="text-center">#ID</th>
             <th class="text-center">Usuário</th>
             <th class="text-center">Data do Acesso</th>
-            <th class="text-center">Ação Efeituada</th>
             <th class="text-center">Id da Venda</th>
             <th class="text-center">Produto</th>
             <th class="text-center">Preço</th>
             <th class="text-center">Quantidade Vendido</th>
+            <th class="text-center">Ação Efeituada</th>
           </tr>
         </thead>
         <tbody *ngIf="listLogs && listLogs.length > 0">
@@ -39,25 +39,81 @@
             <td class="text-center">{{log.id}}</td>
             <td class="text-center">{{log.userName}}</td>
             <td class="text-center">{{log.dataAcesso}}</td>
-            <td class="text-center">{{log.acao}}</td>
             <td class="text-center">{{log.vendaId}}</td>
             <td class="text-center">{{log.nomeProduto}}</td>
             <td class="text-center">R$ {{log.precoProduto.toFixed(2)}}</td>
             <td class="text-center">{{log.quantidadeVendido}}</td>
+            <td class="text-center"
+              [innerHTML]="log.acao == 'Atualização de Venda' ? log.acao + '<br> (Dados da venda antiga)' : log.acao">
+            </td>
           </tr>
         </tbody>
         <tfoot *ngIf="logsFiltrados.length === 0 && filtroLista">
           <tr>
-            <td colspan="8" class="text-center">
+            <td colspan="8" class="text-center tfoot-dark">
               <h4>Nenhuma acesso encontrado!</h4>
             </td>
           </tr>
         </tfoot>
       </table>
     </div>
-
     <div class="pagination-center">
       <pagination-controls (pageChange)="pularPagina($event)"></pagination-controls>
     </div>
 
+    <label class="label-input">Buscar Venda Por ID</label>
+    <div class="d-flex justify-content-start align-items-center" [formGroup]="form">
+      <input type="text" class="form-control input-form"
+        [ngClass]="{'is-invalid': vendaValidator.idLogAcesso.errors && vendaValidator.idLogAcesso.touched}"
+        formControlName="idLogAcesso" placeholder="0" style="width: 10%; margin-right: 10px;">
+
+      <button class="btn btn-primary ml-2" (click)="getById(form.get('idLogAcesso')?.value)">Buscar</button>
+    </div>
+
+    <div *ngIf=" vendaValidator.idLogAcesso.errors?.required" class="invalid-feedback d-block">
+      ID é obrigatório.
+    </div>
+    <div *ngIf=" vendaValidator.idLogAcesso.errors?.pattern" class="invalid-feedback d-block">
+      ID não é valido.
+    </div>
+    <div *ngIf=" vendaValidator.idLogAcesso.errors?.min" class="invalid-feedback d-block">
+      ID não pode ser menor que 0.
+    </div>
+    <div *ngIf=" vendaValidator.idLogAcesso.errors?.max" class="invalid-feedback d-block">
+      ID não pode ser maior que 9999.
+    </div>
+
+    <div *ngIf="exibirTabela" class="responsive-table modal-table scrollbar scrollbar-primary my-3" @slideIn>
+      <table class="table dark-table table-striped">
+        <thead>
+          <th class="text-center">#ID</th>
+          <th class="text-center">Produto</th>
+          <th class="text-center">Preço</th>
+          <th class="text-center">Quantidade</th>
+          <th class="text-center">Data da Venda</th>
+          <th class="text-center">Total</th>
+        </thead>
+        <tbody *ngIf="venda; else noVenda">
+          <tr class="hover-table-row">
+            <td class="text-center">{{venda.id}}</td>
+            <td class="text-center teste">{{venda.nome}}</td>
+            <td class="text-center">R$ {{venda.preco}}</td>
+            <td class="text-center">{{venda.quantidadeVendido}}</td>
+            <td class="text-center">{{venda.dataVenda}}</td>
+            <td class="text-center">R$ {{venda.totalDaVenda}}</td>
+          </tr>
+        </tbody>
+        <ng-template #noVenda>
+          <tfoot>
+            <tr>
+              <td colspan="8" class="text-center tfoot-dark">
+                <h4>Nenhuma venda encontrada!</h4>
+              </td>
+            </tr>
+          </tfoot>
+        </ng-template>
+      </table>
+    </div>
+
+  </div>
 </div>

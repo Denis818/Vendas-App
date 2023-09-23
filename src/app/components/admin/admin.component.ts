@@ -1,23 +1,41 @@
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { LogAcesso } from 'src/app/models/LogAcesso';
 import { AdminService } from 'src/app/services/admin.service';
+import { Venda } from 'src/app/models/Venda';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+  styleUrls: ['./admin.component.css'],
+  animations: [
+    trigger('slideIn', [
+      state('void', style({ transform: 'translateY(-25%)' })),
+      state('*', style({ transform: 'translateY(0)' })),
+      transition(':enter', animate('300ms ease-in')),
+      transition(':leave', animate('300ms ease-out'))
+    ])
+  ]
 })
 export class AdminComponent implements OnInit {
+
+  public form!: FormGroup;
+  get vendaValidator(): any { return this.form.controls; }
 
   public paginaAtual: number = 1;
   public itemsPorPagina: number = 7;
   public totalItens: number = 0;
 
-  public listLogs: any[] = [];
-  public logsFiltrados: any[] = [];
+  public listLogs: LogAcesso[] = [];
+  public logsFiltrados: LogAcesso[] = [];
   public buscarName: string = '';
   public isFiltering: boolean = false;
+
+  public venda!: Venda;
+  public exibirTabela: boolean = false;
 
   public get filtroLista(): string {
     return this.buscarName;
@@ -37,12 +55,14 @@ export class AdminComponent implements OnInit {
   constructor(
     private adminService: AdminService,
     private spinner: NgxSpinnerService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private fb: FormBuilder,
   ) { }
 
   ngOnInit() {
     this.spinner.show();
-    this.getAllLogs()
+    this.getAllLogs();
+    this.idValidation();
   }
 
   public getAllLogs(): void {
@@ -59,6 +79,19 @@ export class AdminComponent implements OnInit {
       error: () => {
         this.spinner.hide();
         this.toastr.error('Error ao carregar Acessos', 'Error')
+      }
+    });
+  }
+
+  public getById(idVenda: number){
+    this.adminService.getSaleById(idVenda).subscribe({
+      next: venda => {
+        this.exibirTabela = true ? true : false
+
+        this.venda = venda;
+      },
+      error: () => {
+        this.toastr.error('Error ao carregar Venda', 'Error')
       }
     });
   }
@@ -90,5 +123,18 @@ export class AdminComponent implements OnInit {
     this.buscarName = '';
     this.isFiltering = false;
     this.getAllLogs();
+  }
+
+  public idValidation(): void {
+    this.form = this.fb.group({
+      idLogAcesso: ['0',
+      [
+        Validators.required,
+        Validators.pattern('^[0-9]+$'),
+        Validators.min(0),
+        Validators.max(99999)
+      ]],
+    }
+    );
   }
 }

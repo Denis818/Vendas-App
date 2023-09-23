@@ -5,7 +5,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { defineLocale, ptBrLocale } from 'ngx-bootstrap/chronos';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
-import { CheckFilters, Pagination, VendaHelper, Vendas } from '../../../models/dto/helper';
+import { CheckFiltersDto, PaginationDto, VendaHelperDto, VendasDto } from '../../../models/dto/helper';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -22,13 +22,13 @@ export class ListVendaComponent implements OnInit {
 
   @ViewChild('selectAllCheckbox') selectAllCheckbox!: ElementRef<HTMLInputElement>;
 
-  public pagination: Pagination = {
+  public pagination: PaginationDto = {
     paginaAtual: 1,
     itemsPorPagina: 7,
     totalItens: 0
   }
 
-  public vendaHelper: VendaHelper = {
+  public vendaHelper: VendaHelperDto = {
     vendaId: 0,
     buscarName: '',
     totalDestaVenda: 0,
@@ -36,12 +36,12 @@ export class ListVendaComponent implements OnInit {
     selectedItems: [],
   };
 
-  public vendas: Vendas = {
+  public vendas: VendasDto = {
     list: [],
     filtradas: []
   }
 
-  public checkFilters: CheckFilters = {
+  public checkFilters: CheckFiltersDto = {
     isFiltering: false,
     isFilteringByDate: false
   }

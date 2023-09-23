@@ -21,24 +21,12 @@ export class VendaService extends BaseService {
     return this.SendHttpRequest('GET', this.Url, null, null, params);
   }
 
-  public getSalesCurrentDay(): Observable<Venda[]> {
-    return this.SendHttpRequest('GET', this.Url + '/dia-atual');
-  }
-
-  public getSalesSummary(): Observable<any> {
-    return this.SendHttpRequest('GET', this.Url + '/resumo-vendas');
-  }
-
   public filterSalesByName(name: string): Observable<Venda> {
     return this.SendHttpRequest('GET', this.Url + `/filter?name=${name}`);
   }
 
   public getSaleById(id: number): Observable<Venda> {
     return this.SendHttpRequest('GET', this.Url + `/${id}`);
-  }
-
-  public getGroupSalesDay(): Observable<any> {
-    return this.SendHttpRequest('GET', this.Url + "/vendas-por-dia")
   }
 
   public getSalesByDate(startDate?: Date, endDate?: Date): Observable<Venda[]> {

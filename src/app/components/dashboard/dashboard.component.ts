@@ -3,7 +3,6 @@ import { ChartOptions } from 'chart.js';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
-import { VendaService } from 'src/app/services/venda.service';
 
 import {
   trigger,
@@ -12,6 +11,7 @@ import {
   animate,
   transition,
 } from '@angular/animations';
+import { DashboardService } from 'src/app/services/dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +22,7 @@ import {
       state('void', style({ transform: 'translateY(-25%)' })),
       state('*', style({ transform: 'translateY(0)' })),
       transition(':enter', animate('300ms ease-in')),
-      transition(':leave', animate('200ms ease-out'))
+      transition(':leave', animate('300ms ease-out'))
     ])
   ]
 })
@@ -104,11 +104,10 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
-  constructor(private vendaServices: VendaService,
+  constructor(private dashboardServices: DashboardService,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService) {
   }
-
 
   public ngOnInit() {
     this.spinner.show();
@@ -121,9 +120,9 @@ export class DashboardComponent implements OnInit {
 
   private carregarDados() {
     forkJoin({
-      resumoVendas: this.vendaServices.getSalesSummary(),
-      graficoVendas: this.vendaServices.getGroupSalesDay(),
-      vendasDeHoje: this.vendaServices.getSalesCurrentDay()
+      resumoVendas: this.dashboardServices.getSalesSummary(),
+      graficoVendas: this.dashboardServices.getGroupSalesDay(),
+      vendasDeHoje: this.dashboardServices.getSalesCurrentDay()
 
     }).subscribe({
       next: results => {
@@ -161,7 +160,7 @@ export class DashboardComponent implements OnInit {
       .map((venda: any) => venda.total.toFixed(2));
   }
 
-  public getProdutosResumoVendas(produtosResumoVendas: any[]) {
+  private getProdutosResumoVendas(produtosResumoVendas: any[]) {
     this.produtosResumoLabels = produtosResumoVendas
       .map(produto => produto.nome);
 
@@ -172,11 +171,11 @@ export class DashboardComponent implements OnInit {
       .map(produto => produto.quantidadeTotalVendida);
   }
 
-  public vendasFormatPreco(context: any): string {
+  private vendasFormatPreco(context: any): string {
     return `R$ ${context.parsed.toFixed(2)}`;
   }
 
-  public produtoFormatPreco(context: any): string {
+  private produtoFormatPreco(context: any): string {
     if (context.dataset.label === 'Total de Vendas') {
       return `R$ ${context.parsed.y.toFixed(2)}`;
     } else {

@@ -43,7 +43,7 @@
         <th class="text-center">Data da Venda</th>
         <th class="text-center">Total</th>
       </thead>
-      <tbody>
+      <tbody *ngIf="listVendas && listVendas.length > 0">
         <tr *ngFor="let venda of listVendas" class="hover-table-row">
           <td class="text-center">{{venda.id}}</td>
           <td class="text-center teste">{{venda.nome}}</td>
@@ -53,6 +53,13 @@
           <td class="text-center">R$ {{venda.totalDaVenda.toFixed(2)}}</td>
         </tr>
       </tbody>
+        <tfoot *ngIf="listVendas.length === 0">
+          <tr>
+            <td colspan="8" class="text-center tfoot-dark">
+              <h4>Nenhuma venda encontrada!</h4>
+            </td>
+          </tr>
+        </tfoot>
     </table>
   </div>
 

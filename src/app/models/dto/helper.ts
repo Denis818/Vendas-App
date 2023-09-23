@@ -1,6 +1,6 @@
 import { Venda } from "../Venda";
 
-export interface VendaHelper {
+export interface VendaHelperDto {
   vendaId: number;
   buscarName: string;
   dateRange: Date[];
@@ -8,18 +8,18 @@ export interface VendaHelper {
   totalDestaVenda: number
 }
 
-export interface Pagination {
+export interface PaginationDto {
   paginaAtual: number,
   itemsPorPagina: number,
   totalItens: number
 }
 
-export interface Vendas {
+export interface VendasDto {
   list: Venda[];
   filtradas: Venda[];
 }
 
-export interface CheckFilters {
+export interface CheckFiltersDto {
   isFiltering: boolean;
   isFilteringByDate: boolean;
 }
