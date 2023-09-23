@@ -67,11 +67,11 @@
           <td class="text-center">{{venda.dataVenda}}</td>
           <td class="text-center">R$ {{venda.totalDaVenda.toFixed(2)}}</td>
           <td class="text-center">
-            <button type="button" class="btn btn-primary btn-lg space hover-botton" tooltip="Editar"
+            <button type="button" class="btn btn-primary btn-lg space" tooltip="Editar"
               (click)="abrirModal(modalForm, venda.id)">
               <i class="fa fa-edit"></i>
             </button>
-            <button type="button" class="btn btn-danger btn-lg hover-botton" tooltip="Deletar"
+            <button type="button" class="btn btn-danger btn-lg" tooltip="Deletar"
               (click)="abrirModal(modalConfirmDelete, venda.id)">
               <i class="fa fa-trash"></i>
             </button>
@@ -100,7 +100,7 @@
     <div class="col-4"></div>
   </div>
 
-  <div class="d-flex justify-content-between align-items-center my-3">
+  <div class="d-flex justify-content-between align-items-center">
     <div class="fotter-summary">
       <b>Total Itens: {{pagination.totalItens}}</b>
     </div>
