@@ -84,13 +84,16 @@ export class AdminComponent implements OnInit {
   }
 
   public getById(idVenda: number){
+    this.spinner.show();
     this.adminService.getSaleById(idVenda).subscribe({
       next: venda => {
         this.exibirTabela = true ? true : false
 
         this.venda = venda;
+        this.spinner.hide();
       },
       error: () => {
+        this.spinner.hide();
         this.toastr.error('Error ao carregar Venda', 'Error')
       }
     });
