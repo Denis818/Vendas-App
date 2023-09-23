@@ -1,15 +1,14 @@
 <div class="d-flex justify-content-between my-3 bg-secondary rounded sombrear p-3">
-  <button class="btn btn-success sombrear bottom-novo" (click)="abrirModal(modalForm)">
-    Novo <i class="fa fa-plus-circle my-1"></i>
-  </button>
   <div class="d-flex justify-content-end">
     <button class="btn btn-success sombrear bottom-apply" (click)="getVendasPorPeriodo()">
       Aplicar
     </button>
     <input class="input-date rounded" placeholder="Pesquisar por data" [(ngModel)]="vendaHelper.dateRange"
       bsDaterangepicker id="filtroData" (bsValueChange)="validateDateRange()">
-    <div class="input-group-text rounded color-text cursor" (click)="resetFilters()">Limpar</div>
   </div>
+  <button class="btn btn-success sombrear bottom-novo" (click)="abrirModal(modalForm)">
+    Novo <i class="fa fa-plus-circle my-1"></i>
+  </button>
 </div>
 
 <div class="card rounded p-3 card-principal card-hover">
