@@ -5,7 +5,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { defineLocale, ptBrLocale } from 'ngx-bootstrap/chronos';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
-import { CheckFiltersDto, PaginationDto, VendaHelperDto, VendasDto } from '../../../models/dto/helper';
+import { CheckFiltersDto, PaginationDto, VendaHelperDto, VendasDto } from '../../../models/dto/helpers';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -176,6 +176,7 @@ export class ListVendaComponent implements OnInit {
     });
   }
 
+  /* Calcular total da venda no fumulario */
   public getPriceAndQuantity() {
     this.form.get('preco')?.valueChanges.subscribe(() => {
       this.calcularTotalDaVenda();
@@ -199,7 +200,9 @@ export class ListVendaComponent implements OnInit {
       this.vendaHelper.totalDestaVenda = 0;
     }
   }
+  /* end */
 
+  /* Formulario e Deleção */
   public abrirModal(template: TemplateRef<any>, id: any = null) {
     if (id != null) {
       this.vendaHelper.selectedItems = [];
@@ -307,6 +310,16 @@ export class ListVendaComponent implements OnInit {
     });
   }
 
+  public validation(): void {
+    this.form = this.fb.group({
+      nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
+      preco: ['', [Validators.required, Validators.pattern('^[0-9.]+$'), Validators.min(0.1), Validators.max(999)]],
+      quantidadeVendido: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.min(1), Validators.max(999)]],
+    }
+    );
+  }
+  /* end form */
+
   public validateDateRange() {
     if (this.vendaHelper.dateRange && this.vendaHelper.dateRange.length === 2) {
       if (this.vendaHelper.dateRange[0] > this.vendaHelper.dateRange[1]) {
@@ -317,15 +330,6 @@ export class ListVendaComponent implements OnInit {
         ];
       }
     }
-  }
-
-  public validation(): void {
-    this.form = this.fb.group({
-      nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
-      preco: ['', [Validators.required, Validators.pattern('^[0-9.]+$'), Validators.min(0.1), Validators.max(999)]],
-      quantidadeVendido: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.min(1), Validators.max(999)]],
-    }
-    );
   }
 
   public resetForm(): void {

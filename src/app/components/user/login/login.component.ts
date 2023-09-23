@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
     this.userService.login(dados).subscribe({
       next: () =>{
         this.spinner.hide();
-        this.router.navigateByUrl('/venda/lista');
+        this.router.navigateByUrl('/dashboard');
       },
       error: () => {
         this.spinner.hide();

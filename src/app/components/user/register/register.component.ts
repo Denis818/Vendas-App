@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
     this.userService.register(dados).subscribe({
       next: () => {
         this.spinner.hide();
-        this.router.navigateByUrl('/venda/lista');
+        this.router.navigateByUrl('/dashboard');
         this.form.reset();
 
       },
