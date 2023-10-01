@@ -5,13 +5,13 @@ export interface VendaHelperDto {
   buscarName: string;
   dateRange: Date[];
   selectedItems: number[];
-  totalDestaVenda: number
+  totalDestaVenda: number;
 }
 
 export interface PaginationDto {
-  paginaAtual: number,
-  itemsPorPagina: number,
-  totalItens: number
+  paginaAtual: number;
+  itemsPorPagina: number;
+  totalItens: number;
 }
 
 export interface VendasDto {

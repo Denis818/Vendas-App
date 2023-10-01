@@ -1,10 +1,10 @@
 <div class="d-flex justify-content-between my-3 bg-secondary rounded sombrear p-3">
   <div class="d-flex justify-content-end">
-    <button class="btn btn-success sombrear bottom-apply" (click)="getVendasPorPeriodo()">
-      Aplicar
-    </button>
     <input class="input-date rounded" placeholder="Pesquisar por data" [(ngModel)]="vendaHelper.dateRange"
       bsDaterangepicker id="filtroData" (bsValueChange)="validateDateRange()">
+      <button class="btn btn-success sombrear bottom-apply" (click)="getVendasPorPeriodo()">
+        Aplicar
+      </button>
   </div>
   <button class="btn btn-success sombrear bottom-novo" (click)="abrirModal(modalForm)">
     Novo <i class="fa fa-plus-circle my-1"></i>
@@ -161,7 +161,7 @@
             Preço não é valido, use '.' para separar.
           </div>
           <div *ngIf=" vendaValidator.preco.errors?.min" class="invalid-feedback">
-            Preço não pode ser menor que 0.1.
+            Preço não pode ser menor que 0.01.
           </div>
           <div *ngIf=" vendaValidator.preco.errors?.max" class="invalid-feedback">
             Preço não pode ser maior que 999.

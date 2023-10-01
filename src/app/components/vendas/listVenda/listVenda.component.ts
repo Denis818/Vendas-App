@@ -11,7 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-listVenda',
   templateUrl: './listVenda.component.html',
-  styleUrls: ['./listVenda.component.css']
+  styleUrls: ['./listVenda.component.scss']
 })
 export class ListVendaComponent implements OnInit {
 
@@ -192,7 +192,6 @@ export class ListVendaComponent implements OnInit {
     const quantidade = this.form.get('quantidadeVendido')?.value;
 
     if (preco) {
-
       this.vendaHelper.totalDestaVenda = !quantidade ? preco : preco * quantidade;
       this.vendaHelper.totalDestaVenda = isNaN(this.vendaHelper.totalDestaVenda) ? 0 : this.vendaHelper.totalDestaVenda;
 
@@ -224,11 +223,10 @@ export class ListVendaComponent implements OnInit {
 
   public adicionarVenda() {
     this.vendaHelper.selectedItems = [];
-    if (this.vendaHelper.vendaId != 0) {
+    if (this.vendaHelper.vendaId !== 0) {
       this.vendaServices.updateSale(this.vendaHelper.vendaId, this.form.value).subscribe({
         next: () => {
           this.resetForm();
-          this.getAllVendas();
           this.toastr.success('Alterações realizadas com sucesso!', 'Finalizado!');
         },
         error: () => {
@@ -240,7 +238,6 @@ export class ListVendaComponent implements OnInit {
       this.vendaServices.insertSale(this.form.value).subscribe({
         next: () => {
           this.resetForm();
-          this.getAllVendas();
           this.toastr.success('Adiconado com sucesso!', 'Finalizado!');
         },
         error: () => {
@@ -255,7 +252,6 @@ export class ListVendaComponent implements OnInit {
       this.vendaServices.deleteSale(this.vendaHelper.vendaId).subscribe({
         next: () => {
           this.resetForm();
-          this.getAllVendas();
           this.toastr.success('Venda deletada com sucesso!', 'Finalizado!');
         },
         error: () => {
@@ -263,7 +259,7 @@ export class ListVendaComponent implements OnInit {
           this.toastr.error('Ocorreu um erro ao deletar.', 'Erro');
         }
       });
-    }else{
+    } else {
       this.deleteSelected()
     }
   }
@@ -299,7 +295,6 @@ export class ListVendaComponent implements OnInit {
     this.vendaServices.deleteAllSale(this.vendaHelper.selectedItems).subscribe({
       next: () => {
         this.vendaHelper.selectedItems = [];
-        this, this.getAllVendas();
         this.toastr.success('Vendas deletadas com sucesso!', 'Finalizado!');
         this.resetForm();
       },
@@ -313,7 +308,7 @@ export class ListVendaComponent implements OnInit {
   public validation(): void {
     this.form = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
-      preco: ['', [Validators.required, Validators.pattern('^[0-9.]+$'), Validators.min(0.1), Validators.max(999)]],
+      preco: ['', [Validators.required, Validators.pattern('^[0-9.]+$'), Validators.min(0.01), Validators.max(999)]],
       quantidadeVendido: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.min(1), Validators.max(999)]],
     }
     );
@@ -343,6 +338,7 @@ export class ListVendaComponent implements OnInit {
     this.vendaHelper.dateRange = [];
     this.checkFilters.isFiltering = false;
     this.checkFilters.isFilteringByDate = false;
+    this.vendaHelper.vendaId = 0;
     this.getAllVendas();
   }
 }

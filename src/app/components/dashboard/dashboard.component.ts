@@ -1,17 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartOptions } from 'chart.js';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
-
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-} from '@angular/animations';
+import { trigger, state, style, animate, transition, } from '@angular/animations';
 import { DashboardService } from 'src/app/services/dashboard.service';
+import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,6 +21,9 @@ import { DashboardService } from 'src/app/services/dashboard.service';
   ]
 })
 export class DashboardComponent implements OnInit {
+
+  @ViewChild(BaseChartDirective, { static: false }) chart!: BaseChartDirective;
+  public hiddenStates: boolean[] = [];
 
   public listVendas: any[] = [];
   public exibirTabela: boolean = false;
@@ -62,13 +59,15 @@ export class DashboardComponent implements OnInit {
   };
 
   public chartOptionsProdutosResumo: ChartOptions = {
-    responsive: false, // Desativa o redimensionamento responsivo
+    responsive: false,
     maintainAspectRatio: false,
     scales: { y: { beginAtZero: true } },
     plugins: {
       tooltip: { callbacks: { label: this.produtoFormatPreco } },
       legend: {
         position: 'top',
+        align: 'start',
+        onClick: (event, legendItem) => this.legendOnClick(legendItem),
         labels: {
           font: { size: 13, },
           color: '#708090'
@@ -92,15 +91,14 @@ export class DashboardComponent implements OnInit {
     {
       data: [] as any,
       label: 'Total de Vendas',
-      backgroundColor: ['#606b6d'],
-      borderColor: ['#fff'],
-      borderWidth: 1
+      backgroundColor: ['#51bbcb'],
+      borderColor: ['#51bbcb'],
     },
     {
       data: [] as any,
       label: 'Quantidade Vendida',
-      backgroundColor: ['#51bbcb']
-
+      backgroundColor: ['#606b6d'],
+      borderColor: ['#606b6d'],
     }
   ];
 
@@ -169,6 +167,9 @@ export class DashboardComponent implements OnInit {
 
     this.produtosResumoDatasets[1].data = produtosResumoVendas
       .map(produto => produto.quantidadeTotalVendida);
+
+    this.hiddenStates = new Array(this.produtosResumoDatasets.length).fill(false);
+
   }
 
   private vendasFormatPreco(context: any): string {
@@ -180,6 +181,34 @@ export class DashboardComponent implements OnInit {
       return `R$ ${context.parsed.y.toFixed(2)}`;
     } else {
       return `Total de vendas: ${context.parsed.y}`;
+    }
+  }
+
+  public legendOnClick(legendItem: any) {
+    let chart = this.chart.chart;
+    if (chart) {
+      let hidden = this.hiddenStates[legendItem.datasetIndex];
+      this.hiddenStates[legendItem.datasetIndex] = !hidden;
+      chart.data.datasets[legendItem.datasetIndex].hidden = this.hiddenStates[legendItem.datasetIndex];
+      chart.update();
+    }
+  }
+
+  public chartClicked(e: any): void {
+    if (this.chart && this.chart.chart) {
+      const activePoints = this.chart.chart.getElementsAtEventForMode(e.event, 'nearest', { intersect: true }, true);
+
+      if (activePoints && activePoints.length > 0) {
+        const clickedDatasetIndex = activePoints[0].datasetIndex;
+
+        const dataset = this.chart.chart.data.datasets[clickedDatasetIndex];
+
+        if (dataset) {
+          this.hiddenStates[clickedDatasetIndex] = !this.hiddenStates[clickedDatasetIndex];
+          dataset.hidden = this.hiddenStates[clickedDatasetIndex];
+          this.chart.chart.update();
+        }
+      }
     }
   }
 }

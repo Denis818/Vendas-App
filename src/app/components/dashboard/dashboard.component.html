@@ -66,14 +66,15 @@
   <div class="chart-flex-container chart-flex-container-style">
     <div class="chart-container chart-container-style">
       <h1 class="title title-grafico-style">Resumo das vendas de cada Produto</h1>
-      <div class="chart-scroll-container bar-chart-container" style="max-height: 400px; overflow-y: auto;">
-        <canvas baseChart [type]="'bar'" [datasets]="produtosResumoDatasets" [labels]="produtosResumoLabels"
-          [options]="chartOptionsProdutosResumo"></canvas>
+      <div class="chart-scroll-container bar-chart-container">
+        <canvas baseChart [type]="'bar'" [datasets]="produtosResumoDatasets" [labels]="produtosResumoLabels" width="6000" height="500"
+          [options]="chartOptionsProdutosResumo" (chartClick)="chartClicked($event)"></canvas>
       </div>
     </div>
+
     <div class="chart-container chart-container-style">
       <h1 class="title title-grafico-style">Total das Vendas por Dia</h1>
-      <div class="chart-scroll-container pie-chart-container" style="max-height: 400px; overflow-y: auto;">
+      <div class="chart-scroll-container pie-chart-container">
         <canvas baseChart [type]="'pie'" [datasets]="graficoVendasPorDiaDados" [labels]="graficoVendasPorDiaLabel"
           [options]="chartOptionsGraficoVendas"></canvas>
       </div>

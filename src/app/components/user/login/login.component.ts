@@ -8,7 +8,7 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  public login(){
+  public login() {
     this.spinner.show();
     const dados =
     {
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.userService.login(dados).subscribe({
-      next: () =>{
+      next: () => {
         this.spinner.hide();
         this.router.navigateByUrl('/dashboard');
       },
@@ -51,6 +51,7 @@ export class LoginComponent implements OnInit {
     this.showPassword = !this.showPassword;
     if (this.showPassword) {
       this.passwordInput.nativeElement.setAttribute('type', 'text');
+
     } else {
       this.passwordInput.nativeElement.setAttribute('type', 'password');
     }

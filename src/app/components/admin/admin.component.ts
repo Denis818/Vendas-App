@@ -10,7 +10,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css'],
+  styleUrls: ['./admin.component.scss'],
   animations: [
     trigger('slideIn', [
       state('void', style({ transform: 'translateY(-25%)' })),
