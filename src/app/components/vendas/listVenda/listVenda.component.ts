@@ -28,6 +28,22 @@ export class ListVendaComponent implements OnInit {
     totalItens: 0
   }
 
+  get paginator(): any{
+    return {
+      itemsPerPage: this.pagination.itemsPorPagina,
+      currentPage: this.pagination.paginaAtual,
+      totalItems: this.pagination.totalItens
+    }
+  }
+
+  get bsConfig(): any {
+    return {
+      isAnimated: true,
+      adaptivePosition: true,
+      showWeekNumbers: false
+    }
+  }
+
   public vendaHelper: VendaHelperDto = {
     vendaId: 0,
     buscarName: '',
@@ -341,4 +357,6 @@ export class ListVendaComponent implements OnInit {
     this.vendaHelper.vendaId = 0;
     this.getAllVendas();
   }
+
+
 }

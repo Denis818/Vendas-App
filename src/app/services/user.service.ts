@@ -44,6 +44,7 @@ export class UserService extends BaseService {
       .subscribe({
         next: obj => {
           localStorage.setItem('userEmail', obj.userEmail)
+          console.log('Adm:', obj.isAdmin)
           localStorage.setItem('isAdmin', obj.isAdmin)
         },
         error: error =>{

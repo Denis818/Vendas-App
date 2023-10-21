@@ -1,7 +1,9 @@
 <div class="d-flex justify-content-between my-3 bg-secondary rounded sombrear p-3">
   <div class="d-flex justify-content-end">
     <input class="input-date rounded" placeholder="Pesquisar por data" [(ngModel)]="vendaHelper.dateRange"
-      bsDaterangepicker id="filtroData" (bsValueChange)="validateDateRange()">
+      bsDaterangepicker
+      [bsConfig]="bsConfig"
+      id="filtroData" (bsValueChange)="validateDateRange()">
       <button class="btn btn-success sombrear bottom-apply" (click)="getVendasPorPeriodo()">
         Aplicar
       </button>
@@ -18,7 +20,7 @@
         <div class="input-group-prepend">
           <div class="input-group-text  p-2 rounded sombra-input color-text">Filtro:</div>
         </div>
-        <input type="text" class="form-control p-2 rounded sombra-input" placeholder="Filtrar por Tema e Local"
+        <input type="text" class="form-control p-2 rounded sombra-input" placeholder="Filtrar por nome do produto"
           [(ngModel)]="filtroLista">
         <div class="input-group-prepend">
           <div class="input-group-text  p-2 rounded sombra-input color-text cursor" (click)="resetFilters()">Limpar
@@ -48,11 +50,7 @@
         </tr>
       </thead>
       <tbody *ngIf="vendas.list && vendas.list.length > 0">
-        <tr class="hover-table-row" *ngFor="let venda of vendas.filtradas | paginate:
-          { itemsPerPage: pagination.itemsPorPagina,
-            currentPage: pagination.paginaAtual,
-            totalItems: pagination.totalItens
-          }">
+        <tr class="hover-table-row" *ngFor="let venda of vendas.filtradas | paginate: paginator">
           <td class="text-center">
             <label class="custom-checkbox-label">
               <input class="custom-checkbox" type="checkbox" [checked]="isSelected(venda.id)"
@@ -89,12 +87,12 @@
   </div>
 
   <div class="row">
-    <div class="col-4">
+    <div class="col-md-auto">
       <button type="button" class="btn btn-danger hover-botton my-1" (click)="abrirModal(modalConfirmDelete)">
         Deletar Selecionados
       </button>
     </div>
-    <div class="col-4 d-flex justify-content-center">
+    <div class="col-8 d-flex justify-content-center">
       <pagination-controls (pageChange)="pularPagina($event)"></pagination-controls>
     </div>
     <div class="col-4"></div>
