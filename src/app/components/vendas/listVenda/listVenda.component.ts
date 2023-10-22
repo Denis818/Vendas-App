@@ -99,7 +99,6 @@ export class ListVendaComponent implements OnInit {
   public getAllVendas(): void {
     this.checkFilters.isFiltering = false;
 
-    console.log(this.pagination.paginaAtual)
     this.vendaServices.getAllVendas(this.pagination.paginaAtual, this.pagination.itemsPorPagina).subscribe({
       next: (vendas: any) => {
 
