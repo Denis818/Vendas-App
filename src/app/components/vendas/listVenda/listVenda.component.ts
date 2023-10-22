@@ -7,6 +7,8 @@ import { defineLocale, ptBrLocale } from 'ngx-bootstrap/chronos';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { CheckFiltersDto, PaginationDto, VendaHelperDto, VendasDto } from '../../../models/dto/helpers';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Venda } from 'src/app/models/Venda';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-listVenda',
@@ -28,7 +30,7 @@ export class ListVendaComponent implements OnInit {
     totalItens: 0
   }
 
-  get paginator(): any{
+  get paginator(): any {
     return {
       itemsPerPage: this.pagination.itemsPorPagina,
       currentPage: this.pagination.paginaAtual,
@@ -81,8 +83,15 @@ export class ListVendaComponent implements OnInit {
     private vendaServices: VendaService,
     private toastr: ToastrService,
     private modalService: BsModalService,
+    private route: ActivatedRoute,
     private fb: FormBuilder,
     private localeService: BsLocaleService) {
+    this.route.queryParams.subscribe(params => {
+      const nomeVenda = params['nome'];
+      if (nomeVenda) {
+        this.filtroLista = nomeVenda;
+      }
+    });
     defineLocale('pt-br', ptBrLocale);
   }
 
@@ -223,17 +232,16 @@ export class ListVendaComponent implements OnInit {
       this.vendaHelper.selectedItems = [];
       this.vendaHelper.vendaId = id;
 
-      this.vendaServices.getSaleById(id).subscribe(produto => {
-        this.form.patchValue({
-          nome: produto.nome,
-          preco: produto.preco,
-          quantidadeVendido: produto.quantidadeVendido
-        });
-
-        this.vendaHelper.totalDestaVenda = produto.preco * produto.quantidadeVendido;
+      this.vendaServices.getSaleById(id).subscribe({
+        next: (produto: Venda) => {
+          this.form.patchValue({ ...produto });
+          this.vendaHelper.totalDestaVenda = produto.preco * produto.quantidadeVendido;
+        },
+        error: () => {
+          this.toastr.error('Ocorreu um erro!', 'Error');
+        }
       });
     }
-
     this.modal = this.modalService.show(template, { class: 'modal-sm' });
   }
 
@@ -246,7 +254,7 @@ export class ListVendaComponent implements OnInit {
           this.toastr.success('Alterações realizadas com sucesso!', 'Finalizado!');
         },
         error: () => {
-          this.toastr.error('Ocorreu um error ao atualizar!', 'Error');
+          this.toastr.error('Ocorreu um erro ao atualizar!', 'Error');
         }
       });
 

@@ -6,6 +6,8 @@ import { forkJoin } from 'rxjs';
 import { trigger, state, style, animate, transition, } from '@angular/animations';
 import { DashboardService } from 'src/app/services/dashboard.service';
 import { BaseChartDirective } from 'ng2-charts';
+import { Venda } from 'src/app/models/Venda';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -104,7 +106,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(private dashboardServices: DashboardService,
     private spinner: NgxSpinnerService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private router: Router) {
   }
 
   public ngOnInit() {
@@ -210,5 +213,9 @@ export class DashboardComponent implements OnInit {
         }
       }
     }
+  }
+
+  public exibirVenda(venda: Venda){
+    this.router.navigate(['/venda/lista'], { queryParams: { nome: venda.nome } });
   }
 }

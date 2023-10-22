@@ -1,7 +1,7 @@
 <div class="dashboard-container dashboard-container-style">
   <div class="dashboard-cards dashboard-cards-style">
     <div class="card card-style" (click)="toggleTabela()">
-      <h3 class="title title-style">Ver Vendas de Hoje</h3>
+      <h3 class="title title-style">Clique para ver as vendas de Hoje</h3>
       <p class="card-value"
         [ngClass]="{'color-negativo': resumoVendas.totalVendasHoje < 30, 'color-positivo': resumoVendas.totalVendasHoje >= 30}">
         R$ {{ resumoVendas.totalVendasHoje.toFixed(2) }}
@@ -44,7 +44,7 @@
         <th class="text-center">Total</th>
       </thead>
       <tbody *ngIf="listVendas && listVendas.length > 0">
-        <tr *ngFor="let venda of listVendas" class="hover-table-row">
+        <tr *ngFor="let venda of listVendas" class="hover-table-row" (click)="exibirVenda(venda)">
           <td class="text-center">{{venda.id}}</td>
           <td class="text-center teste">{{venda.nome}}</td>
           <td class="text-center">R$ {{venda.preco.toFixed(2)}}</td>
@@ -67,7 +67,7 @@
     <div class="chart-container chart-container-style">
       <h1 class="title title-grafico-style">Resumo das vendas de cada Produto</h1>
       <div class="chart-scroll-container bar-chart-container">
-        <canvas baseChart [type]="'bar'" [datasets]="produtosResumoDatasets" [labels]="produtosResumoLabels" width="6000" height="500"
+        <canvas baseChart [type]="'bar'" [datasets]="produtosResumoDatasets" [labels]="produtosResumoLabels" width="2000" height="500"
           [options]="chartOptionsProdutosResumo" (chartClick)="chartClicked($event)"></canvas>
       </div>
     </div>
