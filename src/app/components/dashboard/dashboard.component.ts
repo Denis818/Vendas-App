@@ -8,6 +8,7 @@ import { DashboardService } from 'src/app/services/dashboard.service';
 import { BaseChartDirective } from 'ng2-charts';
 import { Venda } from 'src/app/models/Venda';
 import { Router } from '@angular/router';
+import { PaginationDto } from 'src/app/models/dto/helpers';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,6 +30,20 @@ export class DashboardComponent implements OnInit {
 
   public listVendas: any[] = [];
   public exibirTabela: boolean = false;
+
+  public pagination: PaginationDto = {
+    paginaAtual: 1,
+    itemsPorPagina: 15,
+    totalItens: 0
+  }
+
+  get paginator(): any {
+    return {
+      itemsPerPage: this.pagination.itemsPorPagina,
+      currentPage: this.pagination.paginaAtual,
+      totalItems: this.pagination.totalItens
+    }
+  }
 
   vendasDoDia: number = 0;
   produtosVendidos: number = 0;
@@ -113,23 +128,17 @@ export class DashboardComponent implements OnInit {
   public ngOnInit() {
     this.spinner.show();
     this.carregarDados();
-  }
-
-  public toggleTabela(): void {
-    this.exibirTabela = !this.exibirTabela;
+    this.GetTodaysSalesDate();
   }
 
   private carregarDados() {
     forkJoin({
       resumoVendas: this.dashboardServices.getSalesSummary(),
       graficoVendas: this.dashboardServices.getGroupSalesDay(),
-      vendasDeHoje: this.dashboardServices.getSalesCurrentDay()
-
     }).subscribe({
       next: results => {
         this.processarResumoVendas(results.resumoVendas);
         this.processarGraficoDeVendas(results.graficoVendas);
-        this.processarVendasDeHoje(results.vendasDeHoje);
       },
       error: () => {
         this.spinner.hide();
@@ -141,8 +150,14 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  private processarVendasDeHoje(vendas: any[]) {
-    this.listVendas = vendas;
+  private GetTodaysSalesDate() {
+    this.dashboardServices.GetTodaysSalesDate(this.pagination.paginaAtual, this.pagination.itemsPorPagina)
+    .subscribe({
+      next: (vendas : any) => {
+        this.listVendas = vendas.itens;
+        this.pagination.totalItens = vendas.totalItens
+      }
+    });
   }
 
   private processarResumoVendas(produto: any) {
@@ -216,6 +231,16 @@ export class DashboardComponent implements OnInit {
   }
 
   public exibirVenda(venda: Venda){
-    this.router.navigate(['/venda/lista'], { queryParams: { nome: venda.nome } });
+    localStorage.setItem('vendaFilter', venda.nome);
+    this.router.navigate(['/venda/lista']);
   }
+
+  public toggleTabela(): void {
+    this.exibirTabela = !this.exibirTabela;
+  }
+
+  public pularPagina(event: number): void {
+    this.pagination.paginaAtual = event;
+    this.GetTodaysSalesDate();
+}
 }

@@ -33,6 +33,9 @@
     </div>
   </div>
 
+  <div *ngIf="exibirTabela" class="d-flex justify-content-start"  @slideIn>
+      <pagination-controls (pageChange)="pularPagina($event)"></pagination-controls>
+  </div>
   <div *ngIf="exibirTabela" class="responsive-table modal-table scrollbar scrollbar-primary" @slideIn>
     <table class="table dark-table table-striped">
       <thead>
@@ -44,13 +47,14 @@
         <th class="text-center">Total</th>
       </thead>
       <tbody *ngIf="listVendas && listVendas.length > 0">
-        <tr *ngFor="let venda of listVendas" class="hover-table-row" (click)="exibirVenda(venda)">
+        <tr *ngFor="let venda of listVendas | paginate: paginator" class="hover-table-row">
           <td class="text-center">{{venda.id}}</td>
           <td class="text-center teste">{{venda.nome}}</td>
           <td class="text-center">R$ {{venda.preco.toFixed(2)}}</td>
           <td class="text-center">{{venda.quantidadeVendido}}</td>
           <td class="text-center">{{venda.dataVenda}}</td>
           <td class="text-center">R$ {{venda.totalDaVenda.toFixed(2)}}</td>
+          <td (click)="exibirVenda(venda)"><i class="fa fa-pencil"></i></td>
         </tr>
       </tbody>
         <tfoot *ngIf="listVendas.length === 0">

@@ -8,7 +8,6 @@ import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { CheckFiltersDto, PaginationDto, VendaHelperDto, VendasDto } from '../../../models/dto/helpers';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Venda } from 'src/app/models/Venda';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-listVenda',
@@ -83,15 +82,8 @@ export class ListVendaComponent implements OnInit {
     private vendaServices: VendaService,
     private toastr: ToastrService,
     private modalService: BsModalService,
-    private route: ActivatedRoute,
     private fb: FormBuilder,
     private localeService: BsLocaleService) {
-    this.route.queryParams.subscribe(params => {
-      const nomeVenda = params['nome'];
-      if (nomeVenda) {
-        this.filtroLista = nomeVenda;
-      }
-    });
     defineLocale('pt-br', ptBrLocale);
   }
 
@@ -107,12 +99,14 @@ export class ListVendaComponent implements OnInit {
   public getAllVendas(): void {
     this.checkFilters.isFiltering = false;
 
+    console.log(this.pagination.paginaAtual)
     this.vendaServices.getAllVendas(this.pagination.paginaAtual, this.pagination.itemsPorPagina).subscribe({
       next: (vendas: any) => {
 
         this.vendas.list = vendas.itens
         this.vendas.filtradas = [...this.vendas.list];
         this.pagination.totalItens = vendas.totalItens;
+        this.filterVendadDashboard();
         this.spinner.hide();
       },
       error: () => {
@@ -120,6 +114,7 @@ export class ListVendaComponent implements OnInit {
         this.toastr.error('Error ao carregar Vendas', 'Error')
       }
     });
+
   }
 
   public FiltrarVendas(name: string, resetPage: boolean = true): void {
@@ -136,6 +131,14 @@ export class ListVendaComponent implements OnInit {
       this.vendas.filtradas = data;
       this.pagination.totalItens = this.vendas.filtradas.length;
     });
+  }
+
+  public filterVendadDashboard(): void {
+    const nomeVenda = localStorage.getItem("vendaFilter");
+    if (nomeVenda) {
+      localStorage.removeItem("vendaFilter");
+      this.filtroLista = nomeVenda;
+    }
   }
 
   public pularPagina(event: any): void {

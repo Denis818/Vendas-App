@@ -82,6 +82,12 @@
   }
 }
 
+::ng-deep .ngx-pagination a,
+.ngx-pagination button {
+  color: #54708b !important;
+}
+
+
 .pie-chart-container {
   display: flex;
   justify-content: center;
