@@ -306,14 +306,19 @@ export class ListVendaComponent implements OnInit {
   public toggleAllSelections(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input && input.checked) {
-      this.vendaHelper.selectedItems = this.vendas.filtradas.map(venda => venda.id);
+      if (this.vendas.filtradas.length > 7) {
+        this.vendaHelper.selectedItems = this.vendas.filtradas.slice(0, 7).map(venda => venda.id);
+      } else {
+        this.vendaHelper.selectedItems = this.vendas.filtradas.map(venda => venda.id);
+      }
     } else {
       this.vendaHelper.selectedItems = [];
     }
   }
 
   public deleteSelected(): void {
-    if (this.vendaHelper.selectedItems.length === 0) {
+    let selecionados = this.vendaHelper.selectedItems.length;
+    if (selecionados === 0) {
       this.toastr.warning('Nenhum item selecionado para deletar.', 'Atenção');
       return;
     }
@@ -321,7 +326,7 @@ export class ListVendaComponent implements OnInit {
     this.vendaServices.deleteAllSale(this.vendaHelper.selectedItems).subscribe({
       next: () => {
         this.vendaHelper.selectedItems = [];
-        this.toastr.success('Vendas deletadas com sucesso!', 'Finalizado!');
+        this.toastr.success(`${selecionados} Venda(s) deletada(s) com sucesso!`, 'Finalizado!');
         this.resetForm();
       },
       error: () => {
@@ -367,6 +372,4 @@ export class ListVendaComponent implements OnInit {
     this.vendaHelper.vendaId = 0;
     this.getAllVendas();
   }
-
-
 }
