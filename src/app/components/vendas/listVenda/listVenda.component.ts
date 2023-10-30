@@ -305,18 +305,19 @@ export class ListVendaComponent implements OnInit {
 
   public toggleAllSelections(event: Event): void {
     const input = event.target as HTMLInputElement;
+    const startIndex = (this.pagination.paginaAtual - 1) * this.pagination.itemsPorPagina;
+    const endIndex = startIndex + this.pagination.itemsPorPagina;
+
     if (input && input.checked) {
-      if (this.vendas.filtradas.length > 7) {
-        this.vendaHelper.selectedItems = this.vendas.filtradas.slice(0, 7).map(venda => venda.id);
-      } else {
-        this.vendaHelper.selectedItems = this.vendas.filtradas.map(venda => venda.id);
-      }
+      this.vendaHelper.selectedItems = this.vendas.filtradas.slice(startIndex, endIndex).map(venda => venda.id);
     } else {
       this.vendaHelper.selectedItems = [];
     }
   }
 
   public deleteSelected(): void {
+    this.selectAllCheckbox.nativeElement.checked = false;
+
     let selecionados = this.vendaHelper.selectedItems.length;
     if (selecionados === 0) {
       this.toastr.warning('Nenhum item selecionado para deletar.', 'Atenção');
@@ -360,6 +361,7 @@ export class ListVendaComponent implements OnInit {
 
   public alterarNumeroDaPagina(itemsPorPagina: number): void {
     this.pagination.itemsPorPagina = itemsPorPagina;
+    this.resetFilters();
     this.getAllVendas();
   }
 
