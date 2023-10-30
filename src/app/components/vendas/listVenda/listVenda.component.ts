@@ -23,10 +23,11 @@ export class ListVendaComponent implements OnInit {
 
   @ViewChild('selectAllCheckbox') selectAllCheckbox!: ElementRef<HTMLInputElement>;
 
+  public itemsPorPaginaOptions = [7, 10, 20, 30];
   public pagination: PaginationDto = {
     paginaAtual: 1,
     itemsPorPagina: 7,
-    totalItens: 0
+    totalItens: 0,
   }
 
   get paginator(): any {
@@ -98,7 +99,6 @@ export class ListVendaComponent implements OnInit {
 
   public getAllVendas(): void {
     this.checkFilters.isFiltering = false;
-
     this.vendaServices.getAllVendas(this.pagination.paginaAtual, this.pagination.itemsPorPagina).subscribe({
       next: (vendas: any) => {
 
@@ -356,6 +356,11 @@ export class ListVendaComponent implements OnInit {
         ];
       }
     }
+  }
+
+  public alterarNumeroDaPagina(itemsPorPagina: number): void {
+    this.pagination.itemsPorPagina = itemsPorPagina;
+    this.getAllVendas();
   }
 
   public resetForm(): void {
