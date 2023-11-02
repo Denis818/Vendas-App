@@ -72,6 +72,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "host": "localhost",
+            "port": 4200
+          },
           "configurations": {
             "production": {
               "browserTarget": "Vendas-App:build:production"
