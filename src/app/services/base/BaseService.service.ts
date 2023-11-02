@@ -31,7 +31,7 @@ export abstract class BaseService {
           console.error(`API error, StatusCodes: ${mensagem.StatusCode}, Message: ${mensagem.Descricao}`);
         });
 
-        return throwError(() => error);
+        return throwError(error);
       })
     );
 

@@ -10,12 +10,12 @@ import { Venda } from '../models/Venda';
 })
 export class AdminService extends BaseService {
 
-  private readonly Url = 'https://localhost:7109/api/LogAcesso';
+  private readonly Url = 'https://192.168.18.52:7109/api/LogAcesso';
 
   constructor(http: HttpClient) { super(http); }
 
   public getSaleById(id: number): Observable<Venda> {
-    return this.SendHttpRequest('GET', 'https://localhost:7109/api/Venda' + `/${id}`);
+    return this.SendHttpRequest('GET', 'https://192.168.18.52:7109/api/Venda' + `/${id}`);
   }
 
   public filterUserName(name: string): Observable<LogAcesso[]> {

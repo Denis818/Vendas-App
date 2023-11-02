@@ -46,9 +46,13 @@ export class RegisterComponent implements OnInit {
         this.form.reset();
 
       },
-      error: () => {
+      error: (err) => {
         this.spinner.hide();
-        this.errorMessage = 'Falha ao tentar registrar, verifique seus dados.'
+        if (err?.error?.mensagens?.length > 0) {
+          this.errorMessage = err.error.mensagens[0].descricao;
+        } else {
+          this.errorMessage = "Falha ao tentar registrar, verifique seus dados.";
+        }
       }
     });
   }

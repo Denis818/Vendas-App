@@ -40,9 +40,13 @@ export class LoginComponent implements OnInit {
         this.spinner.hide();
         this.router.navigateByUrl('/dashboard');
       },
-      error: () => {
+      error: (err) => {
         this.spinner.hide();
-        this.errorMessage = "Não foi possível efetuar o login. Verifique seus dados.";
+        if (err?.error?.mensagens?.length > 0) {
+          this.errorMessage = err.error.mensagens[0].descricao;
+        } else {
+          this.errorMessage = "Não foi possível efetuar o login. Verifique seus dados.";
+        }
       }
     });
   }

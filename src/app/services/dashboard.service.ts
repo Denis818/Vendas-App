@@ -9,7 +9,7 @@ import { Venda } from '../models/Venda';
 })
 export class DashboardService extends BaseService {
 
-  private readonly Url = 'https://localhost:7109/api/Dashboard';
+  private readonly Url = 'https://192.168.18.52:7109/api/Dashboard';
 
   constructor(http: HttpClient) {
     super(http);
