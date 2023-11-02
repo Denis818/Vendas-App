@@ -28,18 +28,20 @@
   margin-left: 10px;
 }
 
-.bottom-novo {
-  width: auto;
-  height: auto;
-}
-
 @media (max-width: 476px) {
   .btn {
-      font-size: 0.7em;
+      font-size: 0.8em;
   }
 
   .input-date {
       width: auto;
+  }
+}
+
+@media (max-width: 476px) {
+  .input-date {
+      font-size: 0.8em;
+      padding: 10px;
   }
 }
 
@@ -72,6 +74,16 @@
   padding: 10px;
 
 }
+
+@media (max-width: 476px) {
+  .fotter-summary {
+      font-size: 0.8em; /* Reduz o tamanho da fonte do input */
+      padding: 10px; /* Reduz o padding interno para dar mais espaço ao texto */
+  }
+}
+
+
+
 
 .total {
   text-shadow: 4px 4px 7px rgba(0, 0, 0, 30.5);
@@ -229,6 +241,12 @@
 ::ng-deep .ngx-pagination a,
 .ngx-pagination button {
   color: #54708b !important;
+ }
+
+@media (max-width: 476px) {
+  .teste {
+      font-size: 0.9em;
+  }
 }
 
 .cursor{
