@@ -85,7 +85,7 @@
   </div>
 
   <div class="row align-items-center">
-    <div class="col-md-auto">
+    <div class="col-sm-auto col-md-auto">
       <button type="button" class="btn btn-danger hover-botton my-1" (click)="abrirModal(modalConfirmDelete)">
         Deletar Selecionados
       </button>
@@ -93,16 +93,16 @@
     <div class="col d-flex justify-content-center align-items-center">
       <pagination-controls (pageChange)="pularPagina($event)"></pagination-controls>
     </div>
-    <div class="col-1"></div>
-    <div class="col-md-auto d-flex align-items-center">
+    <div class="col-sm-1 col-1"></div>
+    <div class="col-sm-auto col-md-auto d-flex align-items-center">
       <ul class="pagination">
-          <li *ngFor="let items of itemsPorPaginaOptions">
-              <a class="page-link" (click)="alterarNumeroDaPagina(items)">{{ items }}</a>
-          </li>
+        <li *ngFor="let items of itemsPorPaginaOptions">
+          <a class="page-link" (click)="alterarNumeroDaPagina(items)">{{ items }}</a>
+        </li>
       </ul>
-  </div>
+    </div>
+</div>
 
-  </div>
 
 
 
