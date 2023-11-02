@@ -158,12 +158,23 @@ body.dark .ngx-pagination a,
   background-color: #2e2e2e !important;
   border-radius: 5px !important;
 }
+
 body.dark .ngx-pagination .current {
   padding: .1875rem .625rem !important;
   background: #212121 !important;
   color: #fefefe !important;
   cursor: default !important;
   border-radius: 5px !important;
-
 }
+
+body.dark .page-link {
+  background: #2e2e2e !important;
+  border: var(--bs-pagination-border-width) solid #54708b !important;
+}
+
+body.dark .navbar-toggler{
+  background-color: #0e0e0e !important;
+}
+
+
 /* end pagination */

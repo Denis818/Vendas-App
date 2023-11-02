@@ -85,7 +85,7 @@ export class ListVendaComponent implements OnInit {
     defineLocale('pt-br', ptBrLocale);
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.spinner.show();
     this.getAllVendas()
     this.validation()
