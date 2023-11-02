@@ -22,6 +22,20 @@
   transform: translateY(-5px);
 }
 
+@media (max-width: 768px) {
+  .dashboard-cards {
+      flex-direction: column;
+  }
+
+  .chart-flex-container {
+      flex-direction: column;
+  }
+
+  .modal-table {
+    width: 100% !important;
+  }
+}
+
 .sales-summary {
   display: flex;
   justify-content: space-between;
@@ -86,7 +100,6 @@
 .ngx-pagination button {
   color: #54708b !important;
 }
-
 
 .pie-chart-container {
   display: flex;
@@ -173,9 +186,8 @@
 }
 
 .modal-table {
-  display: flex;
-  justify-content: flex-start;
-  max-width: 45%;
+  width: 100% !important;
+
 }
 
 .hover-table-row {
