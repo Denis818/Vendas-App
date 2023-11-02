@@ -21,8 +21,6 @@ export class ListVendaComponent implements OnInit {
   public form!: FormGroup;
   get vendaValidator(): any { return this.form.controls; }
 
-  @ViewChild('selectAllCheckbox') selectAllCheckbox!: ElementRef<HTMLInputElement>;
-
   public itemsPorPaginaOptions = [7, 10, 20, 30];
   public pagination: PaginationDto = {
     paginaAtual: 1,
@@ -51,7 +49,6 @@ export class ListVendaComponent implements OnInit {
     buscarName: '',
     totalDestaVenda: 0,
     dateRange: [],
-    selectedItems: [],
   };
 
   public vendas: VendasDto = {
@@ -142,9 +139,6 @@ export class ListVendaComponent implements OnInit {
 
   public pularPagina(event: any): void {
     this.pagination.paginaAtual = event;
-    this.vendaHelper.selectedItems = [];
-    this.selectAllCheckbox.nativeElement.checked = false;
-
 
     if (this.checkFilters.isFiltering) {
       this.FiltrarVendas(this.vendaHelper.buscarName, false);
@@ -231,13 +225,12 @@ export class ListVendaComponent implements OnInit {
   /* Formulario e Deleção */
   public abrirModal(template: TemplateRef<any>, id: any = null) {
     if (id != null) {
-      this.vendaHelper.selectedItems = [];
       this.vendaHelper.vendaId = id;
 
       this.vendaServices.getSaleById(id).subscribe({
         next: (produto: Venda) => {
           this.form.patchValue({ ...produto });
-          this.vendaHelper.totalDestaVenda = produto.preco * produto.quantidadeVendido;
+          this.vendaHelper.totalDestaVenda = Number(produto.preco) * Number(produto.quantidadeVendido);
         },
         error: () => {
           this.toastr.error('Ocorreu um erro!', 'Error');
@@ -247,8 +240,15 @@ export class ListVendaComponent implements OnInit {
     this.modal = this.modalService.show(template, { class: 'modal-sm' });
   }
 
+  public TotalASerVendido(): Number {
+    if (typeof this.vendaHelper.totalDestaVenda === 'number') {
+      let value = this.vendaHelper.totalDestaVenda.toFixed(2);
+      return Number.parseFloat(value);
+    }
+    return 0;
+  }
+
   public adicionarVenda() {
-    this.vendaHelper.selectedItems = [];
     if (this.vendaHelper.vendaId !== 0) {
       this.vendaServices.updateSale(this.vendaHelper.vendaId, this.form.value).subscribe({
         next: () => {
@@ -285,56 +285,7 @@ export class ListVendaComponent implements OnInit {
           this.toastr.error('Ocorreu um erro ao deletar.', 'Erro');
         }
       });
-    } else {
-      this.deleteSelected()
     }
-  }
-
-  public isSelected(id: number): boolean {
-    return this.vendaHelper.selectedItems.includes(id);
-  }
-
-  public toggleItemSelection(id: number): void {
-    const index = this.vendaHelper.selectedItems.indexOf(id);
-    if (index === -1) {
-      this.vendaHelper.selectedItems.push(id);
-    } else {
-      this.vendaHelper.selectedItems.splice(index, 1);
-    }
-  }
-
-  public toggleAllSelections(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const startIndex = (this.pagination.paginaAtual - 1) * this.pagination.itemsPorPagina;
-    const endIndex = startIndex + this.pagination.itemsPorPagina;
-
-    if (input && input.checked) {
-      this.vendaHelper.selectedItems = this.vendas.filtradas.slice(startIndex, endIndex).map(venda => venda.id);
-    } else {
-      this.vendaHelper.selectedItems = [];
-    }
-  }
-
-  public deleteSelected(): void {
-    this.selectAllCheckbox.nativeElement.checked = false;
-
-    let selecionados = this.vendaHelper.selectedItems.length;
-    if (selecionados === 0) {
-      this.toastr.warning('Nenhum item selecionado para deletar.', 'Atenção');
-      return;
-    }
-
-    this.vendaServices.deleteAllSale(this.vendaHelper.selectedItems).subscribe({
-      next: () => {
-        this.vendaHelper.selectedItems = [];
-        this.toastr.success(`${selecionados} Venda(s) deletada(s) com sucesso!`, 'Finalizado!');
-        this.resetForm();
-      },
-      error: () => {
-        this.resetForm();
-        this.toastr.error('Ocorreu um erro ao deletar.', 'Erro');
-      }
-    });
   }
 
   public validation(): void {

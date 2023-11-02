@@ -65,7 +65,7 @@
     <div class="d-flex justify-content-start align-items-center" [formGroup]="form">
       <input type="text" class="form-control input-form"
         [ngClass]="{'is-invalid': vendaValidator.idLogAcesso.errors && vendaValidator.idLogAcesso.touched}"
-        formControlName="idLogAcesso" placeholder="0" style="width: 10%; margin-right: 10px;">
+        formControlName="idLogAcesso" placeholder="0" style="width: 55px; margin-right: 10px;">
 
       <button class="btn btn-primary ml-2" (click)="getById(form.get('idLogAcesso')?.value)">Buscar</button>
     </div>

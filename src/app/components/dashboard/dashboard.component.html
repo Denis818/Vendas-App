@@ -1,6 +1,6 @@
 <div class="dashboard-container dashboard-container-style">
   <div class="dashboard-cards dashboard-cards-style">
-    <div class="card card-style" (click)="toggleTabela()">
+    <div class="card card-style" (click)="toggleTabela(); scrollToTabela();">
       <h3 class="title title-style">Clique para ver as vendas de Hoje</h3>
       <p class="card-value"
         [ngClass]="{'color-negativo': resumoVendas.totalVendasHoje < 30, 'color-positivo': resumoVendas.totalVendasHoje >= 30}">
@@ -33,7 +33,7 @@
     </div>
   </div>
 
-  <div *ngIf="exibirTabela" class="responsive-table modal-table scrollbar scrollbar-primary" style=" width: 100% important;"
+  <div *ngIf="exibirTabela" #tabela class="responsive-table modal-table scrollbar scrollbar-primary" style=" width: 100% important;"
     @slideIn>
     <table class="table dark-table table-striped">
       <thead>
@@ -65,7 +65,7 @@
     </table>
   </div>
 
-  <div *ngIf="exibirTabela" class="d-flex justify-content-start" @slideIn>
+  <div *ngIf="exibirTabela" class="d-flex justify-content-end" @slideIn>
     <pagination-controls (pageChange)="pularPagina($event)"></pagination-controls>
   </div>
 

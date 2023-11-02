@@ -4,7 +4,6 @@ export interface VendaHelperDto {
   vendaId: number;
   buscarName: string;
   dateRange: Date[];
-  selectedItems: number[];
   totalDestaVenda: number;
 }
 

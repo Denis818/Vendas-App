@@ -32,12 +32,6 @@
     <table class="table dark-table table-striped">
       <thead>
         <tr>
-          <th class="text-center" style="padding: 3px !important;">
-            <label class="custom-checkbox-label">
-              <input #selectAllCheckbox class="custom-checkbox" type="checkbox" (change)="toggleAllSelections($event)">
-              <span class="custom-checkbox-x"> ✓ </span>
-            </label>
-          </th>
           <th class="text-center">#ID</th>
           <th class="text-center">Produto</th>
           <th class="text-center">Preço</th>
@@ -49,13 +43,6 @@
       </thead>
       <tbody *ngIf="vendas.list && vendas.list.length > 0">
         <tr class="hover-table-row" *ngFor="let venda of vendas.filtradas | paginate: paginator">
-          <td class="text-center">
-            <label class="custom-checkbox-label">
-              <input class="custom-checkbox" type="checkbox" [checked]="isSelected(venda.id)"
-                (change)="toggleItemSelection(venda.id)">
-              <span class="custom-checkbox-x"> ✓ </span>
-            </label>
-          </td>
           <td class="text-center">{{venda.id}}</td>
           <td class="text-center">{{venda.nome}}</td>
           <td class="text-center">R$ {{venda.preco.toFixed(2)}}</td>
@@ -85,12 +72,7 @@
   </div>
 
   <div class="row align-items-center">
-    <div class="col-sm-auto col-md-auto">
-      <button type="button" class="btn btn-danger hover-botton my-1" (click)="abrirModal(modalConfirmDelete)">
-        Deletar Selecionados
-      </button>
-    </div>
-    <div class="col d-flex justify-content-center align-items-center">
+    <div class="col d-flex justify-content-start align-items-center">
       <pagination-controls (pageChange)="pularPagina($event)"></pagination-controls>
     </div>
     <div class="col-sm-1 col-1"></div>
@@ -102,11 +84,6 @@
       </ul>
     </div>
 </div>
-
-
-
-
-
 
   <div class="d-flex justify-content-between align-items-center">
     <div class="fotter-summary">
@@ -199,7 +176,7 @@
         </div>
 
         <div class="total-da-venda">
-          <b>Total: R$ {{vendaHelper.totalDestaVenda.toFixed(2)}}</b>
+          <b>Total: R$ {{TotalASerVendido()}}</b>
         </div>
       </div>
       <div class="card-footer space-card-top">

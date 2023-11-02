@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ChartOptions } from 'chart.js';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -26,6 +26,8 @@ import { PaginationDto } from 'src/app/models/dto/helpers';
 export class DashboardComponent implements OnInit {
 
   @ViewChild(BaseChartDirective, { static: false }) chart!: BaseChartDirective;
+  @ViewChild('tabela') tabela!: ElementRef;
+
   public hiddenStates: boolean[] = [];
 
   public listVendas: any[] = [];
@@ -149,6 +151,15 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
+
+  scrollToTabela() {
+    setTimeout(() => {
+      if (this.tabela && this.tabela.nativeElement) {
+        this.tabela.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  }
+
 
   private GetTodaysSalesDate() {
     this.dashboardServices.GetTodaysSalesDate(this.pagination.paginaAtual, this.pagination.itemsPorPagina)
