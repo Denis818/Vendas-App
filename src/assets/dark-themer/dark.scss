@@ -175,6 +175,9 @@ body.dark .page-link {
 body.dark .navbar-toggler{
   background-color: #0e0e0e !important;
 }
-
+body.dark .selected {
+  background-color: #007bff !important;
+  color: white !important;
+}
 
 /* end pagination */
