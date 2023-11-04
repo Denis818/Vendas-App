@@ -28,6 +28,11 @@
   margin-left: 10px;
 }
 
+.selected {
+  background-color: #007bff; /* ou qualquer cor que indique seleção */
+  color: white;
+}
+
 @media (max-width: 476px) {
   .btn {
       font-size: 0.8em;

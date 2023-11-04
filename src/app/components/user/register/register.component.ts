@@ -96,5 +96,4 @@ export class RegisterComponent implements OnInit {
     const uniqueChars = [...new Set(control?.value?.split(''))];
     return uniqueChars.length > 1 ? null : { hasUniqueChar: true };
   }
-
 }

@@ -22,6 +22,7 @@ export class ListVendaComponent implements OnInit {
   get vendaValidator(): any { return this.form.controls; }
 
   public itemsPorPaginaOptions = [7, 10, 20, 30];
+  itemSelecionado: number = 7;
   public pagination: PaginationDto = {
     paginaAtual: 1,
     itemsPorPagina: 7,
@@ -105,12 +106,15 @@ export class ListVendaComponent implements OnInit {
         this.filterVendadDashboard();
         this.spinner.hide();
       },
-      error: () => {
+      error: (err) => {
         this.spinner.hide();
-        this.toastr.error('Error ao carregar Vendas', 'Error')
+        if (err?.error?.mensagens?.length > 0) {
+          this.toastr.error(err.error.mensagens[0].descricao, 'Falha');
+        } else {
+          this.toastr.error('Error ao carregar Vendas', 'Error')
+        }
       }
     });
-
   }
 
   public FiltrarVendas(name: string, resetPage: boolean = true): void {
@@ -191,8 +195,12 @@ export class ListVendaComponent implements OnInit {
         this.vendas.filtradas = data;
         this.pagination.totalItens = this.vendas.filtradas.length;
       },
-      error: () => {
-        this.toastr.error('Erro ao filtrar vendas por período.', 'Erro');
+      error: (err) => {
+        if (err?.error?.mensagens?.length > 0) {
+          this.toastr.error(err.error.mensagens[0].descricao, 'Falha');
+        } else {
+          this.toastr.error('Erro ao filtrar vendas por período.', 'Erro');
+        }
       }
     });
   }
@@ -232,8 +240,12 @@ export class ListVendaComponent implements OnInit {
           this.form.patchValue({ ...produto });
           this.vendaHelper.totalDestaVenda = Number(produto.preco) * Number(produto.quantidadeVendido);
         },
-        error: () => {
-          this.toastr.error('Ocorreu um erro!', 'Error');
+        error: (err) => {
+          if (err?.error?.mensagens?.length > 0) {
+            this.toastr.error(err.error.mensagens[0].descricao, 'Falha');
+          } else {
+            this.toastr.error('Ocorreu um erro!', 'Error');
+          }
         }
       });
     }
@@ -255,8 +267,12 @@ export class ListVendaComponent implements OnInit {
           this.resetForm();
           this.toastr.success('Alterações realizadas com sucesso!', 'Finalizado!');
         },
-        error: () => {
-          this.toastr.error('Ocorreu um erro ao atualizar!', 'Error');
+        error: (err) => {
+          if (err?.error?.mensagens?.length > 0) {
+            this.toastr.error(err.error.mensagens[0].descricao, 'Falha');
+          } else {
+            this.toastr.error('Ocorreu um erro ao atualizar!', 'Error');
+          }
         }
       });
 
@@ -266,8 +282,12 @@ export class ListVendaComponent implements OnInit {
           this.resetForm();
           this.toastr.success('Adiconado com sucesso!', 'Finalizado!');
         },
-        error: () => {
-          this.toastr.error('Ocorreu um error ao adicionar!', 'Error');
+        error: (err) => {
+          if (err?.error?.mensagens?.length > 0) {
+            this.toastr.error(err.error.mensagens[0].descricao, 'Falha');
+          } else {
+            this.toastr.error('Ocorreu um error ao adicionar!', 'Error');
+          }
         }
       });
     }
@@ -280,9 +300,13 @@ export class ListVendaComponent implements OnInit {
           this.resetForm();
           this.toastr.success('Venda deletada com sucesso!', 'Finalizado!');
         },
-        error: () => {
+        error: (err) => {
           this.resetForm();
-          this.toastr.error('Ocorreu um erro ao deletar.', 'Erro');
+          if (err?.error?.mensagens?.length > 0) {
+            this.toastr.error(err.error.mensagens[0].descricao, 'Falha');
+          } else {
+            this.toastr.error('Ocorreu um erro ao deletar.', 'Erro');
+          }
         }
       });
     }
@@ -290,7 +314,7 @@ export class ListVendaComponent implements OnInit {
 
   public validation(): void {
     this.form = this.fb.group({
-      nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
+      nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
       preco: ['', [Validators.required, Validators.pattern('^[0-9.]+$'), Validators.min(0.01), Validators.max(999)]],
       quantidadeVendido: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.min(1), Validators.max(999)]],
     }
@@ -311,6 +335,7 @@ export class ListVendaComponent implements OnInit {
   }
 
   public alterarNumeroDaPagina(itemsPorPagina: number): void {
+    this.itemSelecionado = itemsPorPagina;
     this.pagination.itemsPorPagina = itemsPorPagina;
     this.resetFilters();
     this.getAllVendas();

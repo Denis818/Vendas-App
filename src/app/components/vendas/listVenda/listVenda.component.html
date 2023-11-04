@@ -15,13 +15,13 @@
   <div class="d-flex">
     <div class="flex-fill pr-3">
       <div class="input-group mb-2">
-        <div class="input-group-prepend">
+     <!--    <div class="input-group-prepend">
           <div class="input-group-text  p-2 rounded sombra-input color-text">Filtro:</div>
-        </div>
+        </div> -->
         <input type="text" class="form-control p-2 rounded sombra-input" placeholder="Filtrar por nome do produto"
           [(ngModel)]="filtroLista">
         <div class="input-group-prepend">
-          <div class="input-group-text  p-2 rounded sombra-input color-text cursor" (click)="resetFilters()">Limpar
+          <div class="input-group-text  p-2 rounded sombra-input color-text cursor" (click)="resetFilters()">Limpar Filtros
           </div>
         </div>
       </div>
@@ -76,13 +76,18 @@
       <pagination-controls (pageChange)="pularPagina($event)"></pagination-controls>
     </div>
     <div class="col-sm-1 col-1"></div>
+
     <div class="col-sm-auto col-md-auto d-flex align-items-center">
       <ul class="pagination">
-        <li *ngFor="let items of itemsPorPaginaOptions">
-          <a class="page-link" (click)="alterarNumeroDaPagina(items)">{{ items }}</a>
+        <li *ngFor="let item of itemsPorPaginaOptions">
+          <a class="page-link" [class.selected]="item === itemSelecionado" (click)="alterarNumeroDaPagina(item)">
+            {{ item }}
+          </a>
         </li>
       </ul>
     </div>
+
+
 </div>
 
   <div class="d-flex justify-content-between align-items-center">
@@ -127,7 +132,7 @@
             Produto deve ter no mínimo 4 caracteres
           </div>
           <div *ngIf=" vendaValidator.nome.errors?.maxlength" class="invalid-feedback">
-            Produto deve ter no maxímo 15 caracteres
+            Produto deve ter no maxímo 25 caracteres
           </div>
         </div>
       </div>

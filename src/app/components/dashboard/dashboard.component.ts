@@ -142,9 +142,13 @@ export class DashboardComponent implements OnInit {
         this.processarResumoVendas(results.resumoVendas);
         this.processarGraficoDeVendas(results.graficoVendas);
       },
-      error: () => {
+      error: (err) => {
         this.spinner.hide();
-        this.toastr.error('Erro ao carregar os dados.', 'Error');
+        if (err?.error?.mensagens?.length > 0) {
+          this.toastr.error(err.error.mensagens[0].descricao, 'Falha');
+        } else {
+          this.toastr.error('Erro ao carregar os dados.', 'Error');
+        }
       },
       complete: () => {
         this.spinner.hide();
@@ -163,12 +167,19 @@ export class DashboardComponent implements OnInit {
 
   private GetTodaysSalesDate() {
     this.dashboardServices.GetTodaysSalesDate(this.pagination.paginaAtual, this.pagination.itemsPorPagina)
-    .subscribe({
-      next: (vendas : any) => {
-        this.listVendas = vendas.itens;
-        this.pagination.totalItens = vendas.totalItens
-      }
-    });
+      .subscribe({
+        next: (vendas: any) => {
+          this.listVendas = vendas.itens;
+          this.pagination.totalItens = vendas.totalItens
+        },
+        error: (err) => {
+          if (err?.error?.mensagens?.length > 0) {
+            this.toastr.error(err.error.mensagens[0].descricao, 'Falha');
+          } else {
+            this.toastr.error('Erro ao carregar os dados.', 'Error');
+          }
+        }
+      });
   }
 
   private processarResumoVendas(produto: any) {
@@ -241,7 +252,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  public exibirVenda(venda: Venda){
+  public exibirVenda(venda: Venda) {
     localStorage.setItem('vendaFilter', venda.nome);
     this.router.navigate(['/venda/lista']);
   }
@@ -253,5 +264,5 @@ export class DashboardComponent implements OnInit {
   public pularPagina(event: number): void {
     this.pagination.paginaAtual = event;
     this.GetTodaysSalesDate();
-}
+  }
 }
