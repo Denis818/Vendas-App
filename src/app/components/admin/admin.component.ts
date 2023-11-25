@@ -1,11 +1,13 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LogAcesso } from 'src/app/models/LogAcesso';
 import { AdminService } from 'src/app/services/admin.service';
 import { Venda } from 'src/app/models/Venda';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { PaginationDto } from 'src/app/models/dto/helpers';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-admin',
@@ -22,12 +24,26 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 })
 export class AdminComponent implements OnInit {
 
+  public modal!: BsModalRef;
+  public userEmail: string = '';
+  public permission: string = '';
+
   public form!: FormGroup;
   get vendaValidator(): any { return this.form.controls; }
 
-  public paginaAtual: number = 1;
-  public itemsPorPagina: number = 7;
-  public totalItens: number = 0;
+  public pagination: PaginationDto = {
+    paginaAtual: 1,
+    itemsPorPagina: 7,
+    totalItens: 0,
+  }
+
+  get paginator(): any {
+    return {
+      itemsPerPage: this.pagination.itemsPorPagina,
+      currentPage: this.pagination.paginaAtual,
+      totalItems: this.pagination.totalItens
+    }
+  }
 
   public listLogs: LogAcesso[] = [];
   public logsFiltrados: LogAcesso[] = [];
@@ -55,6 +71,7 @@ export class AdminComponent implements OnInit {
   constructor(
     private adminService: AdminService,
     private spinner: NgxSpinnerService,
+    private modalService: BsModalService,
     private toastr: ToastrService,
     private fb: FormBuilder,
   ) { }
@@ -68,12 +85,12 @@ export class AdminComponent implements OnInit {
   public getAllLogs(): void {
     this.isFiltering = false;
 
-    this.adminService.getLogAcessos(this.paginaAtual, this.itemsPorPagina).subscribe({
+    this.adminService.getLogAcessos(this.pagination.paginaAtual, this.pagination.itemsPorPagina).subscribe({
       next: (acessos: any) => {
 
         this.listLogs = acessos.itens;
         this.logsFiltrados = [...this.listLogs];
-        this.totalItens = acessos.totalItens;
+        this.pagination.totalItens = acessos.totalItens;
         this.spinner.hide();
       },
       error: () => {
@@ -83,7 +100,7 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  public getById(idVenda: number){
+  public getById(idVenda: number) {
     this.spinner.show();
     this.adminService.getSaleById(idVenda).subscribe({
       next: venda => {
@@ -92,9 +109,13 @@ export class AdminComponent implements OnInit {
         this.venda = venda;
         this.spinner.hide();
       },
-      error: () => {
+      error: (err) => {
         this.spinner.hide();
-        this.toastr.error('Error ao carregar Venda', 'Error')
+        if (err?.error?.mensagens?.length > 0) {
+          this.toastr.error(err.error.mensagens[0].descricao, 'Falha');
+        } else {
+          this.toastr.error('Error ao carregar Venda', 'Error');
+        }
       }
     });
   }
@@ -102,17 +123,17 @@ export class AdminComponent implements OnInit {
   public filtrarAcessos(nameFilter: string, resetPage: boolean = true): void {
     this.isFiltering = true;
 
-    if (resetPage) { this.paginaAtual = 1; }
+    if (resetPage) { this.pagination.paginaAtual = 1; }
 
     this.adminService.filterUserName(nameFilter.toLocaleLowerCase()).subscribe((data: any) => {
 
       this.logsFiltrados = data;
-      this.totalItens = this.logsFiltrados.length;
+      this.pagination.totalItens = this.logsFiltrados.length;
     });
   }
 
   public pularPagina(event: any): void {
-    this.paginaAtual = event;
+    this.pagination.paginaAtual = event;
 
     if (this.isFiltering) {
       this.filtrarAcessos(this.buscarName, false);
@@ -120,6 +141,45 @@ export class AdminComponent implements OnInit {
     } else {
       this.getAllLogs();
     }
+  }
+
+  public addPermissao() {
+    this.adminService.addPermissionToUser(this.userEmail, this.permission).subscribe({
+      next: () => {
+        this.toastr.success(`Permissão adicionada ao usuário ${this.userEmail}`, 'Sucesso');
+      },
+      error: (err) => {
+        if (err?.error?.mensagens?.length > 0) {
+          this.toastr.error(err.error.mensagens[0].descricao, 'Falha');
+        } else {
+          this.toastr.error("Ocorreu um erro interno.", 'Error');
+        }
+      }
+    })
+  }
+
+  public removePermissao() {
+    this.adminService.removePermissionFromUser(this.userEmail, this.permission).subscribe({
+      next: () => {
+        this.toastr.success(`Permissão removida do usuário ${this.userEmail}`, 'Sucesso');
+
+      },
+      error: (err) => {
+        if (err?.error?.mensagens?.length > 0) {
+          this.toastr.error(err.error.mensagens[0].descricao, 'Falha');
+        } else {
+          this.toastr.error("Ocorreu um erro interno.", 'Error');
+        }
+      }
+    })
+  }
+
+  abrirModalPermissao(template: TemplateRef<any>) {
+    this.modal = this.modalService.show(template, { class: 'modal-sm' });
+  }
+
+  fecharModalPermissao() {
+    this.modal.hide();
   }
 
   public resetFilters() {
@@ -131,12 +191,10 @@ export class AdminComponent implements OnInit {
   public idValidation(): void {
     this.form = this.fb.group({
       idLogAcesso: ['0',
-      [
-        Validators.required,
-        Validators.pattern('^[0-9]+$'),
-        Validators.min(0),
-        Validators.max(99999)
-      ]],
+        [
+          Validators.required,
+          Validators.pattern('^[0-9]+$'),
+        ]],
     }
     );
   }

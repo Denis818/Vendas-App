@@ -6,7 +6,8 @@
           <input type="text" class="form-control p-2 rounded sombra-input" placeholder="Filtrar por usuário"
             [(ngModel)]="filtroLista">
           <div class="input-group-prepend">
-            <div class="input-group-text  p-2 rounded sombra-input color-text cursor" (click)="resetFilters()">Limpar Filtro
+            <div class="input-group-text  p-2 rounded sombra-input color-text cursor" (click)="resetFilters()">Limpar
+              Filtro
             </div>
           </div>
         </div>
@@ -28,11 +29,7 @@
           </tr>
         </thead>
         <tbody *ngIf="listLogs && listLogs.length > 0">
-          <tr class="hover-table-row" *ngFor="let log of logsFiltrados | paginate:
-            { itemsPerPage: itemsPorPagina,
-              currentPage: paginaAtual,
-              totalItems: totalItens
-            }">
+          <tr class="hover-table-row" *ngFor="let log of logsFiltrados | paginate: paginator">
             <td class="text-center">{{log.id}}</td>
             <td class="text-center">{{log.userName}}</td>
             <td class="text-center">{{log.dataAcesso}}</td>
@@ -58,26 +55,31 @@
       <pagination-controls (pageChange)="pularPagina($event)"></pagination-controls>
     </div>
 
-    <label class="label-input">Buscar Venda Por ID</label>
-    <div class="d-flex justify-content-start align-items-center" [formGroup]="form">
-      <input type="text" class="form-control input-form"
-        [ngClass]="{'is-invalid': vendaValidator.idLogAcesso.errors && vendaValidator.idLogAcesso.touched}"
-        formControlName="idLogAcesso" placeholder="0" style="width: 55px; margin-right: 10px;">
+    <div class="row" [formGroup]="form">
+      <div class="col-2 col-md-4">
+        <label class="label-input">Buscar Venda Por ID</label>
+        <div class="input-group">
+          <input type="text" class="form-control input-buscar"
+            [ngClass]="{'is-invalid': vendaValidator.idLogAcesso.errors && vendaValidator.idLogAcesso.touched}"
+            formControlName="idLogAcesso" placeholder="0">
+          <button class="btn btn-primary" (click)="getById(form.get('idLogAcesso')?.value)">Buscar</button>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 text-md-right">
+        <button class="btn btn-success btn-sm btn-block btn-block-md" (click)="abrirModalPermissao(modalPermission)">
+          Dar Permissão ao Usuário
+        </button>
+      </div>
 
-      <button class="btn btn-primary ml-2" (click)="getById(form.get('idLogAcesso')?.value)">Buscar</button>
     </div>
+
+
 
     <div *ngIf=" vendaValidator.idLogAcesso.errors?.required" class="invalid-feedback d-block">
       ID é obrigatório.
     </div>
     <div *ngIf=" vendaValidator.idLogAcesso.errors?.pattern" class="invalid-feedback d-block">
       ID não é valido.
-    </div>
-    <div *ngIf=" vendaValidator.idLogAcesso.errors?.min" class="invalid-feedback d-block">
-      ID não pode ser menor que 0.
-    </div>
-    <div *ngIf=" vendaValidator.idLogAcesso.errors?.max" class="invalid-feedback d-block">
-      ID não pode ser maior que 9999.
     </div>
 
     <div *ngIf="exibirTabela" class="responsive-table modal-table scrollbar scrollbar-primary my-3" @slideIn>
@@ -112,5 +114,35 @@
       </table>
     </div>
 
+    <ng-template #modalPermission>
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Recipient:</label>
+                  <input type="text" class="form-control" id="recipient-name">
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Message:</label>
+                  <textarea class="form-control" id="message-text"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Send message</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
   </div>
 </div>
