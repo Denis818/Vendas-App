@@ -85,7 +85,7 @@ export class AdminComponent implements OnInit {
   public getAllLogs(): void {
     this.isFiltering = false;
 
-    this.adminService.getLogAcessos(this.pagination.paginaAtual, this.pagination.itemsPorPagina).subscribe({
+    this.adminService.getLogVendas(this.pagination.paginaAtual, this.pagination.itemsPorPagina).subscribe({
       next: (acessos: any) => {
 
         this.listLogs = acessos.itens;
