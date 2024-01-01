@@ -60,9 +60,9 @@
         <label class="label-input">Buscar Venda Por ID</label>
         <div class="input-group">
           <input type="text" class="form-control input-buscar"
-            [ngClass]="{'is-invalid': vendaValidator.idLogAcesso.errors && vendaValidator.idLogAcesso.touched}"
-            formControlName="idLogAcesso" placeholder="0">
-          <button class="btn btn-primary" (click)="getById(form.get('idLogAcesso')?.value)">Buscar</button>
+            [ngClass]="{'is-invalid': vendaValidator.idLogVenda.errors && vendaValidator.idLogVenda.touched}"
+            formControlName="idLogVenda" placeholder="0">
+          <button class="btn btn-primary" (click)="getById(form.get('idLogVenda')?.value)">Buscar</button>
         </div>
       </div>
      <!--  <div class="col-12 col-md-6 text-md-right">
@@ -75,10 +75,10 @@
 
 
 
-    <div *ngIf=" vendaValidator.idLogAcesso.errors?.required" class="invalid-feedback d-block">
+    <div *ngIf=" vendaValidator.idLogVenda.errors?.required" class="invalid-feedback d-block">
       ID é obrigatório.
     </div>
-    <div *ngIf=" vendaValidator.idLogAcesso.errors?.pattern" class="invalid-feedback d-block">
+    <div *ngIf=" vendaValidator.idLogVenda.errors?.pattern" class="invalid-feedback d-block">
       ID não é valido.
     </div>
 

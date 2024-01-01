@@ -2,7 +2,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { LogAcesso } from 'src/app/models/LogAcesso';
+import { LogVenda } from 'src/app/models/LogVenda';
 import { AdminService } from 'src/app/services/admin.service';
 import { Venda } from 'src/app/models/Venda';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -45,8 +45,8 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  public listLogs: LogAcesso[] = [];
-  public logsFiltrados: LogAcesso[] = [];
+  public listLogs: LogVenda[] = [];
+  public logsFiltrados: LogVenda[] = [];
   public buscarName: string = '';
   public isFiltering: boolean = false;
 
@@ -61,7 +61,7 @@ export class AdminComponent implements OnInit {
     this.buscarName = value;
 
     if (this.buscarName) {
-      this.filtrarAcessos(this.buscarName);
+      this.filtrarLogVenda(this.buscarName);
 
     } else {
       this.resetFilters();
@@ -86,11 +86,11 @@ export class AdminComponent implements OnInit {
     this.isFiltering = false;
 
     this.adminService.getLogVendas(this.pagination.paginaAtual, this.pagination.itemsPorPagina).subscribe({
-      next: (acessos: any) => {
+      next: (logVendas: any) => {
 
-        this.listLogs = acessos.itens;
+        this.listLogs = logVendas.itens;
         this.logsFiltrados = [...this.listLogs];
-        this.pagination.totalItens = acessos.totalItens;
+        this.pagination.totalItens = logVendas.totalItens;
         this.spinner.hide();
       },
       error: () => {
@@ -120,12 +120,12 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  public filtrarAcessos(nameFilter: string, resetPage: boolean = true): void {
+  public filtrarLogVenda(nameFilter: string, resetPage: boolean = true): void {
     this.isFiltering = true;
 
     if (resetPage) { this.pagination.paginaAtual = 1; }
 
-    this.adminService.filterUserName(nameFilter.toLocaleLowerCase()).subscribe((data: any) => {
+    this.adminService.filterUserEmail(nameFilter.toLocaleLowerCase()).subscribe((data: any) => {
 
       this.logsFiltrados = data;
       this.pagination.totalItens = this.logsFiltrados.length;
@@ -136,7 +136,7 @@ export class AdminComponent implements OnInit {
     this.pagination.paginaAtual = event;
 
     if (this.isFiltering) {
-      this.filtrarAcessos(this.buscarName, false);
+      this.filtrarLogVenda(this.buscarName, false);
 
     } else {
       this.getAllLogs();
@@ -190,7 +190,7 @@ export class AdminComponent implements OnInit {
 
   public idValidation(): void {
     this.form = this.fb.group({
-      idLogAcesso: ['0',
+      idLogVenda: ['0',
         [
           Validators.required,
           Validators.pattern('^[0-9]+$'),

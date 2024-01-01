@@ -2,8 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BaseService } from './base/BaseService.service';
 import { Observable } from 'rxjs';
-import { LogAcesso } from '../models/LogAcesso';
 import { Venda } from '../models/Venda';
+import { LogVenda } from '../models/LogVenda';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +19,11 @@ export class AdminService extends BaseService {
     return this.SendHttpRequest('GET', 'https://192.168.18.52:7109/api/Venda' + `/${id}`);
   }
 
-  public filterUserName(name: string): Observable<LogAcesso[]> {
-    return this.SendHttpRequest('GET', this.Url + `/filter?name=${name}`);
+  public filterUserEmail(email: string): Observable<LogVenda[]> {
+    return this.SendHttpRequest('GET', this.Url + `/filterByEmail?email=${email}`);
   }
 
-  public getLogVendas(paginaAtual: number, itensPorPagina: number): Observable<LogAcesso[]> {
+  public getLogVendas(paginaAtual: number, itensPorPagina: number): Observable<LogVenda[]> {
     const params = new HttpParams()
       .set('paginaAtual', paginaAtual.toString())
       .set('itensPorPagina', itensPorPagina.toString());

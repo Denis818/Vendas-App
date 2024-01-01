@@ -9,7 +9,7 @@ import { Venda } from '../models/Venda';
 })
 export class DashboardService extends BaseService {
 
-  private readonly Url = 'https://192.168.18.52:7109/api/Dashboard';
+  private readonly Url = 'https://192.168.18.52:7109/api/SalesSummary';
 
   constructor(http: HttpClient) {
     super(http);
@@ -20,14 +20,14 @@ export class DashboardService extends BaseService {
       .set('paginaAtual', paginaAtual.toString())
       .set('itensPorPagina', itensPorPagina.toString());
 
-    return this.SendHttpRequest('GET', this.Url + '/dia-atual', null, null, params);
+    return this.SendHttpRequest('GET', this.Url + '/vendas-do-dia-atual', null, null, params);
   }
 
   public getSalesSummary(): Observable<any> {
-    return this.SendHttpRequest('GET', this.Url + '/resumo-vendas');
+    return this.SendHttpRequest('GET', this.Url + '/analise-completa-vendas');
   }
 
   public getGroupSalesDay(): Observable<any> {
-    return this.SendHttpRequest('GET', this.Url + "/vendas-por-dia")
+    return this.SendHttpRequest('GET', this.Url + "/vendas-agrupadas-por-dia")
   }
 }

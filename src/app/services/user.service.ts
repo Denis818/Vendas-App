@@ -43,7 +43,7 @@ export class UserService extends BaseService {
     this.SendHttpRequest('GET', this.url + '/info')
       .subscribe({
         next: obj => {
-          localStorage.setItem('userEmail', obj.userEmail)
+          localStorage.setItem('userEmail', obj.email)
           localStorage.setItem('isAdmin', obj.isAdmin)
         },
         error: error =>{

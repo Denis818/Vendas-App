@@ -1,4 +1,4 @@
-export interface LogAcesso {
+export interface LogVenda{
   id: number,
   userName: string,
   dataAcesso: Date,

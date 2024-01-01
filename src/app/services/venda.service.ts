@@ -22,7 +22,7 @@ export class VendaService extends BaseService {
   }
 
   public filterSalesByName(name: string): Observable<Venda> {
-    return this.SendHttpRequest('GET', this.Url + `/filter?name=${name}`);
+    return this.SendHttpRequest('GET', this.Url + `/filterByName?name=${name}`);
   }
 
   public getSaleById(id: number): Observable<Venda> {
