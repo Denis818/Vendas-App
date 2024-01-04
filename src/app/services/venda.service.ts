@@ -7,7 +7,7 @@ import { Venda } from "../models/Venda";
 @Injectable()
 export class VendaService extends BaseService {
 
-  private readonly Url = 'https://192.168.18.52:7109/api/Venda';
+  private readonly Url = 'https://192.168.18.52:7109/api/Sales';
 
   constructor(http: HttpClient) {
     super(http);
@@ -22,7 +22,7 @@ export class VendaService extends BaseService {
   }
 
   public filterSalesByName(name: string): Observable<Venda> {
-    return this.SendHttpRequest('GET', this.Url + `/filterByName?name=${name}`);
+    return this.SendHttpRequest('GET', this.Url + `/by-name?name=${name}`);
   }
 
   public getSaleById(id: number): Observable<Venda> {
@@ -38,7 +38,7 @@ export class VendaService extends BaseService {
       params = params.set('endDate', this.formatDateForAPI(endDate));
     }
 
-    return this.SendHttpRequest('GET', this.Url + '/por-periodo', null, null, params);
+    return this.SendHttpRequest('GET', this.Url + '/by-period', null, null, params);
   }
 
   public insertSale(venda: Venda) {
@@ -54,7 +54,7 @@ export class VendaService extends BaseService {
   }
 
   public deleteAllSale(ids: number[]) {
-    return this.SendHttpRequest('DELETE', this.Url + '/DeleteRange', ids)
+    return this.SendHttpRequest('DELETE', this.Url + '/delete-range', ids)
   }
 
   private formatDateForAPI(date: Date): string {

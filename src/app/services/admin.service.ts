@@ -10,17 +10,17 @@ import { LogVenda } from '../models/LogVenda';
 })
 export class AdminService extends BaseService {
 
-  private readonly Url = 'https://192.168.18.52:7109/api/LogVenda';
-  private readonly urlUser: string = 'https://192.168.18.52:7109/User';
+  private readonly Url = 'https://192.168.18.52:7109/api/LogSales';
+  private readonly urlUser: string = 'https://192.168.18.52:7109/Users';
 
   constructor(http: HttpClient) { super(http); }
 
   public getSaleById(id: number): Observable<Venda> {
-    return this.SendHttpRequest('GET', 'https://192.168.18.52:7109/api/Venda' + `/${id}`);
+    return this.SendHttpRequest('GET', 'https://192.168.18.52:7109/api/Sales' + `/${id}`);
   }
 
   public filterUserEmail(email: string): Observable<LogVenda[]> {
-    return this.SendHttpRequest('GET', this.Url + `/filterByEmail?email=${email}`);
+    return this.SendHttpRequest('GET', this.Url + `/by-email?email=${email}`);
   }
 
   public getLogVendas(paginaAtual: number, itensPorPagina: number): Observable<LogVenda[]> {

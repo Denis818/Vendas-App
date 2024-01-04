@@ -20,14 +20,14 @@ export class DashboardService extends BaseService {
       .set('paginaAtual', paginaAtual.toString())
       .set('itensPorPagina', itensPorPagina.toString());
 
-    return this.SendHttpRequest('GET', this.Url + '/vendas-do-dia-atual', null, null, params);
-  }
-
-  public getSalesSummary(): Observable<any> {
-    return this.SendHttpRequest('GET', this.Url + '/analise-completa-vendas');
+    return this.SendHttpRequest('GET', this.Url + '/today', null, null, params);
   }
 
   public getGroupSalesDay(): Observable<any> {
-    return this.SendHttpRequest('GET', this.Url + "/vendas-agrupadas-por-dia")
+    return this.SendHttpRequest('GET', this.Url + "/group-by-day")
+  }
+
+  public getSalesSummary(): Observable<any> {
+    return this.SendHttpRequest('GET', this.Url + '/summary');
   }
 }
