@@ -28,6 +28,6 @@ export class DashboardService extends BaseService {
   }
 
   public getSalesSummary(): Observable<any> {
-    return this.SendHttpRequest('GET', this.Url + '/summary');
+    return this.SendHttpRequest('GET', this.Url);
   }
 }
