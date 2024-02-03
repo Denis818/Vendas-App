@@ -10,13 +10,13 @@ import { LogVenda } from '../models/LogVenda';
 })
 export class AdminService extends BaseService {
 
-  private readonly Url = 'https://192.168.18.52:7109/api/LogSales';
-  private readonly urlUser: string = 'https://192.168.18.52:7109/Users';
+  private readonly Url = 'http://localhost:5000/api/LogSales';
+  private readonly urlUser: string = 'http://localhost:5000/Users';
 
   constructor(http: HttpClient) { super(http); }
 
   public getSaleById(id: number): Observable<Venda> {
-    return this.SendHttpRequest('GET', 'https://192.168.18.52:7109/api/Sales' + `/${id}`);
+    return this.SendHttpRequest('GET', 'http://localhost:5000/api/Sales' + `/${id}`);
   }
 
   public filterUserEmail(email: string): Observable<LogVenda[]> {
