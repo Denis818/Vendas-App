@@ -9,7 +9,7 @@ import { Venda } from '../models/Venda';
 })
 export class DashboardService extends BaseService {
 
-  private readonly Url = 'http://localhost:5000/api/SalesSummary';
+  private readonly Url = `${this.urlBase}/api/SalesSummary`;
 
   constructor(http: HttpClient) {
     super(http);

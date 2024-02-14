@@ -7,7 +7,7 @@ import { Venda } from "../models/Venda";
 @Injectable()
 export class VendaService extends BaseService {
 
-  private readonly Url = 'http://localhost:5000/api/Sales';
+  private readonly Url = `${this.urlBase}/api/Sales`;
 
   constructor(http: HttpClient) {
     super(http);

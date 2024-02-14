@@ -183,6 +183,11 @@ export class DashboardComponent implements OnInit {
   }
 
   private processarResumoVendas(produto: any) {
+    if (!produto) {
+      this.spinner.hide();
+      this.toastr.warning("Nenhum dado de venda encontrado.", 'Aviso')
+      return;
+    }
     this.resumoVendas.mediaDeVendaPorDia = produto.mediaDeVendaPorDia;
     this.resumoVendas.produtoMaisVendido = produto.produtoMaisVendido;
     this.resumoVendas.totalDeTodasAsVendas = produto.totalDeTodasAsVendas;
@@ -191,6 +196,11 @@ export class DashboardComponent implements OnInit {
   }
 
   private processarGraficoDeVendas(produto: any[]) {
+    if (!produto) {
+      this.spinner.hide();
+      return;
+    }
+
     this.graficoVendasPorDiaLabel = produto
       .map((venda: any) => venda.dia);
 
@@ -199,6 +209,11 @@ export class DashboardComponent implements OnInit {
   }
 
   private getProdutosResumoVendas(produtosResumoVendas: any[]) {
+
+    if (!produtosResumoVendas) {
+      this.spinner.hide();
+      return;
+    }
     this.produtosResumoLabels = produtosResumoVendas
       .map(produto => produto.nome);
 

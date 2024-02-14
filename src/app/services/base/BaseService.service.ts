@@ -7,6 +7,8 @@ export abstract class BaseService {
 
   constructor(private http: HttpClient) { }
 
+  protected urlBase :string = "http://localhost:5000"
+
   protected SendHttpRequest(metodo: string, url: string, dados?: any,
     contentType?: any, params?: HttpParams): Observable<any> {
 
