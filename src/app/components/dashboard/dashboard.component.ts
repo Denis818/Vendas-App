@@ -2,7 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ChartOptions } from 'chart.js';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { forkJoin } from 'rxjs';
 import { trigger, state, style, animate, transition, } from '@angular/animations';
 import { DashboardService } from 'src/app/services/dashboard.service';
 import { BaseChartDirective } from 'ng2-charts';
@@ -134,36 +133,31 @@ export class DashboardComponent implements OnInit {
   }
 
   private carregarDados() {
-    forkJoin({
-      resumoVendas: this.dashboardServices.getSalesSummary(),
-      graficoVendas: this.dashboardServices.getGroupSalesDay(),
-    }).subscribe({
-      next: results => {
-        this.processarResumoVendas(results.resumoVendas);
-        this.processarGraficoDeVendas(results.graficoVendas);
+    this.dashboardServices.getSalesSummary().subscribe({
+      next: (resumoVendas) => {
+        this.processarResumoVendas(resumoVendas);
+
+        this.dashboardServices.getGroupSalesDay().subscribe({
+          next: (graficoVendas) => {
+            this.processarGraficoDeVendas(graficoVendas);
+          },
+          error: (err) => this.error(err, 'Erro ao carregar grafico das vendas.')
+        });
       },
-      error: (err) => {
-        this.spinner.hide();
-        if (err?.error?.mensagens?.length > 0) {
-          this.toastr.error(err.error.mensagens[0].descricao, 'Falha');
-        } else {
-          this.toastr.error('Erro ao carregar os dados.', 'Error');
-        }
-      },
+      error: (err) => this.error(err, 'Erro ao carregar resumo das vendas.'),
       complete: () => {
         this.spinner.hide();
       }
     });
-  }
+  };
 
-  scrollToTabela() {
+  public scrollToTabela(): void {
     setTimeout(() => {
       if (this.tabela && this.tabela.nativeElement) {
         this.tabela.nativeElement.scrollIntoView({ behavior: 'smooth' });
       }
     }, 100);
   }
-
 
   private GetTodaysSalesDate() {
     this.dashboardServices.GetTodaysSalesDate(this.pagination.paginaAtual, this.pagination.itemsPorPagina)
@@ -172,27 +166,21 @@ export class DashboardComponent implements OnInit {
           this.listVendas = vendas.itens;
           this.pagination.totalItens = vendas.totalItens
         },
-        error: (err) => {
-          if (err?.error?.mensagens?.length > 0) {
-            this.toastr.error(err.error.mensagens[0].descricao, 'Falha');
-          } else {
-            this.toastr.error('Erro ao carregar os dados.', 'Error');
-          }
-        }
+        error: (err) => this.error(err, 'Erro ao carregar data das vendas de hoje.')
       });
   }
 
-  private processarResumoVendas(produto: any) {
-    if (!produto) {
+  private processarResumoVendas(resumoVendas: any) {
+    if (!resumoVendas) {
       this.spinner.hide();
       this.toastr.warning("Nenhum dado de venda encontrado.", 'Aviso')
       return;
     }
-    this.resumoVendas.mediaDeVendaPorDia = produto.mediaDeVendaPorDia;
-    this.resumoVendas.produtoMaisVendido = produto.produtoMaisVendido;
-    this.resumoVendas.totalDeTodasAsVendas = produto.totalDeTodasAsVendas;
-    this.resumoVendas.totalVendasHoje = produto.totalVendasHoje;
-    this.getProdutosResumoVendas(produto.produtosResumo);
+    this.resumoVendas.mediaDeVendaPorDia = resumoVendas.mediaDeVendaPorDia;
+    this.resumoVendas.produtoMaisVendido = resumoVendas.produtoMaisVendido;
+    this.resumoVendas.totalDeTodasAsVendas = resumoVendas.totalDeTodasAsVendas;
+    this.resumoVendas.totalVendasHoje = resumoVendas.totalVendasHoje;
+    this.getProdutosResumoVendas(resumoVendas.produtosResumo);
   }
 
   private processarGraficoDeVendas(produto: any[]) {
@@ -279,5 +267,14 @@ export class DashboardComponent implements OnInit {
   public pularPagina(event: number): void {
     this.pagination.paginaAtual = event;
     this.GetTodaysSalesDate();
+  }
+
+  public error(err: any, message: string = "Erro ao carregar."): void {
+    this.spinner.hide();
+    if (err?.error?.mensagens?.length > 0) {
+      this.toastr.error(err.error.mensagens[0].descricao, 'Falha');
+    } else {
+      this.toastr.error(`${message}`, 'Error');
+    }
   }
 }
