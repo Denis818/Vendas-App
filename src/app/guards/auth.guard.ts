@@ -9,26 +9,30 @@ class AuthGuard {
     const router = inject(Router);
 
     const token = localStorage.getItem('token');
+    const expiration = localStorage.getItem('expirationToken');
 
-    const DateNowUTC = new Date(new Date().toISOString());
-    const expirationDate = this.formatDate(localStorage.getItem('expirationToken'));
+    if (token && expiration) {
+      const expirationDate = new Date(expiration);
+      const now = new Date();
 
-    if (!token || expirationDate <= DateNowUTC) {
-      this.resetLocalStorage();
+      const nowUTC = new Date(Date.UTC(
+        now.getFullYear(), now.getMonth(),
+        now.getDate(), now.getHours(),
+        now.getMinutes(), now.getSeconds())
+      );
+
+      if (expirationDate <= nowUTC) {
+        console.log(`Data da API: ${expirationDate} | Data do Angular: ${nowUTC}`);
+        this.resetLocalStorage();
+        router.navigateByUrl('/login');
+        return false;
+      }
+
+    } else {
       router.navigateByUrl('/login');
       return false;
     }
     return true;
-  }
-
-  private formatDate(date: any): Date {
-    if (date) {
-      const [dia, mes, ano, horas, minutos, segundos] = date.split(/[\s:/]/).map(Number);
-
-      return new Date(Date.UTC(ano, mes - 1, dia, horas, minutos, segundos));
-    }
-
-    return new Date(new Date().toISOString());
   }
 
   private resetLocalStorage(): void {
