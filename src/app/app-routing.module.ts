@@ -1,18 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListVendaComponent } from './components/vendas/listVenda/listVenda.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegisterComponent } from './components/user/register/register.component';
-import { authGuard } from './guards/auth.guard';
+import { ListVendaComponent } from './components/vendas/list-venda/list-venda.component';
 import { VendaComponent } from './components/vendas/venda.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { AdminComponent } from './components/admin/admin.component';
+import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [authGuard],
+  },
 
-  { path: 'venda', component: VendaComponent,  canActivate: [authGuard],
-    children: [ { path: 'lista', component: ListVendaComponent, } ]
+  {
+    path: 'venda',
+    component: VendaComponent,
+    canActivate: [authGuard],
+    children: [{ path: 'lista', component: ListVendaComponent }],
   },
 
   { path: 'register', component: RegisterComponent },
@@ -26,6 +33,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

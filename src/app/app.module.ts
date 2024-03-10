@@ -1,31 +1,30 @@
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgChartsModule } from 'ng2-charts';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { AppRoutingModule } from './app-routing.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgChartsModule } from 'ng2-charts';
-import { ToastrModule } from 'ngx-toastr';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ToastrModule } from 'ngx-toastr';
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { ListVendaComponent } from './components/vendas/listVenda/listVenda.component';
+import { ListVendaComponent } from './components/vendas/list-venda/list-venda.component';
 import { NavComponent } from './shared/navbar/nav.component';
 
-import { VendaService } from './services/venda.service';
-import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { AdminComponent } from './components/admin/admin.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegisterComponent } from './components/user/register/register.component';
 import { VendaComponent } from './components/vendas/venda.component';
-import { NgxSpinnerModule } from 'ngx-spinner';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { AdminComponent } from './components/admin/admin.component';
-
+import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
+import { VendaService } from './services/venda.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +36,7 @@ import { AdminComponent } from './components/admin/admin.component';
     DateTimeFormatPipe,
     VendaComponent,
     DashboardComponent,
-    AdminComponent
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,12 +57,10 @@ import { AdminComponent } from './components/admin/admin.component';
       timeOut: 3000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
-      progressBar: true
-    })
+      progressBar: true,
+    }),
   ],
-  providers: [
-    VendaService
-  ],
-  bootstrap: [AppComponent]
+  providers: [VendaService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,9 +1,14 @@
 <div class="dashboard-container dashboard-container-style">
   <div class="dashboard-cards dashboard-cards-style">
-    <div class="card card-style" (click)="toggleTabela(); scrollToTabela();">
+    <div class="card card-style" (click)="toggleTabela(); scrollToTabela()">
       <h3 class="title title-style">Clique para ver as vendas de Hoje</h3>
-      <p class="card-value"
-        [ngClass]="{'color-negativo': resumoVendas.totalVendasHoje < 30, 'color-positivo': resumoVendas.totalVendasHoje >= 30}">
+      <p
+        class="card-value"
+        [ngClass]="{
+          'color-negativo': resumoVendas.totalVendasHoje < 30,
+          'color-positivo': resumoVendas.totalVendasHoje >= 30
+        }"
+      >
         R$ {{ resumoVendas.totalVendasHoje.toFixed(2) }}
         <span *ngIf="resumoVendas.totalVendasHoje < 30">↓</span>
         <span *ngIf="resumoVendas.totalVendasHoje >= 30">↑</span>
@@ -11,8 +16,13 @@
     </div>
     <div class="card card-style">
       <h3 class="title title-style">Medía das Vendas por Dia</h3>
-      <p class="card-value"
-        [ngClass]="{'color-negativo': resumoVendas.mediaDeVendaPorDia < 30, 'color-positivo': resumoVendas.mediaDeVendaPorDia >= 30}">
+      <p
+        class="card-value"
+        [ngClass]="{
+          'color-negativo': resumoVendas.mediaDeVendaPorDia < 30,
+          'color-positivo': resumoVendas.mediaDeVendaPorDia >= 30
+        }"
+      >
         R$ {{ resumoVendas.mediaDeVendaPorDia.toFixed(2) }}
         <span *ngIf="resumoVendas.mediaDeVendaPorDia < 20">↓</span>
         <span *ngIf="resumoVendas.mediaDeVendaPorDia >= 20">↑</span>
@@ -20,12 +30,19 @@
     </div>
     <div class="card card-style">
       <h3 class="title title-style">Mais Vendido da Semana</h3>
-      <p class="card-value" style="color: #008080 !important;">{{ resumoVendas.produtoMaisVendido }}</p>
+      <p class="card-value" style="color: #008080 !important">
+        {{ resumoVendas.produtoMaisVendido }}
+      </p>
     </div>
     <div class="card card-style">
       <h3 class="title title-style">Total das Vendas</h3>
-      <p class="card-value"
-        [ngClass]="{'color-negativo': resumoVendas.totalDeTodasAsVendas < 30, 'color-positivo': resumoVendas.totalDeTodasAsVendas >= 30}">
+      <p
+        class="card-value"
+        [ngClass]="{
+          'color-negativo': resumoVendas.totalDeTodasAsVendas < 30,
+          'color-positivo': resumoVendas.totalDeTodasAsVendas >= 30
+        }"
+      >
         R$ {{ resumoVendas.totalDeTodasAsVendas.toFixed(2) }}
         <span *ngIf="resumoVendas.totalDeTodasAsVendas < 40">↓</span>
         <span *ngIf="resumoVendas.totalDeTodasAsVendas >= 40">↑</span>
@@ -33,8 +50,13 @@
     </div>
   </div>
 
-  <div *ngIf="exibirTabela" #tabela class="responsive-table modal-table scrollbar scrollbar-primary" style=" width: 100% important;"
-    @slideIn>
+  <div
+    *ngIf="exibirTabela"
+    #tabela
+    class="responsive-table modal-table scrollbar scrollbar-primary"
+    style="width: 100% important"
+    @slideIn
+  >
     <table class="table dark-table table-striped">
       <thead>
         <th class="text-center">#ID</th>
@@ -45,13 +67,16 @@
         <th class="text-center">Total</th>
       </thead>
       <tbody *ngIf="listVendas && listVendas.length > 0">
-        <tr *ngFor="let venda of listVendas | paginate: paginator" class="hover-table-row">
-          <td class="text-center">{{venda.id}}</td>
-          <td class="text-center teste">{{venda.nome}}</td>
-          <td class="text-center">R$ {{venda.preco.toFixed(2)}}</td>
-          <td class="text-center">{{venda.quantidadeVendido}}</td>
-          <td class="text-center">{{venda.dataVenda}}</td>
-          <td class="text-center">R$ {{venda.totalDaVenda.toFixed(2)}}</td>
+        <tr
+          *ngFor="let venda of listVendas | paginate : paginator"
+          class="hover-table-row"
+        >
+          <td class="text-center">{{ venda.id }}</td>
+          <td class="text-center teste">{{ venda.nome }}</td>
+          <td class="text-center">R$ {{ venda.preco.toFixed(2) }}</td>
+          <td class="text-center">{{ venda.quantidadeVendido }}</td>
+          <td class="text-center">{{ venda.dataVenda }}</td>
+          <td class="text-center">R$ {{ venda.totalDaVenda.toFixed(2) }}</td>
           <td (click)="exibirVenda(venda)"><i class="fa fa-pencil"></i></td>
         </tr>
       </tbody>
@@ -66,23 +91,40 @@
   </div>
 
   <div *ngIf="exibirTabela" class="d-flex justify-content-end" @slideIn>
-    <pagination-controls (pageChange)="pularPagina($event)"></pagination-controls>
+    <pagination-controls
+      (pageChange)="pularPagina($event)"
+    ></pagination-controls>
   </div>
 
   <div class="chart-flex-container chart-flex-container-style">
     <div class="chart-container chart-container-style">
-      <h1 class="title title-grafico-style">Resumo das vendas de cada Produto</h1>
+      <h1 class="title title-grafico-style">
+        Resumo das vendas de cada Produto
+      </h1>
       <div class="chart-scroll-container bar-chart-container">
-        <canvas baseChart [type]="'bar'" [datasets]="produtosResumoDatasets" [labels]="produtosResumoLabels"
-          width="2000" height="500" [options]="chartOptionsProdutosResumo" (chartClick)="chartClicked($event)"></canvas>
+        <canvas
+          baseChart
+          [type]="'bar'"
+          [datasets]="produtosResumoDatasets"
+          [labels]="produtosResumoLabels"
+          width="2000"
+          height="500"
+          [options]="chartOptionsProdutosResumo"
+          (chartClick)="chartClicked($event)"
+        ></canvas>
       </div>
     </div>
 
     <div class="chart-container chart-container-style">
       <h1 class="title title-grafico-style">Total das Vendas por Dia</h1>
       <div class="chart-scroll-container pie-chart-container">
-        <canvas baseChart [type]="'pie'" [datasets]="graficoVendasPorDiaDados" [labels]="graficoVendasPorDiaLabel"
-          [options]="chartOptionsGraficoVendas"></canvas>
+        <canvas
+          baseChart
+          [type]="'pie'"
+          [datasets]="graficoVendasPorDiaDados"
+          [labels]="graficoVendasPorDiaLabel"
+          [options]="chartOptionsGraficoVendas"
+        ></canvas>
       </div>
     </div>
   </div>

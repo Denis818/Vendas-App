@@ -1,152 +1,153 @@
-body.dark {
-  background-color: #222 !important;
-  color: #ddd !important;
+body {
+  &.dark {
+    background-color: #222;
+    color: #ddd;
+    .card {
+      background-color: #333;
+      color: #f0f0f0;
+    }
+    .modal-body {
+      background-color: #333;
+      color: #f0f0f0;
+    }
+    p {
+      color: #f0f0f0;
+    }
+    .nav-link {
+      color: #f0f0f0;
+    }
+    label {
+      color: #f0f0f0;
+    }
+    div {
+      color: #f0f0f0;
+    }
+  }
 }
 
-body.dark .card {
-  background-color: #333 !important;
-  color: #f0f0f0 !important;
+:root {
+  --denis: white;
+
+  &[data-bs-theme="dark"] {
+    --denis: black;
+  }
 }
 
 .shadow-sm {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important; // Define a sombra da borda mais escura para o modo escuro
-}
-
-body.dark .modal-body {
-  background-color: #333 !important;
-  color: #f0f0f0 !important;
-}
-
-body.dark p {
-  color: #f0f0f0 !important;
-}
-
-body.dark .nav-link {
-  color: #f0f0f0 !important;
-}
-
-body.dark label {
-  color: #f0f0f0 !important;
-}
-
-body.dark div {
-  color: #f0f0f0 !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); // Define a sombra da borda mais escura para o modo escuro
 }
 
 body.dark i {
-  color: #f0f0f0 !important;
+  color: #f0f0f0;
 }
 
 body.dark .dropdown-menu {
-  background-color: #333 !important;
+  background-color: #333;
 }
 
 body.dark .dropdown-item:hover {
-  background-color: #222 !important;
-  color: #f0f0f0 !important;
+  background-color: #222;
+  color: #f0f0f0;
 }
 
 body.dark a {
-  color: #f0f0f0 !important;
+  color: #f0f0f0;
 }
 
 body.light .white-icon {
-  color: #000 !important;
+  color: #000;
 }
 
 body.dark .white-icon {
-  color: #fff !important;
+  color: #fff;
 }
 
 body.dark .input-group-text {
-  color: #000 !important;
+  color: #000;
 }
 
 body.dark .color-text {
-  color: #708090 !important;
+  color: #708090;
 }
 
 .btn-outline-light:hover i,
 .btn-outline-light:focus i {
-  color: #000 !important;
+  color: #000;
 }
 
 .btn-outline-light:not(:hover):not(:focus) i {
-  color: #fff !important;
+  color: #fff;
 }
 
 .btn-outline-light:not(:hover):not(:focus) {
-  color: #fff !important;
+  color: #fff;
 }
 
 body.dark .list-group-item {
-  background-color: #333 !important;
+  background-color: #333;
 }
 
 body.dark .color-positivo {
-  color: #0fe400 !important;
+  color: #0fe400;
 }
 
 body.dark .color-negativo {
-  color: red !important;
+  color: red;
 }
 
 /* table */
 body.dark .dark-table {
-  color: #EAEAEA !important;
-  background-color: #2e2e2e !important;
+  color: #eaeaea;
+  background-color: #2e2e2e;
 }
 
 body.dark .dark-table thead {
-  background-color: #2e2e2e !important;
+  background-color: #2e2e2e;
 }
 
 body.dark .dark-table thead th {
-  background-color: #2e2e2e !important;
-  color: #e9ecef !important;
-  border: none !important;
+  background-color: #2e2e2e;
+  color: #e9ecef;
+  border: none;
 }
 
 body.dark .dark-table tbody tr {
-  border: none !important;
+  border: none;
 }
 
 body.dark .dark-table tbody tr:nth-child(even) {
-  background-color: #282828 !important;
+  background-color: #282828;
 }
 
 body.dark .dark-table tbody td {
-  padding: 10px 15px !important;
-  border: none !important;
-  background-color: #2e2e2ee2 !important;
-  color: #e9ecef !important;
-
+  padding: 10px 15px;
+  border: none;
+  background-color: #2e2e2ee2;
+  color: #e9ecef;
 }
 
 body.dark .dark-table tbody tr:hover {
-  background-color: #302f2fc8 !important;
+  background-color: #302f2fc8;
 }
 
 body.dark .dark-table tbody tr:last-child {
-  border-bottom: none !important;
+  border-bottom: none;
 }
 
 body.dark .tfoot-dark {
-  background-color: #333333 !important;
+  background-color: #333333;
 }
 
 /* end table */
 
-
 /* calendario */
 body.dark .bs-datepicker-body {
-  background-color: rgba(29, 29, 29, 0.409) !important;
+  background-color: rgba(29, 29, 29, 0.409);
   border: none;
-
 }
 
 body.dark .bs-datepicker-container {
-  background-color: rgb(22 22 22 / 79%) !important;
+  background-color: rgb(22 22 22 / 79%);
 }
 
 /* end calendario */
@@ -154,30 +155,30 @@ body.dark .bs-datepicker-container {
 /* pagination */
 body.dark .ngx-pagination a,
 .ngx-pagination button {
-  color: #54708b !important;
-  background-color: #2e2e2e !important;
-  border-radius: 5px !important;
+  color: #54708b;
+  background-color: #2e2e2e;
+  border-radius: 5px;
 }
 
 body.dark .ngx-pagination .current {
-  padding: .1875rem .625rem !important;
-  background: #212121 !important;
-  color: #fefefe !important;
-  cursor: default !important;
-  border-radius: 5px !important;
+  padding: 0.1875rem 0.625rem;
+  background: #212121;
+  color: #fefefe;
+  cursor: default;
+  border-radius: 5px;
 }
 
 body.dark .page-link {
-  background: #2e2e2e !important;
-  border: var(--bs-pagination-border-width) solid #54708b !important;
+  background: #2e2e2e;
+  border: var(--bs-pagination-border-width) solid #54708b;
 }
 
-body.dark .navbar-toggler{
-  background-color: #0e0e0e !important;
+body.dark .navbar-toggler {
+  background-color: #0e0e0e;
 }
 body.dark .selected {
-  background-color: #007bff !important;
-  color: white !important;
+  background-color: #007bff;
+  color: white;
 }
 
 /* end pagination */

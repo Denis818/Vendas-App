@@ -3,11 +3,18 @@
     <div class="d-flex">
       <div class="flex-fill pr-3">
         <div class="input-group mb-2">
-          <input type="text" class="form-control p-2 rounded sombra-input" placeholder="Filtrar por usuário"
-            [(ngModel)]="filtroLista">
+          <input
+            type="text"
+            class="form-control p-2 rounded sombra-input"
+            placeholder="Filtrar por usuário"
+            [(ngModel)]="filtroLista"
+          />
           <div class="input-group-prepend">
-            <div class="input-group-text  p-2 rounded sombra-input color-text cursor" (click)="resetFilters()">Limpar
-              Filtro
+            <div
+              class="input-group-text p-2 rounded sombra-input color-text cursor"
+              (click)="resetFilters()"
+            >
+              Limpar Filtro
             </div>
           </div>
         </div>
@@ -29,16 +36,26 @@
           </tr>
         </thead>
         <tbody *ngIf="listLogs && listLogs.length > 0">
-          <tr class="hover-table-row" *ngFor="let log of logsFiltrados | paginate: paginator">
-            <td class="text-center">{{log.id}}</td>
-            <td class="text-center">{{log.userName}}</td>
-            <td class="text-center">{{log.dataAcesso}}</td>
-            <td class="text-center">{{log.vendaId}}</td>
-            <td class="text-center">{{log.nomeProduto}}</td>
-            <td class="text-center">R$ {{log.precoProduto.toFixed(2)}}</td>
-            <td class="text-center">{{log.quantidadeVendido}}</td>
-            <td class="text-center"
-              [innerHTML]="log.acao == 'Atualização de Venda' ? log.acao + '<br> (Dados da venda antiga)' : log.acao">
+          <tr
+            class="hover-table-row"
+            *ngFor="let log of logsFiltrados | paginate : paginator"
+          >
+            <td class="text-center">{{ log.id }}</td>
+            <td class="text-center">{{ log.userName }}</td>
+            <td class="text-center">{{ log.dataAcesso }}</td>
+            <td class="text-center">{{ log.vendaId }}</td>
+            <td class="text-center">{{ log.nomeProduto }}</td>
+            <td class="text-center">R$ {{ log.precoProduto.toFixed(2) }}</td>
+            <td class="text-center">{{ log.quantidadeVendido }}</td>
+            <td class="text-center">
+              <span
+                *ngIf="log.acao == 'Atualização de Venda'; else logTemplate"
+              >
+                {{ log.acao }} <br />(Dados da venda antiga)
+              </span>
+              <ng-template #logTemplate>
+                <span>{{ log.acao }}</span>
+              </ng-template>
             </td>
           </tr>
         </tbody>
@@ -52,37 +69,58 @@
       </table>
     </div>
     <div class="pagination-center">
-      <pagination-controls (pageChange)="pularPagina($event)"></pagination-controls>
+      <pagination-controls
+        (pageChange)="pularPagina($event)"
+      ></pagination-controls>
     </div>
 
     <div class="row" [formGroup]="form">
       <div class="col-2 col-md-4">
         <label class="label-input">Buscar Venda Por ID</label>
         <div class="input-group">
-          <input type="text" class="form-control input-buscar"
-            [ngClass]="{'is-invalid': vendaValidator.idLogVenda.errors && vendaValidator.idLogVenda.touched}"
-            formControlName="idLogVenda" placeholder="0">
-          <button class="btn btn-primary" (click)="getById(form.get('idLogVenda')?.value)">Buscar</button>
+          <input
+            type="text"
+            class="form-control input-buscar"
+            [class.is-invalid]="
+              vendaValidator.idLogVenda.errors &&
+              vendaValidator.idLogVenda.touched
+            "
+            formControlName="idLogVenda"
+            placeholder="0"
+          />
+          <button
+            class="btn btn-primary"
+            (click)="getById(form.get('idLogVenda')?.value)"
+          >
+            Buscar
+          </button>
         </div>
       </div>
-     <!--  <div class="col-12 col-md-6 text-md-right">
+      <!--  <div class="col-12 col-md-6 text-md-right">
         <button class="btn btn-success btn-sm btn-block btn-block-md" (click)="abrirModalPermissao(modalPermission)">
           Dar Permissão ao Usuário
         </button>
       </div> -->
-
     </div>
 
-
-
-    <div *ngIf=" vendaValidator.idLogVenda.errors?.required" class="invalid-feedback d-block">
+    <div
+      *ngIf="vendaValidator.idLogVenda.errors?.required"
+      class="invalid-feedback d-block"
+    >
       ID é obrigatório.
     </div>
-    <div *ngIf=" vendaValidator.idLogVenda.errors?.pattern" class="invalid-feedback d-block">
+    <div
+      *ngIf="vendaValidator.idLogVenda.errors?.pattern"
+      class="invalid-feedback d-block"
+    >
       ID não é valido.
     </div>
 
-    <div *ngIf="exibirTabela" class="responsive-table modal-table scrollbar scrollbar-primary my-3" @slideIn>
+    <div
+      *ngIf="exibirTabela"
+      class="responsive-table modal-table scrollbar scrollbar-primary my-3"
+      @slideIn
+    >
       <table class="table dark-table table-striped">
         <thead>
           <th class="text-center">#ID</th>
@@ -94,55 +132,72 @@
         </thead>
         <tbody *ngIf="venda; else noVenda">
           <tr class="hover-table-row">
-            <td class="text-center">{{venda.id}}</td>
-            <td class="text-center teste">{{venda.nome}}</td>
-            <td class="text-center">R$ {{venda.preco}}</td>
-            <td class="text-center">{{venda.quantidadeVendido}}</td>
-            <td class="text-center">{{venda.dataVenda}}</td>
-            <td class="text-center">R$ {{venda.totalDaVenda}}</td>
+            <td class="text-center">{{ venda.id }}</td>
+            <td class="text-center teste">{{ venda.nome }}</td>
+            <td class="text-center">R$ {{ venda.preco }}</td>
+            <td class="text-center">{{ venda.quantidadeVendido }}</td>
+            <td class="text-center">{{ venda.dataVenda }}</td>
+            <td class="text-center">R$ {{ venda.totalDaVenda }}</td>
           </tr>
         </tbody>
-        <ng-template #noVenda>
-          <tfoot>
-            <tr>
-              <td colspan="8" class="text-center tfoot-dark">
-                <h4>Nenhuma venda encontrada!</h4>
-              </td>
-            </tr>
-          </tfoot>
-        </ng-template>
       </table>
     </div>
-
-    <ng-template #modalPermission>
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Recipient:</label>
-                  <input type="text" class="form-control" id="recipient-name">
-                </div>
-                <div class="form-group">
-                  <label for="message-text" class="col-form-label">Message:</label>
-                  <textarea class="form-control" id="message-text"></textarea>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Send message</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </ng-template>
   </div>
 </div>
+
+<ng-template #modalPermission>
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label"
+                >Recipient:</label
+              >
+              <input type="text" class="form-control" id="recipient-name" />
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Message:</label>
+              <textarea class="form-control" id="message-text"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" class="btn btn-primary">Send message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noVenda>
+  <tfoot>
+    <tr>
+      <td colspan="8" class="text-center tfoot-dark">
+        <h4>Nenhuma venda encontrada!</h4>
+      </td>
+    </tr>
+  </tfoot>
+</ng-template>

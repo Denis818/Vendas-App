@@ -4,42 +4,81 @@
       <div class="container-fluid h-custom">
         <div class="row d-flex justify-content-center align-items-center h-100">
           <div class="col-md-9 col-lg-6 col-xl-5">
-            <img src="../../../../assets/img/login.png" class="img-fluid" alt="Sample image">
+            <img
+              src="../../../../assets/img/login.png"
+              class="img-fluid"
+              alt="Sample image"
+            />
           </div>
           <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
             <form>
               <div *ngIf="errorMessage" class="alert alert-danger mt-3 mb-3">
                 {{ errorMessage }}
               </div>
-              <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                <h1 class="h3 mb-3 font-weight-normal text-color">Entrar com</h1>
+              <div
+                class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start"
+              >
+                <h1 class="h3 mb-3 font-weight-normal text-color">
+                  Entrar com
+                </h1>
               </div>
 
               <div class="form-outline mb-4">
-                <input type="email" class="form-control form-control-lg sombra" placeholder="email" [(ngModel)]="email"
-                  name="email">
-                <label class="form-label text-color" for="form3Example3">Endereço de Email</label>
+                <input
+                  type="email"
+                  class="form-control form-control-lg sombra"
+                  placeholder="email"
+                  [(ngModel)]="email"
+                  name="email"
+                />
+                <label class="form-label text-color" for="form3Example3"
+                  >Endereço de Email</label
+                >
               </div>
 
               <div class="form-outline mb-3">
                 <div class="input-group">
-                  <input #passwordInput type="password" class="form-control form-control-lg sombra" placeholder="Senha"
-                    [(ngModel)]="password" name="password" />
+                  <input
+                    #passwordInput
+                    type="password"
+                    class="form-control form-control-lg sombra"
+                    placeholder="Senha"
+                    [(ngModel)]="password"
+                    name="password"
+                  />
 
                   <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
-                      <i class="fa" [ngClass]="{'fa-eye': !showPassword, 'fa-eye-slash': showPassword}"
-                        style="margin: 5px;"></i>
+                    <button
+                      class="btn btn-outline-secondary"
+                      type="button"
+                      (click)="togglePasswordVisibility()"
+                    >
+                      <i
+                        class="fa"
+                        [class.fa-eye]="!showPassword"
+                        [class.fa-eye-slash]="showPassword"
+                        style="margin: 5px"
+                      ></i>
                     </button>
                   </div>
                 </div>
-                <label class="form-label text-color" for="form3Example4">Senha</label>
+                <label class="form-label text-color" for="form3Example4"
+                  >Senha</label
+                >
               </div>
 
               <div class="d-flex justify-content-between align-items-center">
                 <div class="form-check mb-0">
-                  <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-                  <label class="form-check-label text-color" for="form2Example3">
+                  <input
+                    class="form-check-input me-2"
+                    type="checkbox"
+                    value=""
+                    id="form2Example3"
+                  />
+                  <label
+                    class="form-check-label text-color"
+                    for="form2Example3"
+                  >
                     Lembre de mim
                   </label>
                 </div>
@@ -47,9 +86,16 @@
               </div>
 
               <div class="text-center text-lg-start mt-4 pt-2">
-                <button type="button" class="btn btn-secondary btn-lg sombra"
-                  style="padding-left: 2.5rem; padding-right: 2.5rem;" (click)="login()">Login</button>
-                <p class="mt-4 mb-2 text-color">Não tem login?
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-lg sombra"
+                  style="padding-left: 2.5rem; padding-right: 2.5rem"
+                  (click)="login()"
+                >
+                  Login
+                </button>
+                <p class="mt-4 mb-2 text-color">
+                  Não tem login?
                   <a class="btn-link" routerLink="/register">Cadastrar-se</a>
                 </p>
               </div>
