@@ -35,18 +35,18 @@
 
 @media (max-width: 476px) {
   .btn {
-      font-size: 0.8em;
+    font-size: 0.8em;
   }
 
   .input-date {
-      width: auto;
+    width: auto;
   }
 }
 
 @media (max-width: 476px) {
   .input-date {
-      font-size: 0.8em;
-      padding: 10px;
+    font-size: 0.8em;
+    padding: 10px;
   }
 }
 
@@ -77,18 +77,14 @@
   border-radius: 20px;
   margin-top: 3px;
   padding: 10px;
-
 }
 
 @media (max-width: 476px) {
   .fotter-summary {
-      font-size: 0.8em; /* Reduz o tamanho da fonte do input */
-      padding: 10px; /* Reduz o padding interno para dar mais espaço ao texto */
+    font-size: 0.8em; /* Reduz o tamanho da fonte do input */
+    padding: 10px; /* Reduz o padding interno para dar mais espaço ao texto */
   }
 }
-
-
-
 
 .total {
   text-shadow: 4px 4px 7px rgba(0, 0, 0, 30.5);
@@ -171,7 +167,6 @@
   background-color: rgba(49, 67, 78, 0.744);
 }
 
-
 ::ng-deep .bs-datepicker-body table td span.is-other-month,
 .bs-datepicker-body table td.is-other-month span {
   color: rgba(0, 187, 34, 0.767);
@@ -228,6 +223,14 @@
   transform: translateY(-2px);
 }
 
+.fa-edit {
+  color: var(--bs-blue);
+  margin-right: 15px;
+}
+.fa-trash {
+  color: var(--bs-red);
+}
+
 .space-form {
   margin-top: 10px;
 }
@@ -246,15 +249,15 @@
 ::ng-deep .ngx-pagination a,
 .ngx-pagination button {
   color: #54708b !important;
- }
+}
 
 @media (max-width: 476px) {
   .text-custom {
-      font-size: 0.9em;
+    font-size: 0.9em;
   }
 }
 
-.cursor{
+.cursor {
   cursor: pointer;
 }
 
@@ -284,8 +287,8 @@
 }
 
 .custom-checkbox:checked {
-  background-color: #007BFF;
-  border-color: #0062CC;
+  background-color: #007bff;
+  border-color: #0062cc;
 }
 
 .custom-checkbox-x {
@@ -303,10 +306,8 @@
   visibility: visible;
 }
 
-
 /* end checkbox */
 
 .text-color {
   color: #54708b !important;
-
 }

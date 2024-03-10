@@ -76,22 +76,16 @@
           <td class="text-center">{{ venda.dataVenda }}</td>
           <td class="text-center">R$ {{ venda.totalDaVenda.toFixed(2) }}</td>
           <td class="text-center">
-            <button
-              type="button"
-              class="btn btn-primary btn-lg space"
+            <i
               tooltip="Editar"
               (click)="abrirModal(modalForm, venda.id)"
-            >
-              <i class="fa fa-edit"></i>
-            </button>
-            <button
-              type="button"
-              class="btn btn-danger btn-lg"
+              class="fa fa-edit"
+            ></i>
+            <i
               tooltip="Deletar"
               (click)="abrirModal(modalConfirmDelete, venda.id)"
-            >
-              <i class="fa fa-trash"></i>
-            </button>
+              class="fa fa-trash"
+            ></i>
           </td>
         </tr>
       </tbody>

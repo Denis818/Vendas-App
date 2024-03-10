@@ -44,11 +44,13 @@ export class NavComponent implements OnInit {
 
   public setDarkMode(isDarkMode: boolean): void {
     this.darkMode = isDarkMode;
-    const theme = isDarkMode ? 'dark' : 'ligth';
-    this.renderer.setAttribute(
-      document.documentElement,
-      'data-bs-theme',
-      theme
-    );
+
+    if (isDarkMode) {
+      this.renderer.addClass(this.document.body, 'dark');
+      this.renderer.removeClass(this.document.body, 'light');
+    } else {
+      this.renderer.removeClass(this.document.body, 'dark');
+      this.renderer.addClass(this.document.body, 'light');
+    }
   }
 }
