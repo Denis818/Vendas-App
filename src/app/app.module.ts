@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -25,6 +25,7 @@ import { RegisterComponent } from './components/user/register/register.component
 import { VendaComponent } from './components/vendas/venda.component';
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { VendaService } from './services/venda.service';
+import { AuthInterceptor } from './interceptors/AuthInterceptor';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,14 @@ import { VendaService } from './services/venda.service';
       progressBar: true,
     }),
   ],
-  providers: [VendaService],
+  providers: [
+    VendaService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

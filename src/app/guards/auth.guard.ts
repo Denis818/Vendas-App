@@ -22,7 +22,6 @@ class AuthGuard {
       );
 
       if (expirationDate <= nowUTC) {
-        console.log(`Data da API: ${expirationDate} | Data do Angular: ${nowUTC}`);
         this.resetLocalStorage();
         router.navigateByUrl('/login');
         return false;
