@@ -7,7 +7,7 @@ import { tap } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class UserService extends BaseService {
  //Comentario teste
-  public url: string = `${this.urlBase}/Users`;
+  public url: string = `${this.urlBase}api/Users`;
 
   constructor(http: HttpClient) { super(http); }
 

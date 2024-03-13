@@ -11,7 +11,7 @@ import { LogVenda } from '../models/LogVenda';
 export class AdminService extends BaseService {
 
   private readonly Url = `${this.urlBase}/api/LogSales`;
-  private readonly urlUser: string = `${this.urlBase}/Users`;
+  private readonly urlUser: string = `${this.urlBase}api/Users`;
 
   constructor(http: HttpClient) { super(http); }
 
