@@ -5,7 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 export abstract class BaseService {
   constructor(private http: HttpClient) {}
 
-  protected urlBase: string = 'https://vendas-api.up.railway.app';
+  protected urlBase: string = 'https://localhost:5000';
 
   protected SendHttpRequest(
     metodo: string,
